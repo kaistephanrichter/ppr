@@ -1,0 +1,106 @@
+name: PPR
+options:
+  bundleIdPrefix: org.ksrichter.ppr
+  deploymentTarget:
+    iOS: "17.0"
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  developmentLanguage: de
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: "0.1.0"
+    DEVELOPMENT_TEAM: LP3VH24QFV
+
+targets:
+  PPR:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources/PPR
+        excludes:
+          - Resources/**
+          - Supporting/**
+      # XcodeGen 2.x may omit a standalone `resources:` phase; attaching the catalog here
+      # ensures actool runs and AppIcon is embedded in the app bundle.
+      - path: Sources/PPR/Resources/Assets.xcassets
+        buildPhase: resources
+      - path: Sources/PPR/Resources/Localizable.xcstrings
+        buildPhase: resources
+    preBuildScripts:
+      - path: scripts/build_app_icons.sh
+        name: App Icons generieren
+        basedOnDependencyAnalysis: false
+        inputFiles:
+          - $(SRCROOT)/app-icon-light.png
+          - $(SRCROOT)/app-icon-dark.png
+        outputFiles:
+          - $(SRCROOT)/Sources/PPR/Resources/Assets.xcassets/AppIcon.appiconset/ios_marketing_1024.png
+          - $(SRCROOT)/Sources/PPR/Resources/Assets.xcassets/AppIcon.appiconset/ios_marketing_1024_dark.png
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: "1,2"
+        PRODUCT_BUNDLE_IDENTIFIER: org.ksrichter.ppr
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: NO
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        GENERATE_INFOPLIST_FILE: true
+        INFOPLIST_KEY_CFBundleDisplayName: PPR
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: true
+        INFOPLIST_KEY_UILaunchScreen_Generation: true
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+    info:
+      path: Sources/PPR/Supporting/Info.plist
+      properties:
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        NSBonjourServices:
+          - _http._tcp
+        NSLocalNetworkUsageDescription: PPR verbindet sich mit Ihrem Paperless-ngx-Server im lokalen Netzwerk (z. B. 192.168.x.x).
+        NSCameraUsageDescription: PPR verwendet die Kamera, um Dokumente zu scannen und in Paperless hochzuladen.
+        CFBundleDocumentTypes:
+          - CFBundleTypeName: PDF Dokument
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: Alternate
+            LSItemContentTypes:
+              - com.adobe.pdf
+          - CFBundleTypeName: Bild
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: Alternate
+            LSItemContentTypes:
+              - public.image
+        LSSupportsOpeningDocumentsInPlace: false
+
+  PPRUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: Sources/PPRUITests
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: "1,2"
+        PRODUCT_BUNDLE_IDENTIFIER: org.ksrichter.ppr.uitests
+        GENERATE_INFOPLIST_FILE: true
+        TEST_TARGET_NAME: PPR
+    dependencies:
+      - target: PPR
+
+schemes:
+  PPR:
+    build:
+      targets:
+        PPR: all
+  PPRUITests:
+    build:
+      targets:
+        PPR: all
+        PPRUITests: [test]
+    test:
+      targets:
+        - PPRUITests
+      language: de-DE
+      region: DE

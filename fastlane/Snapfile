@@ -1,0 +1,17 @@
+# Snapfile — Fastlane Snapshot Konfiguration
+
+devices([
+  "iPhone 17 Pro Max",     # 6.9"
+  "iPhone 17",             # 6.1"
+  "iPad Pro 13-inch (M5)", # 13" iPad
+])
+
+languages([
+  "de-DE",
+  "en-US",
+])
+
+scheme("PPRUITests")
+output_directory("./fastlane/screenshots")
+clear_previous_screenshots(true)
+stop_after_first_error(false)

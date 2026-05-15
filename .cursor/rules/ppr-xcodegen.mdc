@@ -1,0 +1,22 @@
+---
+description: Nach neuen Swift-Dateien immer XcodeGen ausführen (PPR iOS)
+alwaysApply: true
+---
+
+# PPR / XcodeGen
+
+Dieses Repo nutzt **XcodeGen** (`project.yml` → `PPR.xcodeproj`). Neue oder verschobene **Swift-Dateien** unter `Sources/PPR/` erscheinen erst im Target, wenn das Projekt neu generiert wurde.
+
+**Pflicht nach jeder Änderung an der Swift-Struktur** (neue Dateien, neue Ordner, Umbenennungen): Im Repository-Root ausführen:
+
+```bash
+xcodegen generate
+```
+
+Direkt danach kurz prüfen: `xcodebuild -scheme PPR -destination 'generic/platform=iOS Simulator' build` (oder Build in Xcode), damit fehlende Target-Mitgliedschaften sofort auffallen.
+
+## Info.plist
+
+`targets.PPR.info` in **`project.yml`** lässt XcodeGen die Datei unter **`info.path` bei jedem `xcodegen generate` neu schreiben** (XcodeGen: *Plists are created on disk on every generation*). Manuelle Änderungen nur in der erzeugten `Supporting/Info.plist` gehen dabei verloren.
+
+**Regel:** Zusätzliche Keys (z. B. `NSLocalNetworkUsageDescription`, `NSAppTransportSecurity`) nur unter **`targets.PPR.info.properties`** in `project.yml` pflegen, nicht dauerhaft nur in der XML-Datei editieren.

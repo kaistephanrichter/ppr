@@ -1,0 +1,26 @@
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Erstellt App Store Screenshots in allen Sprachen und Gerätegrößen"
+  lane :screenshots do
+    capture_screenshots(
+      project: "PPR.xcodeproj",
+      scheme: "PPRUITests",
+      output_directory: "./fastlane/screenshots",
+      clear_previous_screenshots: true,
+    )
+  end
+
+  desc "Bettet Screenshots in Device-Frames ein"
+  lane :frame do
+    frame_screenshots(path: "./fastlane/screenshots")
+  end
+
+  desc "Screenshots erstellen + einrahmen"
+  lane :screenshots_framed do
+    screenshots
+    frame
+  end
+
+end

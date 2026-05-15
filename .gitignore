@@ -1,0 +1,21 @@
+.secrets
+
+# Xcode / Swift
+DerivedData/
+build/
+*.xcuserstate
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/
+
+# OS
+.DS_Store
+
+# Fastlane
+fastlane/report.xml
+fastlane/screenshots/
+fastlane/.DS_Store
+
+# Data / vector index
+data/
