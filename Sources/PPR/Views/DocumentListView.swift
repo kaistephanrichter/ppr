@@ -1,3 +1,6 @@
+/// Document browser with search, filtering, and infinite scroll pagination.
+/// Filter sheet shows document types, correspondents, and tags (top 7 by usage + "show all").
+/// Active filters are displayed as removable pills below the search bar.
 import SwiftUI
 
 struct DocumentListView: View {

@@ -1,3 +1,6 @@
+/// Models for document classification metadata from the paperless-ngx API.
+/// Both DocumentType and Correspondent include an optional document_count
+/// returned by the API to show usage frequency in filter views.
 import Foundation
 
 struct DocumentType: Identifiable, Decodable, Hashable {

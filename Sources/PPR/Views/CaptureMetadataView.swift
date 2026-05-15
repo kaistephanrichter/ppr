@@ -1,3 +1,6 @@
+/// Metadata form shown before uploading a captured document.
+/// Allows setting title, date, document type, correspondent, and tags.
+/// Tags are displayed as compact pills with a sheet for full selection.
 import SwiftUI
 
 struct CaptureMetadataView: View {

@@ -1,3 +1,5 @@
+/// Document capture tab. Provides camera scanner, photo picker, and file import.
+/// Shows status icons (idle/uploading/success/error) and presents metadata form before upload.
 import SwiftUI
 import CoreImage
 import CoreImage.CIFilterBuiltins

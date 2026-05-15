@@ -1,3 +1,5 @@
+/// Onboarding screen shown on first launch when no server is configured.
+/// Collects server URL and API token, saves to keychain, then dismisses.
 import SwiftUI
 
 struct OnboardingView: View {

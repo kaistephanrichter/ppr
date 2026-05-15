@@ -1,3 +1,5 @@
+/// Observable app configuration holding server URL and API token.
+/// Persists credentials in the iOS Keychain via KeychainStore.
 import Foundation
 import Observation
 

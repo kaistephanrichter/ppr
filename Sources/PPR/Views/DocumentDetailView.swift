@@ -1,3 +1,6 @@
+/// Document detail view with PDF preview, metadata editing (title, date, type,
+/// correspondent, tags), and save functionality. Tags are shown as pills with
+/// a sheet for selection.
 import SwiftUI
 import PDFKit
 

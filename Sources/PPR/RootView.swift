@@ -1,5 +1,7 @@
 import SwiftUI
 
+/// Tab-based root view. Shows onboarding on first launch (when no server is configured),
+/// then provides three tabs: Capture, Documents, and Settings.
 struct RootView: View {
     @Environment(AppConfiguration.self) private var configuration
     @Environment(ImportQueue.self) private var importQueue

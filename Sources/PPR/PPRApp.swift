@@ -1,3 +1,6 @@
+/// PPR – Paperless-ngx iOS Client
+/// Main app entry point. Sets up the environment with shared configuration
+/// and import queue, and handles file open URLs for document import.
 import SwiftUI
 
 @main

@@ -1,3 +1,5 @@
+/// Networking layer for the paperless-ngx REST API.
+/// Handles authentication, pagination, document CRUD, uploads, and metadata endpoints.
 import Foundation
 
 enum PaperlessAPI {
