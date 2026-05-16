@@ -11,9 +11,8 @@ final class AppConfiguration {
     private(set) var didLoadFromKeychain = false
 
     /// Tag IDs to exclude from the "top tags" filter list
-    var excludedTagIDs: Set<Int> {
-        get { Set(UserDefaults.standard.array(forKey: "excludedTagIDs") as? [Int] ?? []) }
-        set { UserDefaults.standard.set(Array(newValue), forKey: "excludedTagIDs") }
+    var excludedTagIDs: Set<Int> = [] {
+        didSet { UserDefaults.standard.set(Array(excludedTagIDs), forKey: "excludedTagIDs") }
     }
 
     var canConnect: Bool {
@@ -25,6 +24,7 @@ final class AppConfiguration {
         let values = KeychainStore.load()
         serverURL = values.serverURL
         apiToken = values.apiToken
+        excludedTagIDs = Set(UserDefaults.standard.array(forKey: "excludedTagIDs") as? [Int] ?? [])
         didLoadFromKeychain = true
     }
 
