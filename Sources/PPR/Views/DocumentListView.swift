@@ -71,11 +71,19 @@ struct DocumentListView: View {
                 } else if isLoading && documents.isEmpty {
                     ProgressView(String(localized: "documents.loading")).frame(maxHeight: .infinity)
                 } else if let errorMessage, !errorMessage.isEmpty, documents.isEmpty {
-                    ContentUnavailableView(
-                        String(localized: "documents.load_error.title"),
-                        systemImage: "exclamationmark.triangle",
-                        description: Text(verbatim: errorMessage)
-                    )
+                    VStack(spacing: 16) {
+                        Image("ErrorLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 100)
+                        Text(String(localized: "documents.load_error.title"))
+                            .font(.headline)
+                        Text(verbatim: errorMessage)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 32)
+                    }
                     .frame(maxHeight: .infinity)
                 } else {
                     documentList
