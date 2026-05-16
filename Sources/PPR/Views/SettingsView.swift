@@ -83,7 +83,7 @@ struct SettingsView: View {
                     }
                 }
 
-                Section(String(localized: "settings.section.excluded_tags")) {
+                Section {
                     if isLoadingTags {
                         ProgressView()
                     } else {
@@ -93,6 +93,10 @@ struct SettingsView: View {
                             excludedTagsPillRow
                         }
                     }
+                } header: {
+                    Text(String(localized: "settings.section.excluded_tags"))
+                } footer: {
+                    Text(String(localized: "settings.excluded_tags.footer"))
                 }
             }
             .navigationTitle(String(localized: "nav.settings"))
@@ -209,7 +213,7 @@ struct ExcludedTagsSelectionView: View {
                 }
             }
         }
-        .navigationTitle(String(localized: "settings.section.excluded_tags"))
+        .navigationTitle(String(localized: "settings.excluded_tags.nav_title"))
         .toolbar(.hidden, for: .tabBar)
     }
 }

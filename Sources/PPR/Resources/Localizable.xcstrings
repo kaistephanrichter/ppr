@@ -1,18 +1,10 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
-    "·" : {
-
-    },
-    "(%@)" : {
-
-    },
-    "%@" : {
-
-    },
-    "+%@" : {
-
-    },
+    "·" : {},
+    "(%@)" : {},
+    "%@" : {},
+    "+%@" : {},
     "alert.new_correspondent.title" : {
       "comment" : "Alert title: create new correspondent",
       "extractionState" : "stale",
@@ -6074,6 +6066,98 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ustawienia"
+          }
+        }
+      }
+    },
+    "settings.excluded_tags.nav_title" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tags ausblenden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide Tags"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocultar etiquetas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masquer les tags"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi tag"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tags verbergen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukryj tagi"
+          }
+        }
+      }
+    },
+    "settings.excluded_tags.footer" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Tags werden im Filter-Dialog aus der Liste der häufigsten Tags ausgeblendet. Nutze das für Tags wie \"processed\", die vom System für den Verarbeitungszustand vergeben werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "These tags are hidden from the top tags list in the filter dialog. Use this for tags like \"processed\" that are assigned by the system for processing status."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estas etiquetas se ocultan de la lista de etiquetas frecuentes en el diálogo de filtro. Úsalo para etiquetas como \"processed\" que el sistema asigna para el estado de procesamiento."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ces tags sont masqués de la liste des tags fréquents dans le filtre. Utilisez ceci pour les tags comme « processed » attribués par le système pour l'état de traitement."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questi tag sono nascosti dalla lista dei tag più frequenti nel filtro. Usalo per tag come \"processed\" assegnati dal sistema per lo stato di elaborazione."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze tags worden verborgen in de lijst met veelgebruikte tags in het filter. Gebruik dit voor tags zoals \"processed\" die door het systeem worden toegewezen voor de verwerkingsstatus."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te tagi są ukryte na liście najczęstszych tagów w filtrze. Użyj tego dla tagów takich jak \"processed\", które system przypisuje dla statusu przetwarzania."
           }
         }
       }
