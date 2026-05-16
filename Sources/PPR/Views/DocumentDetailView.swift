@@ -143,7 +143,7 @@ struct DocumentDetailView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 HStack {
-                    if let pdfData {
+                    if pdfData != nil {
                         Button {
                             showShareSheet = true
                         } label: {
