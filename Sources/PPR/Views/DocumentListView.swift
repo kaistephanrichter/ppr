@@ -111,6 +111,14 @@ struct DocumentListView: View {
             }
             .navigationTitle(String(localized: "tab.documents"))
             .searchable(text: $searchText, prompt: String(localized: "documents.search.placeholder"))
+            .onChange(of: searchText) { _, _ in
+                searchDebounceTask?.cancel()
+                searchDebounceTask = Task {
+                    try? await Task.sleep(nanoseconds: 400_000_000)
+                    guard !Task.isCancelled else { return }
+                    await resetAndLoad()
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showFilterSheet = true } label: {
@@ -141,14 +149,6 @@ struct DocumentListView: View {
                 guard configuration.canConnect, !didInitialLoad else { return }
                 didInitialLoad = true
                 await loadMetadataAndDocuments()
-            }
-            .onChange(of: searchText) { _, _ in
-                searchDebounceTask?.cancel()
-                searchDebounceTask = Task {
-                    try? await Task.sleep(nanoseconds: 400_000_000)
-                    guard !Task.isCancelled else { return }
-                    await resetAndLoad()
-                }
             }
             .onChange(of: filterTagIDs) { _, newValue in
                 UserDefaults.standard.set(Array(newValue), forKey: "filterTagIDs")
