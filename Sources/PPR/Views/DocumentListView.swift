@@ -50,21 +50,7 @@ struct DocumentListView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                searchBar
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
-                    .background(Color(.systemBackground))
-
-                if isFiltered {
-                    activeFilterPills
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 8)
-                        .background(Color(.systemBackground))
-                }
-
-                Divider()
-
+            Group {
                 if !configuration.canConnect {
                     VStack(spacing: 16) {
                         Image("ErrorLogo")
@@ -123,7 +109,33 @@ struct DocumentListView: View {
                     documentList
                 }
             }
-            .toolbar(.hidden, for: .navigationBar)
+            .navigationTitle(String(localized: "tab.documents"))
+            .searchable(text: $searchText, prompt: String(localized: "documents.search.placeholder"))
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button { showFilterSheet = true } label: {
+                        Image(systemName: isFiltered
+                              ? "line.3.horizontal.decrease.circle.fill"
+                              : "line.3.horizontal.decrease.circle")
+                            .foregroundStyle(isFiltered ? Color.accentColor : Color.primary)
+                    }
+                    .disabled(!configuration.canConnect)
+                    .sheet(isPresented: $showFilterSheet) {
+                        FilterSheet(
+                            allTags: allTags,
+                            allCorrespondents: allCorrespondents,
+                            allDocumentTypes: allDocumentTypes,
+                            filterTagIDs: $filterTagIDs,
+                            filterCorrespondent: $filterCorrespondent,
+                            filterDocumentType: $filterDocumentType,
+                            groupBy: $groupBy,
+                            sortOrder: $sortOrder,
+                            excludedTagIDs: configuration.excludedTagIDs
+                        )
+                        .presentationDetents([.medium, .large])
+                    }
+                }
+            }
             .refreshable { await resetAndLoad() }
             .task(id: configuration.canConnect) {
                 guard configuration.canConnect, !didInitialLoad else { return }
@@ -158,54 +170,6 @@ struct DocumentListView: View {
             .onChange(of: sortOrder) { _, newValue in
                 UserDefaults.standard.set(newValue.rawValue, forKey: "documentListSortOrder")
                 Task { await resetAndLoad() }
-            }
-        }
-    }
-
-    // MARK: - Search bar
-
-    private var searchBar: some View {
-        HStack(spacing: 10) {
-            HStack(spacing: 6) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundStyle(.secondary)
-                    .font(.subheadline)
-                TextField(String(localized: "documents.search.placeholder"), text: $searchText)
-                    .autocorrectionDisabled()
-                    .font(.subheadline)
-                if !searchText.isEmpty {
-                    Button { searchText = "" } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(Color(.tertiaryLabel))
-                    }
-                }
-            }
-            .padding(.horizontal, 10)
-            .padding(.vertical, 8)
-            .background(Color(.secondarySystemGroupedBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-
-            Button { showFilterSheet = true } label: {
-                Image(systemName: isFiltered
-                      ? "line.3.horizontal.decrease.circle.fill"
-                      : "line.3.horizontal.decrease.circle")
-                    .font(.title2)
-                    .foregroundStyle(isFiltered ? Color.accentColor : Color.primary)
-            }
-            .disabled(!configuration.canConnect)
-            .sheet(isPresented: $showFilterSheet) {
-                FilterSheet(
-                    allTags: allTags,
-                    allCorrespondents: allCorrespondents,
-                    allDocumentTypes: allDocumentTypes,
-                    filterTagIDs: $filterTagIDs,
-                    filterCorrespondent: $filterCorrespondent,
-                    filterDocumentType: $filterDocumentType,
-                    groupBy: $groupBy,
-                    sortOrder: $sortOrder,
-                    excludedTagIDs: configuration.excludedTagIDs
-                )
-                .presentationDetents([.medium, .large])
             }
         }
     }
@@ -250,6 +214,13 @@ struct DocumentListView: View {
     @ViewBuilder
     private var documentList: some View {
         List {
+            if isFiltered {
+                Section {
+                    activeFilterPills
+                }
+                .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+            }
+
             if let errorMessage, !errorMessage.isEmpty {
                 Section {
                     Text(verbatim: errorMessage).font(.footnote).foregroundStyle(.red)
