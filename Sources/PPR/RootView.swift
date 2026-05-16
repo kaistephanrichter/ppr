@@ -27,10 +27,6 @@ struct RootView: View {
                 Tab(String(localized: "tab.settings"), systemImage: "gearshape", value: 2) {
                     SettingsView()
                 }
-
-                Tab(value: 3, role: .search) {
-                    SearchView()
-                }
             }
             .opacity(showSplash ? 0 : 1)
 
