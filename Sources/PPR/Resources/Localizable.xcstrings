@@ -2220,7 +2220,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sortieren und gruppieren"
+            "value" : "Sortieren und Gruppieren"
           }
         },
         "en" : {
@@ -2232,31 +2232,31 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ordenar y agrupar"
+            "value" : "Ordenar y Agrupar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trier et grouper"
+            "value" : "Trier et Grouper"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ordina e raggruppa"
+            "value" : "Ordina e Raggruppa"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sorteren en groeperen"
+            "value" : "Sorteren en Groeperen"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sortuj i grupuj"
+            "value" : "Sortuj i Grupuj"
           }
         }
       }
