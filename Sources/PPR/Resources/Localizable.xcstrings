@@ -1,15 +1,9 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
-    "·" : {
-
-    },
-    "(%@)" : {
-
-    },
-    "+%@" : {
-
-    },
+    "·" : {},
+    "(%@)" : {},
+    "+%@" : {},
     "alert.new_correspondent.title" : {
       "comment" : "Alert title: create new correspondent",
       "extractionState" : "stale",
@@ -1761,43 +1755,43 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter"
+            "value" : "Gruppieren & Filtern"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter"
+            "value" : "Group & Filter"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filtrar"
+            "value" : "Agrupar y filtrar"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filtrer"
+            "value" : "Grouper et filtrer"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filtro"
+            "value" : "Raggruppa e filtra"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filter"
+            "value" : "Groeperen en filteren"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Filtr"
+            "value" : "Grupuj i filtruj"
           }
         }
       }
@@ -6024,6 +6018,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ustawienia"
+          }
+        }
+      }
+    },
+    "filter.section.filter" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtre"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtro"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtr"
           }
         }
       }

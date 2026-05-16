@@ -191,7 +191,8 @@ enum PaperlessAPI {
         search: String = "",
         tagIDs: [Int] = [],
         correspondentID: Int? = nil,
-        documentTypeID: Int? = nil
+        documentTypeID: Int? = nil,
+        ordering: String? = nil
     ) async throws -> PaginatedEnvelope<DocumentSummary> {
         var components = URLComponents(
             url: try buildURL(serverURL: serverURL, path: "api/documents/"),
@@ -205,6 +206,7 @@ enum PaperlessAPI {
         for id in tagIDs { items.append(URLQueryItem(name: "tags__id__all", value: String(id))) }
         if let id = correspondentID { items.append(URLQueryItem(name: "correspondent__id", value: String(id))) }
         if let id = documentTypeID { items.append(URLQueryItem(name: "document_type__id", value: String(id))) }
+        if let ordering { items.append(URLQueryItem(name: "ordering", value: ordering)) }
         components?.queryItems = items
         guard let url = components?.url else { throw PaperlessAPIError.invalidServerURL }
         let request = try authorizedRequest(url: url, token: token)

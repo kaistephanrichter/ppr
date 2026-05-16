@@ -86,21 +86,11 @@ struct SettingsView: View {
                 Section(String(localized: "settings.section.excluded_tags")) {
                     if isLoadingTags {
                         ProgressView()
-                    } else if allTags.isEmpty {
-                        Text(String(localized: "metadata.field.document_type.none"))
-                            .foregroundStyle(.secondary)
                     } else {
-                        ForEach(allTags) { tag in
-                            Toggle(tag.name, isOn: Binding(
-                                get: { configuration.excludedTagIDs.contains(tag.id) },
-                                set: { isOn in
-                                    if isOn {
-                                        configuration.excludedTagIDs.insert(tag.id)
-                                    } else {
-                                        configuration.excludedTagIDs.remove(tag.id)
-                                    }
-                                }
-                            ))
+                        NavigationLink {
+                            ExcludedTagsSelectionView(allTags: allTags)
+                        } label: {
+                            excludedTagsPillRow
                         }
                     }
                 }
@@ -111,6 +101,35 @@ struct SettingsView: View {
                 guard configuration.canConnect && configuration.didLoadFromKeychain else { return }
                 await testConnection()
                 await loadTags()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var excludedTagsPillRow: some View {
+        let excluded = allTags.filter { configuration.excludedTagIDs.contains($0.id) }
+        if excluded.isEmpty {
+            Text(String(localized: "filter.option.none"))
+                .foregroundStyle(.secondary)
+        } else {
+            HStack(spacing: 4) {
+                let visible = Array(excluded.prefix(3))
+                let overflow = excluded.count - visible.count
+                ForEach(visible) { tag in
+                    Text(tag.name)
+                        .font(.caption2.weight(.medium))
+                        .lineLimit(1)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color.accentColor.opacity(0.15))
+                        .foregroundStyle(Color.accentColor)
+                        .clipShape(Capsule())
+                }
+                if overflow > 0 {
+                    Text("+\(overflow)")
+                        .font(.caption2.weight(.medium))
+                        .foregroundStyle(.secondary)
+                }
             }
         }
     }
@@ -161,6 +180,37 @@ struct SettingsView: View {
         } catch {
             allTags = []
         }
+    }
+}
+
+// MARK: - ExcludedTagsSelectionView
+
+struct ExcludedTagsSelectionView: View {
+    @Environment(AppConfiguration.self) private var configuration
+    let allTags: [TagSummary]
+
+    var body: some View {
+        List(allTags) { tag in
+            Button {
+                if configuration.excludedTagIDs.contains(tag.id) {
+                    configuration.excludedTagIDs.remove(tag.id)
+                } else {
+                    configuration.excludedTagIDs.insert(tag.id)
+                }
+            } label: {
+                HStack {
+                    Text(tag.name)
+                        .foregroundStyle(.primary)
+                    Spacer()
+                    if configuration.excludedTagIDs.contains(tag.id) {
+                        Image(systemName: "checkmark")
+                            .foregroundStyle(Color.accentColor)
+                    }
+                }
+            }
+        }
+        .navigationTitle(String(localized: "settings.section.excluded_tags"))
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

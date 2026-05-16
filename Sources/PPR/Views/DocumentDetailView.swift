@@ -36,9 +36,10 @@ struct DocumentDetailView: View {
     @State private var saveError: String?
     @State private var showTagSheet = false
     @State private var showShareSheet = false
+    @State private var didPopulateFields = false
 
     private var hasChanges: Bool {
-        guard let detail else { return false }
+        guard didPopulateFields, let detail else { return false }
         if editTitle != detail.title { return true }
         if editDocumentType?.id != detail.documentType { return true }
         if editCorrespondent?.id != detail.correspondent { return true }
@@ -263,6 +264,7 @@ struct DocumentDetailView: View {
             editDocumentType = allDocumentTypes.first { $0.id == d.documentType }
             editCorrespondent = allCorrespondents.first { $0.id == d.correspondent }
             editTagIDs = Set(d.tags)
+            didPopulateFields = true
         }
         isLoading = false
     }

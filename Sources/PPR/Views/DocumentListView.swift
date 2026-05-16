@@ -99,6 +99,10 @@ struct DocumentListView: View {
             .onChange(of: filterTagIDs) { _, _ in Task { await resetAndLoad() } }
             .onChange(of: filterCorrespondent) { _, _ in Task { await resetAndLoad() } }
             .onChange(of: filterDocumentType) { _, _ in Task { await resetAndLoad() } }
+            .onChange(of: groupBy) { _, _ in
+                collapsedSections = []
+                Task { await resetAndLoad() }
+            }
         }
     }
 
@@ -201,9 +205,19 @@ struct DocumentListView: View {
                 }
             } else {
                 ForEach(groupedSections, id: \.title) { section in
-                    Section(section.title, isExpanded: sectionBinding(for: section.title)) {
-                        ForEach(section.documents) { doc in
-                            documentRow(doc)
+                    Section {
+                        DisclosureGroup(isExpanded: sectionBinding(for: section.title)) {
+                            ForEach(section.documents) { doc in
+                                documentRow(doc)
+                            }
+                        } label: {
+                            HStack {
+                                Text(section.title).font(.subheadline.weight(.semibold))
+                                Spacer()
+                                Text("\(section.documents.count)")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
                         }
                     }
                 }
@@ -292,6 +306,14 @@ struct DocumentListView: View {
         await loadPage(reset: false)
     }
 
+    private var apiOrdering: String? {
+        switch groupBy {
+        case .none: return nil
+        case .documentType: return "document_type__name"
+        case .correspondent: return "correspondent__name"
+        }
+    }
+
     private func loadPage(reset: Bool) async {
         guard configuration.canConnect else { return }
         isLoading = true
@@ -304,7 +326,8 @@ struct DocumentListView: View {
                 search: searchText,
                 tagIDs: Array(filterTagIDs),
                 correspondentID: filterCorrespondent?.id,
-                documentTypeID: filterDocumentType?.id
+                documentTypeID: filterDocumentType?.id,
+                ordering: apiOrdering
             )
             totalCount = envelope.count
             nextPageURL = envelope.next
@@ -462,7 +485,16 @@ private struct FilterSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section(String(localized: "filter.section.document_type")) {
+                Section(String(localized: "filter.section.group_by")) {
+                    Picker(String(localized: "filter.picker.group_by"), selection: $groupBy) {
+                        Text(String(localized: "filter.option.none")).tag(DocumentListView.GroupBy.none)
+                        Text(String(localized: "filter.section.document_type")).tag(DocumentListView.GroupBy.documentType)
+                        Text(String(localized: "metadata.field.correspondent")).tag(DocumentListView.GroupBy.correspondent)
+                    }
+                    .pickerStyle(.menu)
+                }
+
+                Section(String(localized: "filter.section.filter")) {
                     Picker(String(localized: "filter.picker.type_label"), selection: $filterDocumentType) {
                         Text(String(localized: "filter.option.all")).tag(Optional<DocumentType>.none)
                         ForEach(allDocumentTypes) { t in
@@ -470,8 +502,7 @@ private struct FilterSheet: View {
                         }
                     }
                     .pickerStyle(.menu)
-                }
-                Section(String(localized: "metadata.field.correspondent")) {
+
                     Picker(String(localized: "metadata.field.correspondent"), selection: $filterCorrespondent) {
                         Text(String(localized: "filter.option.all")).tag(Optional<Correspondent>.none)
                         ForEach(allCorrespondents) { c in
@@ -479,8 +510,7 @@ private struct FilterSheet: View {
                         }
                     }
                     .pickerStyle(.menu)
-                }
-                Section(String(localized: "metadata.section.tags")) {
+
                     let visibleTags = showAllTags ? allTagsAlphabetical : topTags
                     ForEach(visibleTags) { tag in
                         Button {
@@ -512,14 +542,7 @@ private struct FilterSheet: View {
                         }
                     }
                 }
-                Section(String(localized: "filter.section.group_by")) {
-                    Picker(String(localized: "filter.picker.group_by"), selection: $groupBy) {
-                        Text(String(localized: "filter.option.none")).tag(DocumentListView.GroupBy.none)
-                        Text(String(localized: "filter.section.document_type")).tag(DocumentListView.GroupBy.documentType)
-                        Text(String(localized: "metadata.field.correspondent")).tag(DocumentListView.GroupBy.correspondent)
-                    }
-                    .pickerStyle(.menu)
-                }
+
                 if !filterTagIDs.isEmpty || filterCorrespondent != nil || filterDocumentType != nil {
                     Section {
                         Button(role: .destructive) {
