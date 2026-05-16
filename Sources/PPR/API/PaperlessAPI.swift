@@ -172,6 +172,59 @@ enum PaperlessAPI {
         return lines.joined(separator: "\n")
     }
 
+    /// Single-attempt perform without retries, used for fast connectivity probing.
+    private static func performOnce<T: Decodable>(_ request: URLRequest, _ type: T.Type) async throws -> T {
+        await LocalNetworkAccess.warmUpBonjourBrowse()
+        try Task.checkCancellation()
+
+        let data: Data
+        let response: URLResponse
+        do {
+            (data, response) = try await session.data(for: request)
+        } catch {
+            if error is CancellationError || Task.isCancelled { throw error }
+            if let urlError = error as? URLError, urlError.code == .cancelled { throw CancellationError() }
+            if let urlError = error as? URLError, urlError.isLocalNetworkProhibited {
+                throw PaperlessAPIError.localNetworkBlocked
+            }
+            if let urlError = error as? URLError {
+                throw PaperlessAPIError.transport(urlError.localizedPaperlessDescription)
+            }
+            throw PaperlessAPIError.transport(error.localizedDescription)
+        }
+
+        guard let http = response as? HTTPURLResponse else {
+            throw PaperlessAPIError.transport("Missing HTTP response.")
+        }
+        if http.statusCode == 401 || http.statusCode == 403 { throw PaperlessAPIError.unauthorized }
+        guard (200 ..< 300).contains(http.statusCode) else {
+            let snippet = String(data: data.prefix(800), encoding: .utf8)?
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            throw PaperlessAPIError.httpResponse(code: http.statusCode, bodySnippet: snippet)
+        }
+        do {
+            return try decoder.decode(T.self, from: data)
+        } catch {
+            if error is CancellationError || Task.isCancelled { throw error }
+            throw PaperlessAPIError.decodingFailed(error.localizedDescription)
+        }
+    }
+
+    /// Lightweight connectivity check (fetches 1 tag, no retries).
+    static func connectivityCheck(serverURL: String, token: String) async throws {
+        var components = URLComponents(
+            url: try buildURL(serverURL: serverURL, path: "api/tags/"),
+            resolvingAgainstBaseURL: false
+        )
+        components?.queryItems = [
+            URLQueryItem(name: "page", value: "1"),
+            URLQueryItem(name: "page_size", value: "1"),
+        ]
+        guard let url = components?.url else { throw PaperlessAPIError.invalidServerURL }
+        let request = try authorizedRequest(url: url, token: token)
+        _ = try await performOnce(request, PaginatedEnvelope<TagSummary>.self)
+    }
+
     static func status(serverURL: String, token: String) async throws -> RemoteStatus {
         let url = try buildURL(serverURL: serverURL, path: "api/status/")
         let request = try authorizedRequest(url: url, token: token)

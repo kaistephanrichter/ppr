@@ -30,6 +30,8 @@ struct CaptureView: View {
     @State private var isUploading = false
     @State private var uploadSuccessMessage: String?
     @State private var uploadError: String?
+    @State private var connectionError: String?
+    @State private var showConnectionErrorDetail = false
 
     private var anySettingActive: Bool { quickUpload || torchEnabled || enhancementEnabled }
 
@@ -110,6 +112,20 @@ struct CaptureView: View {
             if let data = importQueue.pendingDocument {
                 handleCaptured(data: data)
                 importQueue.pendingDocument = nil
+            }
+            if configuration.canConnect {
+                do {
+                    try await PaperlessAPI.connectivityCheck(
+                        serverURL: configuration.serverURL,
+                        token: configuration.apiToken
+                    )
+                    connectionError = nil
+                } catch is CancellationError {
+                    // ignore
+                } catch {
+                    connectionError = PaperlessAPI.formattedUserError(error)
+                        ?? error.localizedDescription
+                }
             }
         }
     }
@@ -255,6 +271,41 @@ struct CaptureView: View {
                             .font(.subheadline).foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                     }
+                } else if let connErr = connectionError {
+                    VStack(spacing: 16) {
+                        Image("ErrorLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 120)
+                        Text(String(localized: "error.connection_failed")).font(.title2.bold())
+                        Text(String(localized: "error.connection_failed.description"))
+                            .font(.subheadline).foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .onTapGesture { showConnectionErrorDetail = true }
+                    .sheet(isPresented: $showConnectionErrorDetail) {
+                        NavigationStack {
+                            ScrollView {
+                                Text(verbatim: connErr)
+                                    .font(.body.monospaced())
+                                    .textSelection(.enabled)
+                                    .padding()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            .navigationTitle(String(localized: "error.detail.title"))
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar {
+                                ToolbarItem(placement: .topBarTrailing) {
+                                    Button(String(localized: "error.detail.copy")) {
+                                        UIPasteboard.general.string = connErr
+                                    }
+                                }
+                                ToolbarItem(placement: .topBarLeading) {
+                                    Button(String(localized: "button.done")) { showConnectionErrorDetail = false }
+                                }
+                            }
+                        }
+                    }
                 } else {
                     VStack(spacing: 16) {
                         Image("AppLogo")
@@ -319,6 +370,7 @@ struct CaptureView: View {
         .animation(.easeInOut, value: isUploading)
         .animation(.easeInOut, value: uploadSuccessMessage)
         .animation(.easeInOut, value: uploadError)
+        .animation(.easeInOut, value: connectionError)
     }
 }
 

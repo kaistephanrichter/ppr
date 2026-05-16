@@ -27,6 +27,7 @@ struct DocumentListView: View {
     @State private var searchDebounceTask: Task<Void, Never>?
     @State private var didInitialLoad = false
     @State private var groupBy: GroupBy = .none
+    @State private var showErrorDetail = false
 
     enum GroupBy: String, CaseIterable {
         case none, documentType, correspondent
@@ -85,6 +86,30 @@ struct DocumentListView: View {
                             .padding(.horizontal, 32)
                     }
                     .frame(maxHeight: .infinity)
+                    .onTapGesture { showErrorDetail = true }
+                    .sheet(isPresented: $showErrorDetail) {
+                        NavigationStack {
+                            ScrollView {
+                                Text(verbatim: errorMessage)
+                                    .font(.body.monospaced())
+                                    .textSelection(.enabled)
+                                    .padding()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            .navigationTitle(String(localized: "error.detail.title"))
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar {
+                                ToolbarItem(placement: .topBarTrailing) {
+                                    Button(String(localized: "error.detail.copy")) {
+                                        UIPasteboard.general.string = errorMessage
+                                    }
+                                }
+                                ToolbarItem(placement: .topBarLeading) {
+                                    Button(String(localized: "button.done")) { showErrorDetail = false }
+                                }
+                            }
+                        }
+                    }
                 } else {
                     documentList
                 }
