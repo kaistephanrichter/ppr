@@ -24,6 +24,10 @@ struct RootView: View {
                     .tabItem { Label(String(localized: "tab.documents"), systemImage: "doc.text.magnifyingglass") }
                     .tag(1)
 
+                SearchView()
+                    .tabItem { Label(String(localized: "tab.search"), systemImage: "magnifyingglass") }
+                    .tag(3)
+
                 SettingsView()
                     .tabItem { Label(String(localized: "tab.settings"), systemImage: "gearshape") }
                     .tag(2)

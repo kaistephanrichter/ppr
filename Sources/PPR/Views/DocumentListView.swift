@@ -17,7 +17,6 @@ struct DocumentListView: View {
     @State private var allCorrespondents: [Correspondent] = []
     @State private var allDocumentTypes: [DocumentType] = []
 
-    @State private var searchText = ""
     @State private var filterTagIDs: Set<Int> = Set(UserDefaults.standard.array(forKey: "filterTagIDs") as? [Int] ?? [])
     @State private var filterCorrespondent: Correspondent?
     @State private var filterDocumentType: DocumentType?
@@ -25,7 +24,6 @@ struct DocumentListView: View {
 
     @State private var isLoading = false
     @State private var errorMessage: String?
-    @State private var searchDebounceTask: Task<Void, Never>?
     @State private var didInitialLoad = false
     @State private var groupBy: GroupBy = GroupBy(rawValue: UserDefaults.standard.string(forKey: "documentListGroupBy") ?? "") ?? .none
     @State private var showErrorDetail = false
@@ -110,7 +108,6 @@ struct DocumentListView: View {
                 }
             }
             .navigationTitle(String(localized: "tab.documents"))
-            .searchable(text: $searchText, prompt: String(localized: "documents.search.placeholder"))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showFilterSheet = true } label: {
@@ -141,14 +138,6 @@ struct DocumentListView: View {
                 guard configuration.canConnect, !didInitialLoad else { return }
                 didInitialLoad = true
                 await loadMetadataAndDocuments()
-            }
-            .onChange(of: searchText) { _, _ in
-                searchDebounceTask?.cancel()
-                searchDebounceTask = Task {
-                    try? await Task.sleep(nanoseconds: 400_000_000)
-                    guard !Task.isCancelled else { return }
-                    await resetAndLoad()
-                }
             }
             .onChange(of: filterTagIDs) { _, newValue in
                 UserDefaults.standard.set(Array(newValue), forKey: "filterTagIDs")
@@ -377,7 +366,6 @@ struct DocumentListView: View {
                 serverURL: configuration.serverURL,
                 token: configuration.apiToken,
                 page: page, pageSize: pageSize,
-                search: searchText,
                 tagIDs: Array(filterTagIDs),
                 correspondentID: filterCorrespondent?.id,
                 documentTypeID: filterDocumentType?.id,
