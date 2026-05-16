@@ -1,6 +1,7 @@
 /// Document capture tab. Provides camera scanner, photo picker, and file import.
 /// Shows status icons (idle/uploading/success/error) and presents metadata form before upload.
 import SwiftUI
+import AVFoundation
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import PDFKit
@@ -64,6 +65,8 @@ struct CaptureView: View {
                 showScanner = false
             }
             .ignoresSafeArea()
+            .onAppear { setTorch(torchEnabled) }
+            .onDisappear { setTorch(false) }
         }
         .fullScreenCover(isPresented: $showPhotoPicker) {
             PhotoPickerView {
@@ -122,6 +125,14 @@ struct CaptureView: View {
         } else {
             scannedDocument = ScannedDocument(data: processed)
         }
+    }
+
+    private func setTorch(_ on: Bool) {
+        guard let device = AVCaptureDevice.default(for: .video),
+              device.hasTorch else { return }
+        try? device.lockForConfiguration()
+        device.torchMode = on ? .on : .off
+        device.unlockForConfiguration()
     }
 
     private func directUpload(data: Data) async {
@@ -231,6 +242,17 @@ struct CaptureView: View {
                             .frame(height: 160)
                         Text(String(localized: "capture.upload_error")).font(.title2.bold())
                         Text(err).font(.caption).foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                } else if !configuration.canConnect {
+                    VStack(spacing: 16) {
+                        Image("ErrorLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 120)
+                        Text(String(localized: "server.not_configured.title")).font(.title2.bold())
+                        Text(String(localized: "server.not_configured.description"))
+                            .font(.subheadline).foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                     }
                 } else {

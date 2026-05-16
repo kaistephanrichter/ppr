@@ -60,5 +60,14 @@
 	<string>PPR verwendet die Kamera, um Dokumente zu scannen und in Paperless hochzuladen.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>PPR verbindet sich mit Ihrem Paperless-ngx-Server im lokalen Netzwerk (z. B. 192.168.x.x).</string>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>AccentColor</string>
+		<key>UIImageName</key>
+		<string>AppLogo</string>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<false/>
+	</dict>
 </dict>
 </plist>

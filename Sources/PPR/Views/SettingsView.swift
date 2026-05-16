@@ -9,6 +9,8 @@ struct SettingsView: View {
     @State private var connectionErrorMessage: String?
     @State private var testedURL = ""
     @State private var testedToken = ""
+    @State private var allTags: [TagSummary] = []
+    @State private var isLoadingTags = false
 
     private var credentialsMatchLastTest: Bool {
         configuration.serverURL == testedURL && configuration.apiToken == testedToken
@@ -80,12 +82,35 @@ struct SettingsView: View {
                         }
                     }
                 }
+
+                Section(String(localized: "settings.section.excluded_tags")) {
+                    if isLoadingTags {
+                        ProgressView()
+                    } else if allTags.isEmpty {
+                        Text(String(localized: "metadata.field.document_type.none"))
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ForEach(allTags) { tag in
+                            Toggle(tag.name, isOn: Binding(
+                                get: { configuration.excludedTagIDs.contains(tag.id) },
+                                set: { isOn in
+                                    if isOn {
+                                        configuration.excludedTagIDs.insert(tag.id)
+                                    } else {
+                                        configuration.excludedTagIDs.remove(tag.id)
+                                    }
+                                }
+                            ))
+                        }
+                    }
+                }
             }
             .navigationTitle(String(localized: "nav.settings"))
             .task {
                 isSaved = configuration.didLoadFromKeychain && configuration.canConnect
                 guard configuration.canConnect && configuration.didLoadFromKeychain else { return }
                 await testConnection()
+                await loadTags()
             }
         }
     }
@@ -121,6 +146,20 @@ struct SettingsView: View {
         } catch {
             saveError = error.localizedDescription
             isSaved = false
+        }
+    }
+
+    private func loadTags() async {
+        guard configuration.canConnect else { return }
+        isLoadingTags = true
+        defer { isLoadingTags = false }
+        do {
+            allTags = try await PaperlessAPI.tags(
+                serverURL: configuration.serverURL,
+                token: configuration.apiToken
+            )
+        } catch {
+            allTags = []
         }
     }
 }

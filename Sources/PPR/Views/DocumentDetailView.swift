@@ -35,6 +35,7 @@ struct DocumentDetailView: View {
     @State private var isSaving = false
     @State private var saveError: String?
     @State private var showTagSheet = false
+    @State private var showShareSheet = false
 
     private var hasChanges: Bool {
         guard let detail else { return false }
@@ -140,11 +141,20 @@ struct DocumentDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                if isSaving {
-                    ProgressView()
-                } else if hasChanges {
-                    Button(String(localized: "detail.button.save")) { Task { await save() } }
-                        .bold()
+                HStack {
+                    if let pdfData {
+                        Button {
+                            showShareSheet = true
+                        } label: {
+                            Label(String(localized: "detail.button.share"), systemImage: "square.and.arrow.up")
+                        }
+                    }
+                    if isSaving {
+                        ProgressView()
+                    } else if hasChanges {
+                        Button(String(localized: "detail.button.save")) { Task { await save() } }
+                            .bold()
+                    }
                 }
             }
         }
@@ -168,6 +178,11 @@ struct DocumentDetailView: View {
                             }
                         }
                 }
+            }
+        }
+        .sheet(isPresented: $showShareSheet) {
+            if let pdfData {
+                ActivityViewController(activityItems: [pdfData])
             }
         }
         .alert(String(localized: "detail.alert.save_error.title"), isPresented: Binding(
@@ -336,4 +351,17 @@ struct PDFKitView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: PDFView, context: Context) {}
+}
+
+// MARK: - Activity View Controller wrapper
+
+struct ActivityViewController: UIViewControllerRepresentable {
+    let activityItems: [Any]
+    var applicationActivities: [UIActivity]? = nil
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }

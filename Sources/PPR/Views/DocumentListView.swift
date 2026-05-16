@@ -26,6 +26,11 @@ struct DocumentListView: View {
     @State private var errorMessage: String?
     @State private var searchDebounceTask: Task<Void, Never>?
     @State private var didInitialLoad = false
+    @State private var groupBy: GroupBy = .none
+
+    enum GroupBy: String, CaseIterable {
+        case none, documentType, correspondent
+    }
 
     private var isFiltered: Bool {
         !filterTagIDs.isEmpty || filterCorrespondent != nil || filterDocumentType != nil
@@ -49,11 +54,19 @@ struct DocumentListView: View {
                 Divider()
 
                 if !configuration.canConnect {
-                    ContentUnavailableView(
-                        String(localized: "server.not_configured.title"),
-                        systemImage: "link.badge.plus",
-                        description: Text(String(localized: "server.not_configured.description"))
-                    )
+                    VStack(spacing: 16) {
+                        Image("ErrorLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 100)
+                        Text(String(localized: "server.not_configured.title"))
+                            .font(.headline)
+                        Text(String(localized: "server.not_configured.description"))
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 32)
+                    }
                     .frame(maxHeight: .infinity)
                 } else if isLoading && documents.isEmpty {
                     ProgressView(String(localized: "documents.loading")).frame(maxHeight: .infinity)
@@ -127,7 +140,9 @@ struct DocumentListView: View {
                     allDocumentTypes: allDocumentTypes,
                     filterTagIDs: $filterTagIDs,
                     filterCorrespondent: $filterCorrespondent,
-                    filterDocumentType: $filterDocumentType
+                    filterDocumentType: $filterDocumentType,
+                    groupBy: $groupBy,
+                    excludedTagIDs: configuration.excludedTagIDs
                 )
                 .presentationDetents([.medium, .large])
             }
@@ -180,16 +195,17 @@ struct DocumentListView: View {
                 }
             }
 
-            ForEach(documents) { doc in
-                NavigationLink {
-                    DocumentDetailView(summary: doc).environment(configuration)
-                } label: {
-                    DocumentRowView(
-                        document: doc,
-                        allTags: allTags,
-                        allCorrespondents: allCorrespondents,
-                        allDocumentTypes: allDocumentTypes
-                    )
+            if groupBy == .none {
+                ForEach(documents) { doc in
+                    documentRow(doc)
+                }
+            } else {
+                ForEach(groupedSections, id: \.title) { section in
+                    Section(section.title, isExpanded: sectionBinding(for: section.title)) {
+                        ForEach(section.documents) { doc in
+                            documentRow(doc)
+                        }
+                    }
                 }
             }
 
@@ -200,6 +216,57 @@ struct DocumentListView: View {
         }
         .listStyle(.plain)
         .scrollDismissesKeyboard(.immediately)
+    }
+
+    private func documentRow(_ doc: DocumentSummary) -> some View {
+        NavigationLink {
+            DocumentDetailView(summary: doc).environment(configuration)
+        } label: {
+            DocumentRowView(
+                document: doc,
+                allTags: allTags,
+                allCorrespondents: allCorrespondents,
+                allDocumentTypes: allDocumentTypes
+            )
+        }
+    }
+
+    // MARK: - Grouping
+
+    @State private var collapsedSections: Set<String> = []
+
+    private struct GroupedSection {
+        let title: String
+        let documents: [DocumentSummary]
+    }
+
+    private var groupedSections: [GroupedSection] {
+        switch groupBy {
+        case .none:
+            return []
+        case .documentType:
+            let grouped = Dictionary(grouping: documents) { doc in
+                allDocumentTypes.first { $0.id == doc.documentType }?.name
+                    ?? String(localized: "metadata.field.document_type.none")
+            }
+            return grouped.keys.sorted().map { GroupedSection(title: $0, documents: grouped[$0]!) }
+        case .correspondent:
+            let grouped = Dictionary(grouping: documents) { doc in
+                allCorrespondents.first { $0.id == doc.correspondent }?.name
+                    ?? String(localized: "metadata.field.correspondent.none")
+            }
+            return grouped.keys.sorted().map { GroupedSection(title: $0, documents: grouped[$0]!) }
+        }
+    }
+
+    private func sectionBinding(for title: String) -> Binding<Bool> {
+        Binding(
+            get: { !collapsedSections.contains(title) },
+            set: { isExpanded in
+                if isExpanded { collapsedSections.remove(title) }
+                else { collapsedSections.insert(title) }
+            }
+        )
     }
 
     // MARK: - Load
@@ -215,7 +282,7 @@ struct DocumentListView: View {
     }
 
     private func resetAndLoad() async {
-        page = 1; nextPageURL = nil; documents = []; errorMessage = nil
+        page = 1; nextPageURL = nil; errorMessage = nil
         await loadPage(reset: true)
     }
 
@@ -372,16 +439,17 @@ private struct FilterSheet: View {
     @Binding var filterTagIDs: Set<Int>
     @Binding var filterCorrespondent: Correspondent?
     @Binding var filterDocumentType: DocumentType?
+    @Binding var groupBy: DocumentListView.GroupBy
 
     @Environment(\.dismiss) private var dismiss
     @State private var showAllTags = false
 
-    private static let excludedFromTopTags: Set<String> = ["processed", "ai-processed"]
+    var excludedTagIDs: Set<Int>
 
     private var topTags: [TagSummary] {
         Array(
             allTags
-                .filter { !Self.excludedFromTopTags.contains($0.name.lowercased()) }
+                .filter { !excludedTagIDs.contains($0.id) }
                 .sorted { ($0.documentCount ?? 0) > ($1.documentCount ?? 0) }
                 .prefix(7)
         )
@@ -443,6 +511,14 @@ private struct FilterSheet: View {
                                 .font(.subheadline)
                         }
                     }
+                }
+                Section(String(localized: "filter.section.group_by")) {
+                    Picker(String(localized: "filter.picker.group_by"), selection: $groupBy) {
+                        Text(String(localized: "filter.option.none")).tag(DocumentListView.GroupBy.none)
+                        Text(String(localized: "filter.section.document_type")).tag(DocumentListView.GroupBy.documentType)
+                        Text(String(localized: "metadata.field.correspondent")).tag(DocumentListView.GroupBy.correspondent)
+                    }
+                    .pickerStyle(.menu)
                 }
                 if !filterTagIDs.isEmpty || filterCorrespondent != nil || filterDocumentType != nil {
                     Section {
