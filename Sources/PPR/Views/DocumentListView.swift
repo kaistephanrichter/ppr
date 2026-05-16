@@ -38,6 +38,12 @@ struct DocumentListView: View {
         case none, documentType, correspondent
     }
 
+    enum SortOrder: String, CaseIterable {
+        case newestFirst, oldestFirst, titleAZ, titleZA, addedRecent
+    }
+
+    @AppStorage("documentListSortOrder") private var sortOrder: SortOrder = .newestFirst
+
     private var isFiltered: Bool {
         !filterTagIDs.isEmpty || filterCorrespondent != nil || filterDocumentType != nil
     }
@@ -148,6 +154,9 @@ struct DocumentListView: View {
                 collapsedSections = []
                 Task { await resetAndLoad() }
             }
+            .onChange(of: sortOrder) { _, _ in
+                Task { await resetAndLoad() }
+            }
         }
     }
 
@@ -191,6 +200,7 @@ struct DocumentListView: View {
                     filterCorrespondent: $filterCorrespondent,
                     filterDocumentType: $filterDocumentType,
                     groupBy: $groupBy,
+                    sortOrder: $sortOrder,
                     excludedTagIDs: configuration.excludedTagIDs
                 )
                 .presentationDetents([.medium, .large])
@@ -367,10 +377,21 @@ struct DocumentListView: View {
     }
 
     private var apiOrdering: String? {
-        switch groupBy {
-        case .none: return nil
-        case .documentType: return "document_type__name"
-        case .correspondent: return "correspondent__name"
+        // Grouping takes priority for ordering
+        if groupBy != .none {
+            switch groupBy {
+            case .none: break
+            case .documentType: return "document_type__name"
+            case .correspondent: return "correspondent__name"
+            }
+        }
+        // Otherwise use sort order
+        switch sortOrder {
+        case .newestFirst: return "-created"
+        case .oldestFirst: return "created"
+        case .titleAZ: return "title"
+        case .titleZA: return "-title"
+        case .addedRecent: return "-added"
         }
     }
 
@@ -523,6 +544,7 @@ private struct FilterSheet: View {
     @Binding var filterCorrespondent: Correspondent?
     @Binding var filterDocumentType: DocumentType?
     @Binding var groupBy: DocumentListView.GroupBy
+    @Binding var sortOrder: DocumentListView.SortOrder
 
     @Environment(\.dismiss) private var dismiss
     @State private var showAllTags = false
@@ -550,6 +572,15 @@ private struct FilterSheet: View {
                         Text(String(localized: "filter.option.none")).tag(DocumentListView.GroupBy.none)
                         Text(String(localized: "filter.section.document_type")).tag(DocumentListView.GroupBy.documentType)
                         Text(String(localized: "metadata.field.correspondent")).tag(DocumentListView.GroupBy.correspondent)
+                    }
+                    .pickerStyle(.menu)
+
+                    Picker(String(localized: "filter.picker.sort_by"), selection: $sortOrder) {
+                        Text(String(localized: "filter.sort.newest")).tag(DocumentListView.SortOrder.newestFirst)
+                        Text(String(localized: "filter.sort.oldest")).tag(DocumentListView.SortOrder.oldestFirst)
+                        Text(String(localized: "filter.sort.title_az")).tag(DocumentListView.SortOrder.titleAZ)
+                        Text(String(localized: "filter.sort.title_za")).tag(DocumentListView.SortOrder.titleZA)
+                        Text(String(localized: "filter.sort.added_recent")).tag(DocumentListView.SortOrder.addedRecent)
                     }
                     .pickerStyle(.menu)
                 }
