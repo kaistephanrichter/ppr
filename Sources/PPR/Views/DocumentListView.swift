@@ -27,7 +27,7 @@ struct DocumentListView: View {
     @State private var errorMessage: String?
     @State private var searchDebounceTask: Task<Void, Never>?
     @State private var didInitialLoad = false
-    @AppStorage("documentListGroupBy") private var groupBy: GroupBy = .none
+    @State private var groupBy: GroupBy = GroupBy(rawValue: UserDefaults.standard.string(forKey: "documentListGroupBy") ?? "") ?? .none
     @State private var showErrorDetail = false
 
     // Persisted filter IDs (restored after metadata loads)
@@ -42,7 +42,7 @@ struct DocumentListView: View {
         case newestFirst, oldestFirst, titleAZ, titleZA, addedRecent
     }
 
-    @AppStorage("documentListSortOrder") private var sortOrder: SortOrder = .newestFirst
+    @State private var sortOrder: SortOrder = SortOrder(rawValue: UserDefaults.standard.string(forKey: "documentListSortOrder") ?? "") ?? .newestFirst
 
     private var isFiltered: Bool {
         !filterTagIDs.isEmpty || filterCorrespondent != nil || filterDocumentType != nil
@@ -150,11 +150,13 @@ struct DocumentListView: View {
                 UserDefaults.standard.set(newValue?.id, forKey: Self.savedDocumentTypeIDKey)
                 Task { await resetAndLoad() }
             }
-            .onChange(of: groupBy) { _, _ in
+            .onChange(of: groupBy) { _, newValue in
+                UserDefaults.standard.set(newValue.rawValue, forKey: "documentListGroupBy")
                 collapsedSections = []
                 Task { await resetAndLoad() }
             }
-            .onChange(of: sortOrder) { _, _ in
+            .onChange(of: sortOrder) { _, newValue in
+                UserDefaults.standard.set(newValue.rawValue, forKey: "documentListSortOrder")
                 Task { await resetAndLoad() }
             }
         }
