@@ -72,7 +72,7 @@ struct RootView: View {
                 Image("AppLogo")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 160, height: 160)
+                    .frame(width: 180, height: 180)
                     .scaleEffect(splashScale)
                     .opacity(splashOpacity)
             }
