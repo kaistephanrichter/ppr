@@ -1,9 +1,18 @@
 {
   "sourceLanguage" : "de",
   "strings" : {
-    "·" : {},
-    "(%@)" : {},
-    "+%@" : {},
+    "·" : {
+
+    },
+    "(%@)" : {
+
+    },
+    "%@" : {
+
+    },
+    "+%@" : {
+
+    },
     "alert.new_correspondent.title" : {
       "comment" : "Alert title: create new correspondent",
       "extractionState" : "stale",
@@ -2030,6 +2039,53 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Typ dokumentu"
+          }
+        }
+      }
+    },
+    "filter.section.filter" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtro"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtre"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtro"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtr"
           }
         }
       }
@@ -6018,52 +6074,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ustawienia"
-          }
-        }
-      }
-    },
-    "filter.section.filter" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filter"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filter"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filtro"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filtre"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filtro"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filter"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filtr"
           }
         }
       }

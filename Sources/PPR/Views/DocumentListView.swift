@@ -223,7 +223,7 @@ struct DocumentListView: View {
                 }
             }
 
-            if nextPageURL != nil {
+            if nextPageURL != nil && groupBy == .none {
                 HStack { Spacer(); ProgressView(); Spacer() }
                     .onAppear { Task { await loadNextPage() } }
             }
@@ -298,6 +298,13 @@ struct DocumentListView: View {
     private func resetAndLoad() async {
         page = 1; nextPageURL = nil; errorMessage = nil
         await loadPage(reset: true)
+        // When grouping, load all pages so groups are complete
+        if groupBy != .none {
+            while nextPageURL != nil, !Task.isCancelled {
+                page += 1
+                await loadPage(reset: false)
+            }
+        }
     }
 
     private func loadNextPage() async {
