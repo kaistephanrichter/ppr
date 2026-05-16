@@ -24,6 +24,10 @@ struct RootView: View {
                     DocumentListView()
                 }
 
+                Tab(value: 3, role: .search) {
+                    SearchView()
+                }
+
                 Tab(String(localized: "tab.settings"), systemImage: "gearshape", value: 2) {
                     SettingsView()
                 }
