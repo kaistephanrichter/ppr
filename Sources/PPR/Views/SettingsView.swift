@@ -9,6 +9,8 @@ struct SettingsView: View {
     @State private var connectionErrorMessage: String?
     @State private var testedURL = ""
     @State private var testedToken = ""
+    @State private var showConnectionErrorSheet = false
+    @State private var connectionErrorDetail: String = ""
     @State private var allTags: [TagSummary] = []
     @State private var isLoadingTags = false
 
@@ -68,18 +70,26 @@ struct SettingsView: View {
                                   systemImage: "checkmark.circle.fill")
                                 .foregroundStyle(.green)
                         }
+                    } else if let connectionErrorMessage, !connectionErrorMessage.isEmpty, credentialsMatchLastTest {
+                        Button {
+                            connectionErrorDetail = connectionErrorMessage
+                            showConnectionErrorSheet = true
+                        } label: {
+                            Label(String(localized: "server.status.connection_failed"),
+                                  systemImage: "xmark.circle.fill")
+                                .foregroundStyle(.red)
+                        }
+                        .sheet(isPresented: $showConnectionErrorSheet) {
+                            ErrorDetailSheet(
+                                title: String(localized: "error.detail.title"),
+                                detail: connectionErrorDetail
+                            )
+                        }
                     } else {
                         Button(String(localized: "server.settings.button.test_connection")) {
                             Task { await testConnection() }
                         }
                         .disabled(!config.canConnect)
-
-                        if let connectionErrorMessage, !connectionErrorMessage.isEmpty {
-                            Text(verbatim: connectionErrorMessage)
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
-                                .textSelection(.enabled)
-                        }
                     }
                 }
 

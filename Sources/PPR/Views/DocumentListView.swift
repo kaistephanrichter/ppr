@@ -60,9 +60,9 @@ struct DocumentListView: View {
                         Image("ErrorLogo")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 100, height: 100)
+                            .frame(height: 120)
                         Text(String(localized: "server.not_configured.title"))
-                            .font(.headline)
+                            .font(.title2.bold())
                         Text(String(localized: "server.not_configured.description"))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
@@ -75,9 +75,9 @@ struct DocumentListView: View {
                         Image("ErrorLogo")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 100, height: 100)
+                            .frame(height: 120)
                         Text(String(localized: "error.connection_failed"))
-                            .font(.headline)
+                            .font(.title2.bold())
                         Text(String(localized: "error.connection_failed.description"))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
@@ -92,9 +92,9 @@ struct DocumentListView: View {
                         Image("ErrorLogo")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 100, height: 100)
+                            .frame(height: 120)
                         Text(String(localized: "documents.load_error.title"))
-                            .font(.headline)
+                            .font(.title2.bold())
                         Text(verbatim: errorMessage)
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
@@ -104,27 +104,10 @@ struct DocumentListView: View {
                     .frame(maxHeight: .infinity)
                     .onTapGesture { showErrorDetail = true }
                     .sheet(isPresented: $showErrorDetail) {
-                        NavigationStack {
-                            ScrollView {
-                                Text(verbatim: errorMessage)
-                                    .font(.body.monospaced())
-                                    .textSelection(.enabled)
-                                    .padding()
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                            .navigationTitle(String(localized: "error.detail.title"))
-                            .navigationBarTitleDisplayMode(.inline)
-                            .toolbar {
-                                ToolbarItem(placement: .topBarTrailing) {
-                                    Button(String(localized: "error.detail.copy")) {
-                                        UIPasteboard.general.string = errorMessage
-                                    }
-                                }
-                                ToolbarItem(placement: .topBarLeading) {
-                                    Button(String(localized: "button.done")) { showErrorDetail = false }
-                                }
-                            }
-                        }
+                        ErrorDetailSheet(
+                            title: String(localized: "error.detail.title"),
+                            detail: errorMessage
+                        )
                     }
                 } else {
                     documentList

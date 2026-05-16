@@ -4274,6 +4274,23 @@
         }
       }
     },
+    "server.status.connection_failed" : {
+      "comment" : "Label shown when connection test fails",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbindung fehlgeschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connection failed"
+          }
+        }
+      }
+    },
     "settings.caption.direct_upload" : {
       "comment" : "Toggle label: skip metadata sheet and upload directly",
       "extractionState" : "stale",
