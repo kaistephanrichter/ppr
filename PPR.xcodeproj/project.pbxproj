@@ -34,6 +34,7 @@
 		CF4B34505389A36F80F531E5 /* JSONDecoder+Paperless.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A8BCC7A044914C96958801 /* JSONDecoder+Paperless.swift */; };
 		EB18D11F22CF9E6D483BF1D2 /* ImportQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234FBF7028DEB8C25BA45B44 /* ImportQueue.swift */; };
 		F86600A4D44BCDBAC75D243D /* LocalNetworkAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E81CA042F1466C2A5BFB75 /* LocalNetworkAccess.swift */; };
+		FA1B2C3D4E5F6A7B8C9D0E1F /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2C3D4E5F6A7B8C9D0E1FA1 /* NetworkMonitor.swift */; };
 		FC7C5F0396BB4067CD095630 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7441E7DFC2FA40F4DE8493 /* KeychainStore.swift */; };
 		FDAB82FD5679C75360450430 /* PaperlessAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E85A8FAA943E34A29059E82 /* PaperlessAPIError.swift */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,7 @@
 		7B0B165D485AE2D8CD7DE451 /* CaptureMetadataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureMetadataView.swift; sourceTree = "<group>"; };
 		7D4708788C06DE44231DC8F9 /* PPRScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPRScreenshots.swift; sourceTree = "<group>"; };
 		7E85A8FAA943E34A29059E82 /* PaperlessAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperlessAPIError.swift; sourceTree = "<group>"; };
+		AB2C3D4E5F6A7B8C9D0E1FA1 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		AB4BF0AC18B145DAC15B795A /* PPR.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PPR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3B63CEB1B0926F7F9C47CD /* DocumentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentType.swift; sourceTree = "<group>"; };
 		C5CAC7DAE9EBB98955D4929F /* PPRUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PPRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				18E81CA042F1466C2A5BFB75 /* LocalNetworkAccess.swift */,
+				AB2C3D4E5F6A7B8C9D0E1FA1 /* NetworkMonitor.swift */,
 				4FC7A7B6FCE8491F83B09F33 /* URLError+LocalNetwork.swift */,
 			);
 			path = Networking;
@@ -339,6 +342,7 @@
 				CF4B34505389A36F80F531E5 /* JSONDecoder+Paperless.swift in Sources */,
 				FC7C5F0396BB4067CD095630 /* KeychainStore.swift in Sources */,
 				F86600A4D44BCDBAC75D243D /* LocalNetworkAccess.swift in Sources */,
+				FA1B2C3D4E5F6A7B8C9D0E1F /* NetworkMonitor.swift in Sources */,
 				3E3CA1C7DD5C16D77F035A00 /* OnboardingView.swift in Sources */,
 				9AE80A0130CF39F4375249CC /* PPRApp.swift in Sources */,
 				C795B96950D0F0B4B8407779 /* PaperlessAPI.swift in Sources */,

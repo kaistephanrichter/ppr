@@ -5,6 +5,7 @@ import SwiftUI
 
 struct DocumentListView: View {
     @Environment(AppConfiguration.self) private var configuration
+    @Environment(NetworkMonitor.self) private var networkMonitor
 
     @State private var documents: [DocumentSummary] = []
     @State private var totalCount = 0
@@ -63,6 +64,21 @@ struct DocumentListView: View {
                         Text(String(localized: "server.not_configured.title"))
                             .font(.headline)
                         Text(String(localized: "server.not_configured.description"))
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 32)
+                    }
+                    .frame(maxHeight: .infinity)
+                } else if networkMonitor.state == .offline {
+                    VStack(spacing: 16) {
+                        Image("ErrorLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 100)
+                        Text(String(localized: "error.connection_failed"))
+                            .font(.headline)
+                        Text(String(localized: "error.connection_failed.description"))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
@@ -329,6 +345,7 @@ struct DocumentListView: View {
     }
 
     private func resetAndLoad() async {
+        guard networkMonitor.state != .offline else { return }
         page = 1; nextPageURL = nil; errorMessage = nil
         await loadPage(reset: true)
         // When grouping, load all pages so groups are complete
@@ -620,4 +637,5 @@ private extension Color {
 #Preview {
     DocumentListView()
         .environment(AppConfiguration())
+        .environment(NetworkMonitor())
 }

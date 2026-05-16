@@ -5,6 +5,7 @@ import SwiftUI
 struct RootView: View {
     @Environment(AppConfiguration.self) private var configuration
     @Environment(ImportQueue.self) private var importQueue
+    @Environment(NetworkMonitor.self) private var networkMonitor
 
     @State private var selectedTab = 0
     @State private var showOnboarding = false
@@ -46,6 +47,12 @@ struct RootView: View {
             if configuration.serverURL.isEmpty {
                 showOnboarding = true
             }
+            if configuration.canConnect {
+                networkMonitor.startMonitoring(
+                    serverURL: configuration.serverURL,
+                    token: configuration.apiToken
+                )
+            }
         }
         .onChange(of: importQueue.pendingDocument) { _, newValue in
             if newValue != nil {
@@ -75,4 +82,5 @@ struct RootView: View {
     RootView()
         .environment(AppConfiguration())
         .environment(ImportQueue())
+        .environment(NetworkMonitor())
 }

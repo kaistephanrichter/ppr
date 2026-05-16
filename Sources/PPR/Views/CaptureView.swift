@@ -14,6 +14,7 @@ private struct ScannedDocument: Identifiable {
 struct CaptureView: View {
     @Environment(AppConfiguration.self) private var configuration
     @Environment(ImportQueue.self) private var importQueue
+    @Environment(NetworkMonitor.self) private var networkMonitor
 
     @State private var showScanner = false
     @State private var showPhotoPicker = false
@@ -30,6 +31,7 @@ struct CaptureView: View {
     @State private var isUploading = false
     @State private var uploadSuccessMessage: String?
     @State private var uploadError: String?
+    @State private var showConnectionErrorDetail = false
 
     private var anySettingActive: Bool { quickUpload || torchEnabled || enhancementEnabled }
 
@@ -255,6 +257,41 @@ struct CaptureView: View {
                             .font(.subheadline).foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                     }
+                } else if networkMonitor.state == .offline || networkMonitor.state == .serverUnreachable {
+                    VStack(spacing: 16) {
+                        Image("ErrorLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 160)
+                        Text(String(localized: "error.connection_failed")).font(.title2.bold())
+                        Text(String(localized: "error.connection_failed.description"))
+                            .font(.subheadline).foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                    }
+                    .onTapGesture { showConnectionErrorDetail = true }
+                    .sheet(isPresented: $showConnectionErrorDetail) {
+                        NavigationStack {
+                            ScrollView {
+                                Text(verbatim: networkMonitor.serverError ?? String(localized: "error.connection_failed.description"))
+                                    .font(.body.monospaced())
+                                    .textSelection(.enabled)
+                                    .padding()
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            .navigationTitle(String(localized: "error.connection_failed"))
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar {
+                                ToolbarItem(placement: .topBarTrailing) {
+                                    Button(String(localized: "error.detail.copy")) {
+                                        UIPasteboard.general.string = networkMonitor.serverError ?? ""
+                                    }
+                                }
+                                ToolbarItem(placement: .topBarLeading) {
+                                    Button(String(localized: "button.done")) { showConnectionErrorDetail = false }
+                                }
+                            }
+                        }
+                    }
                 } else {
                     VStack(spacing: 16) {
                         Image("AppLogo")
@@ -375,4 +412,5 @@ private struct CaptureSettingsSheet: View {
     CaptureView()
         .environment(AppConfiguration())
         .environment(ImportQueue())
+        .environment(NetworkMonitor())
 }

@@ -7,12 +7,14 @@ import SwiftUI
 struct PPRApp: App {
     @State private var configuration = AppConfiguration()
     @State private var importQueue = ImportQueue()
+    @State private var networkMonitor = NetworkMonitor()
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(configuration)
                 .environment(importQueue)
+                .environment(networkMonitor)
                 .onOpenURL { url in
                     importQueue.receive(url: url)
                 }
