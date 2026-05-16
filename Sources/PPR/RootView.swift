@@ -66,16 +66,20 @@ struct RootView: View {
     }
 
     private var splashView: some View {
-        Color(.systemBackground)
-            .ignoresSafeArea()
-            .overlay {
-                Image("AppLogo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 180, height: 180)
-                    .scaleEffect(splashScale)
-                    .opacity(splashOpacity)
-            }
+        GeometryReader { geo in
+            Color(.systemBackground)
+                .ignoresSafeArea()
+                .overlay {
+                    Image("AppLogo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 180, height: 180)
+                        .scaleEffect(splashScale)
+                        .opacity(splashOpacity)
+                        .position(x: geo.size.width / 2, y: geo.size.height / 2)
+                }
+        }
+        .ignoresSafeArea()
     }
 }
 
