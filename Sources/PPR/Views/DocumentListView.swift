@@ -18,7 +18,7 @@ struct DocumentListView: View {
     @State private var allDocumentTypes: [DocumentType] = []
 
     @State private var searchText = ""
-    @State private var filterTagIDs: Set<Int> = []
+    @State private var filterTagIDs: Set<Int> = Set(UserDefaults.standard.array(forKey: "filterTagIDs") as? [Int] ?? [])
     @State private var filterCorrespondent: Correspondent?
     @State private var filterDocumentType: DocumentType?
     @State private var showFilterSheet = false
@@ -27,8 +27,12 @@ struct DocumentListView: View {
     @State private var errorMessage: String?
     @State private var searchDebounceTask: Task<Void, Never>?
     @State private var didInitialLoad = false
-    @State private var groupBy: GroupBy = .none
+    @AppStorage("documentListGroupBy") private var groupBy: GroupBy = .none
     @State private var showErrorDetail = false
+
+    // Persisted filter IDs (restored after metadata loads)
+    private static let savedCorrespondentIDKey = "filterCorrespondentID"
+    private static let savedDocumentTypeIDKey = "filterDocumentTypeID"
 
     enum GroupBy: String, CaseIterable {
         case none, documentType, correspondent
@@ -128,9 +132,18 @@ struct DocumentListView: View {
                     await resetAndLoad()
                 }
             }
-            .onChange(of: filterTagIDs) { _, _ in Task { await resetAndLoad() } }
-            .onChange(of: filterCorrespondent) { _, _ in Task { await resetAndLoad() } }
-            .onChange(of: filterDocumentType) { _, _ in Task { await resetAndLoad() } }
+            .onChange(of: filterTagIDs) { _, newValue in
+                UserDefaults.standard.set(Array(newValue), forKey: "filterTagIDs")
+                Task { await resetAndLoad() }
+            }
+            .onChange(of: filterCorrespondent) { _, newValue in
+                UserDefaults.standard.set(newValue?.id, forKey: Self.savedCorrespondentIDKey)
+                Task { await resetAndLoad() }
+            }
+            .onChange(of: filterDocumentType) { _, newValue in
+                UserDefaults.standard.set(newValue?.id, forKey: Self.savedDocumentTypeIDKey)
+                Task { await resetAndLoad() }
+            }
             .onChange(of: groupBy) { _, _ in
                 collapsedSections = []
                 Task { await resetAndLoad() }
@@ -324,6 +337,13 @@ struct DocumentListView: View {
         allTags = (try? await tagsTask) ?? []
         allCorrespondents = (try? await corrsTask) ?? []
         allDocumentTypes = (try? await typesTask) ?? []
+        // Restore persisted filters
+        if let savedTypeID = UserDefaults.standard.object(forKey: Self.savedDocumentTypeIDKey) as? Int {
+            filterDocumentType = allDocumentTypes.first { $0.id == savedTypeID }
+        }
+        if let savedCorrID = UserDefaults.standard.object(forKey: Self.savedCorrespondentIDKey) as? Int {
+            filterCorrespondent = allCorrespondents.first { $0.id == savedCorrID }
+        }
         await resetAndLoad()
     }
 

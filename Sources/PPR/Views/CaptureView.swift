@@ -21,10 +21,10 @@ struct CaptureView: View {
     @State private var showDocumentPicker = false
     @State private var scannedDocument: ScannedDocument?
 
-    // Capture settings
-    @State private var quickUpload = false
-    @State private var torchEnabled = false
-    @State private var enhancementEnabled = false
+    // Capture settings (persisted)
+    @AppStorage("captureQuickUpload") private var quickUpload = false
+    @AppStorage("captureTorchEnabled") private var torchEnabled = false
+    @AppStorage("captureEnhancementEnabled") private var enhancementEnabled = false
     @State private var showSettings = false
 
     // Upload state
