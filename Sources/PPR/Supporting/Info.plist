@@ -62,12 +62,8 @@
 	<string>PPR verbindet sich mit Ihrem Paperless-ngx-Server im lokalen Netzwerk (z. B. 192.168.x.x).</string>
 	<key>UILaunchScreen</key>
 	<dict>
-		<key>UIColorName</key>
-		<string>AccentColor</string>
 		<key>UIImageName</key>
-		<string>AppLogo</string>
-		<key>UIImageRespectsSafeAreaInsets</key>
-		<false/>
+		<string>LaunchLogo</string>
 	</dict>
 </dict>
 </plist>

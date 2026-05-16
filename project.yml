@@ -74,9 +74,7 @@ targets:
               - public.image
         LSSupportsOpeningDocumentsInPlace: false
         UILaunchScreen:
-          UIColorName: AccentColor
-          UIImageName: AppLogo
-          UIImageRespectsSafeAreaInsets: false
+          UIImageName: LaunchLogo
 
   PPRUITests:
     type: bundle.ui-testing
