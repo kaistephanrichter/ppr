@@ -9,6 +9,8 @@ struct RootView: View {
     @State private var selectedTab = 0
     @State private var showOnboarding = false
     @State private var showSplash = true
+    @State private var splashScale: CGFloat = 0.6
+    @State private var splashOpacity: Double = 0
 
     var body: some View {
         ZStack {
@@ -34,7 +36,11 @@ struct RootView: View {
         }
         .task {
             configuration.loadFromKeychain()
-            try? await Task.sleep(nanoseconds: 800_000_000)
+            withAnimation(.easeOut(duration: 0.4)) {
+                splashOpacity = 1
+                splashScale = 1.0
+            }
+            try? await Task.sleep(nanoseconds: 1_500_000_000)
             withAnimation(.easeOut(duration: 0.3)) { showSplash = false }
             await LocalNetworkAccess.warmUpBonjourBrowse()
             if configuration.serverURL.isEmpty {
@@ -58,7 +64,9 @@ struct RootView: View {
                 Image("AppLogo")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 120, height: 120)
+                    .frame(width: 160, height: 160)
+                    .scaleEffect(splashScale)
+                    .opacity(splashOpacity)
             }
     }
 }

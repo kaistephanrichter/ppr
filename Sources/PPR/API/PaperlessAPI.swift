@@ -7,9 +7,8 @@ enum PaperlessAPI {
 
     private static let session: URLSession = {
         let configuration = URLSessionConfiguration.ephemeral
-        configuration.timeoutIntervalForRequest = 45
-        configuration.timeoutIntervalForResource = 120
-        configuration.waitsForConnectivity = true
+        configuration.timeoutIntervalForRequest = 15
+        configuration.timeoutIntervalForResource = 60
         return URLSession(configuration: configuration)
     }()
 
