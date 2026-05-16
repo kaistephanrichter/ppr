@@ -16,21 +16,21 @@ struct RootView: View {
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
-                CaptureView()
-                    .tabItem { Label(String(localized: "tab.capture"), systemImage: "doc.badge.plus") }
-                    .tag(0)
+                Tab(String(localized: "tab.capture"), systemImage: "doc.badge.plus", value: 0) {
+                    CaptureView()
+                }
 
-                DocumentListView()
-                    .tabItem { Label(String(localized: "tab.documents"), systemImage: "doc.text.magnifyingglass") }
-                    .tag(1)
+                Tab(String(localized: "tab.documents"), systemImage: "doc.text.magnifyingglass", value: 1) {
+                    DocumentListView()
+                }
 
-                SearchView()
-                    .tabItem { Label(String(localized: "tab.search"), systemImage: "magnifyingglass") }
-                    .tag(3)
+                Tab(String(localized: "tab.settings"), systemImage: "gearshape", value: 2) {
+                    SettingsView()
+                }
 
-                SettingsView()
-                    .tabItem { Label(String(localized: "tab.settings"), systemImage: "gearshape") }
-                    .tag(2)
+                Tab(value: 3, role: .search) {
+                    SearchView()
+                }
             }
             .opacity(showSplash ? 0 : 1)
 

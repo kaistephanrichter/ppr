@@ -2,7 +2,7 @@ name: PPR
 options:
   bundleIdPrefix: org.ksrichter.ppr
   deploymentTarget:
-    iOS: "17.0"
+    iOS: "18.0"
   groupSortPosition: top
   generateEmptyDirectories: true
   developmentLanguage: de
