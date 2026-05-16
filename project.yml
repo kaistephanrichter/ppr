@@ -59,7 +59,7 @@ targets:
       path: Sources/PPR/Supporting/Info.plist
       properties:
         NSAppTransportSecurity:
-          NSAllowsLocalNetworking: true
+          NSAllowsArbitraryLoads: true
         NSBonjourServices:
           - _http._tcp
         NSLocalNetworkUsageDescription: PPR verbindet sich mit Ihrem Paperless-ngx-Server im lokalen Netzwerk (z. B. 192.168.x.x).
