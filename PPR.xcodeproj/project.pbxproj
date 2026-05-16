@@ -28,7 +28,6 @@
 		8DB7FC7D77B06F096916C140 /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8D90D620F5B47C700188B7 /* DocumentPickerView.swift */; };
 		94133E2561002F3ADD326169 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3B8A721ADE866CCDEA7B1 /* RootView.swift */; };
 		9AE80A0130CF39F4375249CC /* PPRApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420F97639466E69DE34E9856 /* PPRApp.swift */; };
-		A1E936256D5052446684F17C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BEE2ADEEE2103423F385E0 /* SearchView.swift */; };
 		A6B77383C4BBDCFF1FE8AE4B /* ServerStatusDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78C8834B297A0A251C16479 /* ServerStatusDetailView.swift */; };
 		C795B96950D0F0B4B8407779 /* PaperlessAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F204A1325A1D69C97E4F3EE /* PaperlessAPI.swift */; };
 		C9050DB2E62D072DA1F0A87C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B671ACEB3EA3A2B4BBBBB24 /* Assets.xcassets */; };
@@ -74,7 +73,6 @@
 		7D4708788C06DE44231DC8F9 /* PPRScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPRScreenshots.swift; sourceTree = "<group>"; };
 		7E85A8FAA943E34A29059E82 /* PaperlessAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperlessAPIError.swift; sourceTree = "<group>"; };
 		86D87D6A3E2679A17677490A /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
-		A3BEE2ADEEE2103423F385E0 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		AB4BF0AC18B145DAC15B795A /* PPR.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PPR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3B63CEB1B0926F7F9C47CD /* DocumentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentType.swift; sourceTree = "<group>"; };
 		C5CAC7DAE9EBB98955D4929F /* PPRUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PPRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -196,7 +194,6 @@
 				2FB26C16F34E58C667FD6D00 /* ErrorDetailSheet.swift */,
 				337A506B8DB19C8AB1FFB0FD /* OnboardingView.swift */,
 				D4E8A85E182DFCDE9F421CA2 /* PhotoPickerView.swift */,
-				A3BEE2ADEEE2103423F385E0 /* SearchView.swift */,
 				C78C8834B297A0A251C16479 /* ServerStatusDetailView.swift */,
 				D83325B1CBDE5D748B779F5D /* SettingsView.swift */,
 				48F5A01E3FB93A9EE3216D9E /* StatusView.swift */,
@@ -357,7 +354,6 @@
 				5176B35E708EB691EE4D2F18 /* PhotoPickerView.swift in Sources */,
 				1FBF661A17E47492493B5431 /* RemoteStatus.swift in Sources */,
 				94133E2561002F3ADD326169 /* RootView.swift in Sources */,
-				A1E936256D5052446684F17C /* SearchView.swift in Sources */,
 				A6B77383C4BBDCFF1FE8AE4B /* ServerStatusDetailView.swift in Sources */,
 				264134A75C10488D60E4CE61 /* SettingsView.swift in Sources */,
 				CCC1F896946C3D5B5CED47EC /* StatusView.swift in Sources */,
