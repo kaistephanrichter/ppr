@@ -1841,43 +1841,43 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gruppieren & Filtern"
+            "value" : "Listeneigenschaften"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Group & Filter"
+            "value" : "List Properties"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Agrupar y filtrar"
+            "value" : "Propiedades de lista"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Grouper et filtrer"
+            "value" : "Propriétés de la liste"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Raggruppa e filtra"
+            "value" : "Proprietà lista"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Groeperen en filteren"
+            "value" : "Lijsteigenschappen"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Grupuj i filtruj"
+            "value" : "Właściwości listy"
           }
         }
       }
