@@ -568,19 +568,19 @@ private struct FilterSheet: View {
         NavigationStack {
             Form {
                 Section(String(localized: "filter.section.group_by")) {
-                    Picker(String(localized: "filter.picker.group_by"), selection: $groupBy) {
-                        Text(String(localized: "filter.option.none")).tag(DocumentListView.GroupBy.none)
-                        Text(String(localized: "filter.section.document_type")).tag(DocumentListView.GroupBy.documentType)
-                        Text(String(localized: "metadata.field.correspondent")).tag(DocumentListView.GroupBy.correspondent)
-                    }
-                    .pickerStyle(.menu)
-
                     Picker(String(localized: "filter.picker.sort_by"), selection: $sortOrder) {
                         Text(String(localized: "filter.sort.newest")).tag(DocumentListView.SortOrder.newestFirst)
                         Text(String(localized: "filter.sort.oldest")).tag(DocumentListView.SortOrder.oldestFirst)
                         Text(String(localized: "filter.sort.title_az")).tag(DocumentListView.SortOrder.titleAZ)
                         Text(String(localized: "filter.sort.title_za")).tag(DocumentListView.SortOrder.titleZA)
                         Text(String(localized: "filter.sort.added_recent")).tag(DocumentListView.SortOrder.addedRecent)
+                    }
+                    .pickerStyle(.menu)
+
+                    Picker(String(localized: "filter.picker.group_by"), selection: $groupBy) {
+                        Text(String(localized: "filter.option.none")).tag(DocumentListView.GroupBy.none)
+                        Text(String(localized: "filter.section.document_type")).tag(DocumentListView.GroupBy.documentType)
+                        Text(String(localized: "metadata.field.correspondent")).tag(DocumentListView.GroupBy.correspondent)
                     }
                     .pickerStyle(.menu)
                 }
