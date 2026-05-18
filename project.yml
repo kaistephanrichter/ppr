@@ -39,8 +39,8 @@ targets:
         name: App Icons generieren
         basedOnDependencyAnalysis: false
         inputFiles:
-          - $(SRCROOT)/app-icon-light.png
-          - $(SRCROOT)/app-icon-dark.png
+          - $(SRCROOT)/assets/app-icon-light.png
+          - $(SRCROOT)/assets/app-icon-dark.png
         outputFiles:
           - $(SRCROOT)/Sources/PPR/Resources/Assets.xcassets/AppIcon.appiconset/ios_marketing_1024.png
           - $(SRCROOT)/Sources/PPR/Resources/Assets.xcassets/AppIcon.appiconset/ios_marketing_1024_dark.png

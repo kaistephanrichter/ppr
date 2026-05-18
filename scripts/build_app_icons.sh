@@ -6,8 +6,8 @@
 set -euo pipefail
 
 ROOT="${SRCROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
-LIGHT_SRC="${ROOT}/app-icon-light.png"
-DARK_SRC="${ROOT}/app-icon-dark.png"
+LIGHT_SRC="${ROOT}/assets/app-icon-light.png"
+DARK_SRC="${ROOT}/assets/app-icon-dark.png"
 DEST="${ROOT}/Sources/PPR/Resources/Assets.xcassets/AppIcon.appiconset"
 
 if [[ ! -f "$LIGHT_SRC" ]]; then
