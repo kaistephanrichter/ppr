@@ -6,8 +6,7 @@ struct RootView: View {
     @Environment(AppConfiguration.self) private var configuration
     @Environment(ImportQueue.self) private var importQueue
     @Environment(NetworkMonitor.self) private var networkMonitor
-
-    @State private var selectedTab = 0
+    @Environment(TabRouter.self) private var tabRouter
     @State private var showOnboarding = false
     @State private var showSplash = true
     @State private var splashScale: CGFloat = 1.0
@@ -15,7 +14,7 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
-            TabView(selection: $selectedTab) {
+            TabView(selection: Bindable(tabRouter).selectedTab) {
                 Tab(String(localized: "tab.capture"), systemImage: "doc.badge.plus", value: 0) {
                     CaptureView()
                 }
@@ -57,7 +56,7 @@ struct RootView: View {
         }
         .onChange(of: importQueue.pendingDocument) { _, newValue in
             if newValue != nil {
-                selectedTab = 0
+                tabRouter.selectedTab = 0
             }
         }
         .fullScreenCover(isPresented: $showOnboarding) {
@@ -88,4 +87,5 @@ struct RootView: View {
         .environment(AppConfiguration())
         .environment(ImportQueue())
         .environment(NetworkMonitor())
+        .environment(TabRouter())
 }

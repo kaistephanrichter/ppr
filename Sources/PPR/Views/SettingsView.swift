@@ -61,7 +61,11 @@ struct SettingsView: View {
 
                 Section(String(localized: "server.settings.section.connection")) {
                     if isTestingConnection {
-                        ProgressView(String(localized: "server.settings.testing_connection"))
+                        HStack(spacing: 8) {
+                            ProgressView().controlSize(.small)
+                            Text(String(localized: "server.settings.testing_connection"))
+                                .foregroundStyle(.secondary)
+                        }
                     } else if let version = connectionOKVersion, credentialsMatchLastTest {
                         NavigationLink {
                             ServerStatusDetailView()

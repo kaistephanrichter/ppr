@@ -29,10 +29,12 @@
 		94133E2561002F3ADD326169 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3B8A721ADE866CCDEA7B1 /* RootView.swift */; };
 		9AE80A0130CF39F4375249CC /* PPRApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420F97639466E69DE34E9856 /* PPRApp.swift */; };
 		A6B77383C4BBDCFF1FE8AE4B /* ServerStatusDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78C8834B297A0A251C16479 /* ServerStatusDetailView.swift */; };
+		B6E857DC867CE59F98CC2177 /* TabRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4657E4A6E43CCCEE081163D /* TabRouter.swift */; };
 		C795B96950D0F0B4B8407779 /* PaperlessAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F204A1325A1D69C97E4F3EE /* PaperlessAPI.swift */; };
 		C9050DB2E62D072DA1F0A87C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B671ACEB3EA3A2B4BBBBB24 /* Assets.xcassets */; };
 		CCC1F896946C3D5B5CED47EC /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F5A01E3FB93A9EE3216D9E /* StatusView.swift */; };
 		CF4B34505389A36F80F531E5 /* JSONDecoder+Paperless.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A8BCC7A044914C96958801 /* JSONDecoder+Paperless.swift */; };
+		D5BEA4E3D5B642562E947B2E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 5C245044D4C6A7586F1165A8 /* PrivacyInfo.xcprivacy */; };
 		DC9FF83C8682AEC664EC06E7 /* ErrorDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB26C16F34E58C667FD6D00 /* ErrorDetailSheet.swift */; };
 		EB18D11F22CF9E6D483BF1D2 /* ImportQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234FBF7028DEB8C25BA45B44 /* ImportQueue.swift */; };
 		F86600A4D44BCDBAC75D243D /* LocalNetworkAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18E81CA042F1466C2A5BFB75 /* LocalNetworkAccess.swift */; };
@@ -64,6 +66,7 @@
 		4FC7A7B6FCE8491F83B09F33 /* URLError+LocalNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLError+LocalNetwork.swift"; sourceTree = "<group>"; };
 		54E3B8A721ADE866CCDEA7B1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		5B671ACEB3EA3A2B4BBBBB24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5C245044D4C6A7586F1165A8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		5C816A244FFBDAAE03C4D64F /* DocumentScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerView.swift; sourceTree = "<group>"; };
 		5D7441E7DFC2FA40F4DE8493 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		5F8D90D620F5B47C700188B7 /* DocumentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerView.swift; sourceTree = "<group>"; };
@@ -73,6 +76,7 @@
 		7D4708788C06DE44231DC8F9 /* PPRScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPRScreenshots.swift; sourceTree = "<group>"; };
 		7E85A8FAA943E34A29059E82 /* PaperlessAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperlessAPIError.swift; sourceTree = "<group>"; };
 		86D87D6A3E2679A17677490A /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		A4657E4A6E43CCCEE081163D /* TabRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRouter.swift; sourceTree = "<group>"; };
 		AB4BF0AC18B145DAC15B795A /* PPR.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PPR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3B63CEB1B0926F7F9C47CD /* DocumentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentType.swift; sourceTree = "<group>"; };
 		C5CAC7DAE9EBB98955D4929F /* PPRUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PPRUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,8 +118,18 @@
 			children = (
 				4614A7261D12E6F526CF4068 /* AppConfiguration.swift */,
 				5D7441E7DFC2FA40F4DE8493 /* KeychainStore.swift */,
+				A4657E4A6E43CCCEE081163D /* TabRouter.swift */,
 			);
 			path = Configuration;
+			sourceTree = "<group>";
+		};
+		45F844E39355ECFCB8CA2963 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				5C245044D4C6A7586F1165A8 /* PrivacyInfo.xcprivacy */,
+			);
+			name = Supporting;
+			path = Sources/PPR/Supporting;
 			sourceTree = "<group>";
 		};
 		53F582B847CF62AA9BCE0ACC /* Products */ = {
@@ -178,6 +192,7 @@
 				6BE72958DBA618850692D854 /* PPR */,
 				30DF1E2167ABDD5FC1AD633E /* PPRUITests */,
 				8D4954DD16EADBB1EFBBD0AA /* Resources */,
+				45F844E39355ECFCB8CA2963 /* Supporting */,
 				53F582B847CF62AA9BCE0ACC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -286,6 +301,7 @@
 			files = (
 				C9050DB2E62D072DA1F0A87C /* Assets.xcassets in Resources */,
 				1A212659FA9162FCCC2BA2A1 /* Localizable.xcstrings in Resources */,
+				D5BEA4E3D5B642562E947B2E /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +373,7 @@
 				A6B77383C4BBDCFF1FE8AE4B /* ServerStatusDetailView.swift in Sources */,
 				264134A75C10488D60E4CE61 /* SettingsView.swift in Sources */,
 				CCC1F896946C3D5B5CED47EC /* StatusView.swift in Sources */,
+				B6E857DC867CE59F98CC2177 /* TabRouter.swift in Sources */,
 				610C6FB40361475D4011116D /* URLError+LocalNetwork.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

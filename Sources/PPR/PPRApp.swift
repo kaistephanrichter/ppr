@@ -8,6 +8,7 @@ struct PPRApp: App {
     @State private var configuration = AppConfiguration()
     @State private var importQueue = ImportQueue()
     @State private var networkMonitor = NetworkMonitor()
+    @State private var tabRouter = TabRouter()
 
     var body: some Scene {
         WindowGroup {
@@ -15,6 +16,7 @@ struct PPRApp: App {
                 .environment(configuration)
                 .environment(importQueue)
                 .environment(networkMonitor)
+                .environment(tabRouter)
                 .onOpenURL { url in
                     importQueue.receive(url: url)
                 }

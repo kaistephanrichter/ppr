@@ -15,6 +15,7 @@ struct CaptureView: View {
     @Environment(AppConfiguration.self) private var configuration
     @Environment(ImportQueue.self) private var importQueue
     @Environment(NetworkMonitor.self) private var networkMonitor
+    @Environment(TabRouter.self) private var tabRouter
 
     @State private var showScanner = false
     @State private var showPhotoPicker = false
@@ -251,11 +252,17 @@ struct CaptureView: View {
                         Image("ErrorLogo")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 120)
+                            .frame(height: 160)
                         Text(String(localized: "server.not_configured.title")).font(.title2.bold())
                         Text(String(localized: "server.not_configured.description"))
                             .font(.subheadline).foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
+                        Button {
+                            tabRouter.selectedTab = 2
+                        } label: {
+                            Label(String(localized: "nav.settings"), systemImage: "gearshape")
+                        }
+                        .buttonStyle(.bordered)
                     }
                 } else if networkMonitor.state == .offline || networkMonitor.state == .serverUnreachable {
                     VStack(spacing: 16) {
@@ -267,6 +274,12 @@ struct CaptureView: View {
                         Text(String(localized: "error.connection_failed.description"))
                             .font(.subheadline).foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
+                        Button {
+                            tabRouter.selectedTab = 2
+                        } label: {
+                            Label(String(localized: "nav.settings"), systemImage: "gearshape")
+                        }
+                        .buttonStyle(.bordered)
                     }
                     .onTapGesture { showConnectionErrorDetail = true }
                     .sheet(isPresented: $showConnectionErrorDetail) {

@@ -32,6 +32,8 @@ targets:
         buildPhase: resources
       - path: Sources/PPR/Resources/Localizable.xcstrings
         buildPhase: resources
+      - path: Sources/PPR/Supporting/PrivacyInfo.xcprivacy
+        buildPhase: resources
     preBuildScripts:
       - path: scripts/build_app_icons.sh
         name: App Icons generieren
@@ -59,7 +61,7 @@ targets:
       path: Sources/PPR/Supporting/Info.plist
       properties:
         NSAppTransportSecurity:
-          NSAllowsArbitraryLoads: true
+          NSAllowsLocalNetworking: true
         NSBonjourServices:
           - _http._tcp
         NSLocalNetworkUsageDescription: PPR verbindet sich mit Ihrem Paperless-ngx-Server im lokalen Netzwerk (z. B. 192.168.x.x).

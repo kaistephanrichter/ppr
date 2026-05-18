@@ -73,9 +73,10 @@ final class NetworkMonitor {
             // Initial check
             await self.performServerCheck()
 
-            // Periodic checks every 30 seconds
+            // Periodic checks: faster when server is unreachable, slower when connected
             while !Task.isCancelled {
-                try? await Task.sleep(nanoseconds: 30_000_000_000)
+                let interval: UInt64 = self.state == .serverUnreachable ? 10_000_000_000 : 30_000_000_000
+                try? await Task.sleep(nanoseconds: interval)
                 guard !Task.isCancelled else { break }
                 await self.performServerCheck()
             }

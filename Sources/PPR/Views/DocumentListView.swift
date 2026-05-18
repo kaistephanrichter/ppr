@@ -6,6 +6,7 @@ import SwiftUI
 struct DocumentListView: View {
     @Environment(AppConfiguration.self) private var configuration
     @Environment(NetworkMonitor.self) private var networkMonitor
+    @Environment(TabRouter.self) private var tabRouter
 
     @State private var documents: [DocumentSummary] = []
     @State private var totalCount = 0
@@ -56,7 +57,7 @@ struct DocumentListView: View {
                         Image("ErrorLogo")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 120)
+                            .frame(height: 160)
                         Text(String(localized: "server.not_configured.title"))
                             .font(.title2.bold())
                         Text(String(localized: "server.not_configured.description"))
@@ -64,14 +65,21 @@ struct DocumentListView: View {
                             .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 32)
+                        Button {
+                            tabRouter.selectedTab = 2
+                        } label: {
+                            Label(String(localized: "nav.settings"), systemImage: "gearshape")
+                        }
+                        .buttonStyle(.bordered)
                     }
                     .frame(maxHeight: .infinity)
-                } else if networkMonitor.state == .offline {
+                } else if networkMonitor.state == .offline
+                            || (networkMonitor.state == .serverUnreachable && documents.isEmpty) {
                     VStack(spacing: 16) {
                         Image("ErrorLogo")
                             .resizable()
                             .scaledToFit()
-                            .frame(height: 120)
+                            .frame(height: 160)
                         Text(String(localized: "error.connection_failed"))
                             .font(.title2.bold())
                         Text(String(localized: "error.connection_failed.description"))
@@ -79,6 +87,12 @@ struct DocumentListView: View {
                             .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 32)
+                        Button {
+                            tabRouter.selectedTab = 2
+                        } label: {
+                            Label(String(localized: "nav.settings"), systemImage: "gearshape")
+                        }
+                        .buttonStyle(.bordered)
                     }
                     .frame(maxHeight: .infinity)
                 } else if isLoading && documents.isEmpty {
@@ -149,6 +163,12 @@ struct DocumentListView: View {
                 guard configuration.canConnect, !didInitialLoad else { return }
                 didInitialLoad = true
                 await loadMetadataAndDocuments()
+            }
+            .onChange(of: networkMonitor.state) { _, newState in
+                guard newState == .connected else { return }
+                guard documents.isEmpty || errorMessage != nil else { return }
+                errorMessage = nil
+                Task { await loadMetadataAndDocuments() }
             }
             .onChange(of: filterTagIDs) { _, newValue in
                 UserDefaults.standard.set(Array(newValue), forKey: "filterTagIDs")
@@ -221,12 +241,6 @@ struct DocumentListView: View {
                 .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
             }
 
-            if let errorMessage, !errorMessage.isEmpty {
-                Section {
-                    Text(verbatim: errorMessage).font(.footnote).foregroundStyle(.red)
-                }
-            }
-
             if groupBy == .none {
                 ForEach(documents) { doc in
                     documentRow(doc)
@@ -266,7 +280,7 @@ struct DocumentListView: View {
         } label: {
             DocumentRowView(
                 document: doc,
-                allTags: allTags,
+                allTags: allTags.filter { !configuration.excludedTagIDs.contains($0.id) },
                 allCorrespondents: allCorrespondents,
                 allDocumentTypes: allDocumentTypes
             )
