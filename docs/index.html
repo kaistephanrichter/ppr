@@ -7,7 +7,7 @@
   <meta name="description" content="A native iOS app for scanning, uploading, and managing documents with your self-hosted paperless-ngx instance.">
   <meta property="og:title" content="PPR – Paperless-ngx iOS Client">
   <meta property="og:description" content="Scan, upload, and manage documents from your iPhone. A native iOS client for paperless-ngx.">
-  <meta property="og:image" content="assets/app-icon-light.png">
+  <meta property="og:image" content="assets/Documents List - Light.png">
   <link rel="icon" type="image/png" href="assets/app-icon-light.png">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -39,7 +39,7 @@
   <p>A native iOS client for <a href="https://docs.paperless-ngx.com" target="_blank">paperless-ngx</a> — scan, upload, and manage documents directly from your iPhone.</p>
   <div class="hero-badges">
     <a class="badge badge-primary" href="https://github.com/kaistephanrichter/ppr">View on GitHub</a>
-    <span class="badge">iOS 17+</span>
+    <span class="badge">iOS 18+</span>
     <span class="badge">Self-hosted</span>
     <span class="badge">7 languages</span>
   </div>
@@ -106,10 +106,12 @@
 <!-- SHOWCASE 1 -->
 <section>
   <div class="showcase">
-    <picture>
-      <source srcset="assets/document-capture-dark.png" media="(prefers-color-scheme: dark)">
-      <img class="showcase-img" src="assets/document-capture-light.png" alt="Document Capture">
-    </picture>
+    <div class="phone-wrap">
+      <picture>
+        <source srcset="assets/Document Capturing - Dark.png" media="(prefers-color-scheme: dark)">
+        <img class="phone-screen" src="assets/Document Capturing - Light.png" alt="Document Scanning">
+      </picture>
+    </div>
     <div class="showcase-text">
       <h2>Capture &amp; upload in seconds</h2>
       <p>Point, shoot, done. PPR guides you through scanning and tagging so every document lands in the right place.</p>
@@ -126,10 +128,12 @@
 <!-- SHOWCASE 2 -->
 <section>
   <div class="showcase reverse">
-    <picture>
-      <source srcset="assets/success-dark.png" media="(prefers-color-scheme: dark)">
-      <img class="showcase-img" src="assets/success-light.png" alt="Document Archive">
-    </picture>
+    <div class="phone-wrap">
+      <picture>
+        <source srcset="assets/Documents List - Dark.png" media="(prefers-color-scheme: dark)">
+        <img class="phone-screen" src="assets/Documents List - Light.png" alt="Document Archive">
+      </picture>
+    </div>
     <div class="showcase-text">
       <h2>Your archive, always with you</h2>
       <p>Search and filter your entire document archive directly on your paperless-ngx server — no local copies needed.</p>
@@ -143,6 +147,66 @@
   </div>
 </section>
 
+<!-- SHOWCASE 3 -->
+<section>
+  <div class="showcase">
+    <div class="phone-wrap">
+      <picture>
+        <source srcset="assets/Document Details - Dark.png" media="(prefers-color-scheme: dark)">
+        <img class="phone-screen" src="assets/Document Details - Light.png" alt="Document Details">
+      </picture>
+    </div>
+    <div class="showcase-text">
+      <h2>Edit metadata on the go</h2>
+      <p>Open any document, preview the PDF inline, and edit title, date, type, correspondent, and tags — all without leaving the app.</p>
+      <ul>
+        <li>Inline PDF preview</li>
+        <li>Edit all metadata fields</li>
+        <li>Full-screen document view</li>
+        <li>Instant server sync</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENSHOT STRIP -->
+<section id="screenshots">
+  <div class="section-label">Screenshots</div>
+  <h2 class="section-title">See it in action</h2>
+  <div class="screenshot-strip">
+    <div class="phone-wrap phone-sm">
+      <picture>
+        <source srcset="assets/Start Screen - Dark.png" media="(prefers-color-scheme: dark)">
+        <img class="phone-screen" src="assets/Start Screen - Light.png" alt="Start Screen">
+      </picture>
+    </div>
+    <div class="phone-wrap phone-sm">
+      <picture>
+        <source srcset="assets/Capture Settings - Dark.png" media="(prefers-color-scheme: dark)">
+        <img class="phone-screen" src="assets/Capture Settings - Light.png" alt="Capture Settings">
+      </picture>
+    </div>
+    <div class="phone-wrap phone-sm">
+      <picture>
+        <source srcset="assets/Documents Filters - Dark.png" media="(prefers-color-scheme: dark)">
+        <img class="phone-screen" src="assets/Documents Filters - Light.png" alt="Filters">
+      </picture>
+    </div>
+    <div class="phone-wrap phone-sm">
+      <picture>
+        <source srcset="assets/Server Status - Dark.png" media="(prefers-color-scheme: dark)">
+        <img class="phone-screen" src="assets/Server Status - Light.png" alt="Server Status">
+      </picture>
+    </div>
+    <div class="phone-wrap phone-sm">
+      <picture>
+        <source srcset="assets/Settings - Dark.png" media="(prefers-color-scheme: dark)">
+        <img class="phone-screen" src="assets/Settings - Light.png" alt="Settings">
+      </picture>
+    </div>
+  </div>
+</section>
+
 <!-- REQUIREMENTS -->
 <section id="requirements">
   <div class="section-label">Requirements</div>
@@ -152,7 +216,7 @@
   <div class="req-grid">
     <div class="req-card">
       <h4>iOS</h4>
-      <p>iOS 17.0 or later</p>
+      <p>iOS 18.0 or later</p>
     </div>
     <div class="req-card">
       <h4>Server</h4>

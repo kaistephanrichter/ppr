@@ -355,6 +355,48 @@ footer {
 footer a { color: var(--text-muted); }
 footer a:hover { color: var(--text); }
 
+/* PHONE MOCKUP */
+.phone-wrap {
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 36px;
+  padding: 10px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+  width: 220px;
+}
+
+.phone-screen {
+  width: 100%;
+  border-radius: 28px;
+  display: block;
+}
+
+.phone-sm {
+  width: 160px;
+  border-radius: 28px;
+  padding: 8px;
+}
+
+.phone-sm .phone-screen {
+  border-radius: 22px;
+}
+
+.showcase .phone-wrap {
+  width: 260px;
+  margin: 0 auto;
+}
+
+/* SCREENSHOT STRIP */
+.screenshot-strip {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 /* RESPONSIVE */
 @media (max-width: 700px) {
   .showcase { grid-template-columns: 1fr; gap: 2rem; }
