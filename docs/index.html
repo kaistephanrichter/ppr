@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPR – Paperless-ngx iOS Client</title>
+  <meta name="description" content="A native iOS app for scanning, uploading, and managing documents with your self-hosted paperless-ngx instance.">
+  <meta property="og:title" content="PPR – Paperless-ngx iOS Client">
+  <meta property="og:description" content="Scan, upload, and manage documents from your iPhone. A native iOS client for paperless-ngx.">
+  <meta property="og:image" content="assets/app-icon-light.png">
+  <link rel="icon" type="image/png" href="assets/app-icon-light.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <picture>
+      <source srcset="assets/app-icon-dark.png" media="(prefers-color-scheme: dark)">
+      <img src="assets/app-icon-light.png" alt="PPR Icon">
+    </picture>
+    PPR
+  </a>
+  <ul>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="docs.html">Docs</a></li>
+    <li><a href="https://github.com/kaistephanrichter/ppr">GitHub</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <picture>
+    <source srcset="assets/app-icon-dark.png" media="(prefers-color-scheme: dark)">
+    <img class="hero-icon" src="assets/app-icon-light.png" alt="PPR App Icon">
+  </picture>
+  <h1>Your documents,<br><span>always at hand.</span></h1>
+  <p>A native iOS client for <a href="https://docs.paperless-ngx.com" target="_blank">paperless-ngx</a> — scan, upload, and manage documents directly from your iPhone.</p>
+  <div class="hero-badges">
+    <a class="badge badge-primary" href="https://github.com/kaistephanrichter/ppr">View on GitHub</a>
+    <span class="badge">iOS 17+</span>
+    <span class="badge">Self-hosted</span>
+    <span class="badge">7 languages</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-label">Features</div>
+  <h2 class="section-title">Everything you need,<br>nothing you don't.</h2>
+  <p class="section-sub">PPR connects directly to your paperless-ngx server — no cloud middleman, no subscription.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <picture>
+        <source srcset="assets/document-capture-dark.png" media="(prefers-color-scheme: dark)">
+        <img class="feature-icon" src="assets/document-capture-light.png" alt="Document Capture">
+      </picture>
+      <h3>Document Capture</h3>
+      <p>Scan with the camera, import from Photos, or pick any file. Multi-page scanning with automatic cropping.</p>
+    </div>
+    <div class="feature-card">
+      <picture>
+        <source srcset="assets/upload-dark.png" media="(prefers-color-scheme: dark)">
+        <img class="feature-icon" src="assets/upload-light.png" alt="Upload">
+      </picture>
+      <h3>Smart Upload</h3>
+      <p>Set tags, document type, correspondent, and title before uploading. Metadata is synced live from your server.</p>
+    </div>
+    <div class="feature-card">
+      <picture>
+        <source srcset="assets/success-dark.png" media="(prefers-color-scheme: dark)">
+        <img class="feature-icon" src="assets/success-light.png" alt="Document Management">
+      </picture>
+      <h3>Document Management</h3>
+      <p>Browse, search, and filter your entire archive. View PDFs inline with full-screen support.</p>
+    </div>
+    <div class="feature-card">
+      <picture>
+        <source srcset="assets/logo-dark.png" media="(prefers-color-scheme: dark)">
+        <img class="feature-icon" src="assets/logo-light.png" alt="Dark Mode">
+      </picture>
+      <h3>Dark Mode &amp; Localization</h3>
+      <p>Fully translated in 7 languages (DE, EN, FR, ES, IT, NL, PL) with custom accent colors for light and dark appearance.</p>
+    </div>
+    <div class="feature-card">
+      <picture>
+        <source srcset="assets/error-dark.png" media="(prefers-color-scheme: dark)">
+        <img class="feature-icon" src="assets/error-light.png" alt="Server Status">
+      </picture>
+      <h3>Server Status</h3>
+      <p>Monitor your paperless-ngx instance health — task queue, index status, storage usage — directly in the app.</p>
+    </div>
+    <div class="feature-card">
+      <picture>
+        <source srcset="assets/app-icon-dark.png" media="(prefers-color-scheme: dark)">
+        <img class="feature-icon" src="assets/app-icon-light.png" alt="Privacy">
+      </picture>
+      <h3>Privacy First</h3>
+      <p>All data stays on your server. Credentials are stored securely in the iOS Keychain. Zero telemetry.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE 1 -->
+<section>
+  <div class="showcase">
+    <picture>
+      <source srcset="assets/document-capture-dark.png" media="(prefers-color-scheme: dark)">
+      <img class="showcase-img" src="assets/document-capture-light.png" alt="Document Capture">
+    </picture>
+    <div class="showcase-text">
+      <h2>Capture &amp; upload in seconds</h2>
+      <p>Point, shoot, done. PPR guides you through scanning and tagging so every document lands in the right place.</p>
+      <ul>
+        <li>Camera scanner with auto-crop</li>
+        <li>Import from Photos or Files</li>
+        <li>Set metadata before uploading</li>
+        <li>Share extension from any app</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE 2 -->
+<section>
+  <div class="showcase reverse">
+    <picture>
+      <source srcset="assets/success-dark.png" media="(prefers-color-scheme: dark)">
+      <img class="showcase-img" src="assets/success-light.png" alt="Document Archive">
+    </picture>
+    <div class="showcase-text">
+      <h2>Your archive, always with you</h2>
+      <p>Search and filter your entire document archive directly on your paperless-ngx server — no local copies needed.</p>
+      <ul>
+        <li>Full-text server-side search</li>
+        <li>Filter by type, correspondent, tags</li>
+        <li>Inline PDF viewer</li>
+        <li>Edit metadata on existing documents</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- REQUIREMENTS -->
+<section id="requirements">
+  <div class="section-label">Requirements</div>
+  <h2 class="section-title">What you need</h2>
+  <p class="section-sub">PPR connects to your existing paperless-ngx setup. No new infrastructure required.</p>
+
+  <div class="req-grid">
+    <div class="req-card">
+      <h4>iOS</h4>
+      <p>iOS 17.0 or later</p>
+    </div>
+    <div class="req-card">
+      <h4>Server</h4>
+      <p>paperless-ngx instance with REST API enabled</p>
+    </div>
+    <div class="req-card">
+      <h4>Network</h4>
+      <p>Device must reach your server (local network or VPN)</p>
+    </div>
+    <div class="req-card">
+      <h4>API Token</h4>
+      <p>Found in paperless-ngx under Settings → Profile</p>
+    </div>
+  </div>
+</section>
+
+<!-- SETUP -->
+<section id="setup">
+  <div class="section-label">Setup</div>
+  <h2 class="section-title">Get started in minutes</h2>
+  <p class="section-sub">PPR walks you through setup on first launch. Just have your server URL and API token ready.</p>
+
+  <div class="setup-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Find your API token</h4>
+        <p>In your paperless-ngx web interface, go to <strong>Settings → Profile → API Token</strong> and copy it.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Open PPR and follow onboarding</h4>
+        <p>On first launch, PPR shows the onboarding screen. Enter your server URL (e.g. <code>http://192.168.1.100:8000</code>) and paste your API token.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Start scanning</h4>
+        <p>PPR connects to your server and loads your tags, document types, and correspondents. You're ready to scan.</p>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin-top: 2rem;">
+    Building from source? See the <a href="docs.html">developer documentation →</a>
+  </p>
+</section>
+
+<footer>
+  <p>PPR is an open-source project by <a href="https://github.com/kaistephanrichter" target="_blank">Kai Stephan Richter</a> · <a href="https://github.com/kaistephanrichter/ppr" target="_blank">GitHub</a></p>
+</footer>
+
+</body>
+</html>

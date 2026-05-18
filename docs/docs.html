@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation – PPR</title>
+  <meta name="description" content="Developer documentation for PPR, the native iOS client for paperless-ngx.">
+  <link rel="icon" type="image/png" href="assets/app-icon-light.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .docs-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      align-items: start;
+    }
+
+    .docs-sidebar {
+      position: sticky;
+      top: 80px;
+    }
+
+    .docs-sidebar h3 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .docs-sidebar h3:first-child { margin-top: 0; }
+
+    .docs-sidebar ul { list-style: none; }
+
+    .docs-sidebar li a {
+      display: block;
+      padding: 0.3rem 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      transition: color 0.15s;
+    }
+
+    .docs-sidebar li a:hover { color: var(--text); }
+    .docs-sidebar li a.active { color: var(--accent); font-weight: 500; }
+
+    .docs-content {
+      padding-left: 3rem;
+      border-left: 1px solid var(--border);
+      min-height: 80vh;
+    }
+
+    .docs-content h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .docs-content .lead {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .docs-section {
+      margin-bottom: 3rem;
+    }
+
+    .docs-section h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+      padding-top: 1rem;
+    }
+
+    .docs-section h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+    }
+
+    .docs-section p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      line-height: 1.7;
+    }
+
+    .docs-section ul, .docs-section ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .docs-section li {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+    }
+
+    pre {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: none;
+      color: var(--text);
+      padding: 0;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .callout {
+      background: color-mix(in srgb, var(--accent) 10%, var(--bg-card));
+      border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.25rem;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .callout strong { color: var(--accent); }
+
+    .arch-tree {
+      font-family: "SF Mono", "Fira Code", monospace;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem 1.5rem;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 700px) {
+      .docs-layout { grid-template-columns: 1fr; }
+      .docs-sidebar { display: none; }
+      .docs-content { padding-left: 0; border-left: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <picture>
+      <source srcset="assets/app-icon-dark.png" media="(prefers-color-scheme: dark)">
+      <img src="assets/app-icon-light.png" alt="PPR Icon">
+    </picture>
+    PPR
+  </a>
+  <ul>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="index.html#setup">Setup</a></li>
+    <li><a href="docs.html" style="color: var(--text);">Docs</a></li>
+    <li><a href="https://github.com/kaistephanrichter/ppr">GitHub</a></li>
+  </ul>
+</nav>
+
+<div class="docs-layout">
+  <aside class="docs-sidebar">
+    <h3>Getting Started</h3>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#requirements">Requirements</a></li>
+      <li><a href="#build">Build from Source</a></li>
+    </ul>
+    <h3>Architecture</h3>
+    <ul>
+      <li><a href="#structure">Project Structure</a></li>
+      <li><a href="#api-layer">API Layer</a></li>
+      <li><a href="#configuration">Configuration</a></li>
+    </ul>
+    <h3>Development</h3>
+    <ul>
+      <li><a href="#xcodegen">XcodeGen</a></li>
+      <li><a href="#screenshots">Screenshots</a></li>
+      <li><a href="#localization">Localization</a></li>
+    </ul>
+  </aside>
+
+  <main class="docs-content">
+    <h1>Developer Documentation</h1>
+    <p class="lead">Everything you need to build, run, and contribute to PPR — a native iOS client for paperless-ngx.</p>
+
+    <!-- OVERVIEW -->
+    <div class="docs-section" id="overview">
+      <h2>Overview</h2>
+      <p>PPR is a SwiftUI iOS app that connects to a self-hosted <a href="https://docs.paperless-ngx.com" target="_blank">paperless-ngx</a> instance via its REST API. The app targets a single user (or small household): you supply the server URL and an API token — there is no bundled service.</p>
+      <p>The app focuses on <strong>ingest, find, read, and status</strong>. It intentionally does not replicate the full paperless-ngx web UI.</p>
+    </div>
+
+    <!-- REQUIREMENTS -->
+    <div class="docs-section" id="requirements">
+      <h2>Requirements</h2>
+      <ul>
+        <li>Xcode 16+</li>
+        <li>iOS 17.0+ deployment target</li>
+        <li><a href="https://github.com/yonaskolb/XcodeGen" target="_blank">XcodeGen</a> — <code>brew install xcodegen</code></li>
+        <li>Fastlane (optional, for screenshots) — <code>brew install fastlane</code></li>
+        <li>A running paperless-ngx instance reachable from your device</li>
+      </ul>
+    </div>
+
+    <!-- BUILD -->
+    <div class="docs-section" id="build">
+      <h2>Build from Source</h2>
+
+      <h3>1. Clone the repository</h3>
+      <pre><code>git clone https://github.com/kaistephanrichter/ppr.git
+cd ppr</code></pre>
+
+      <h3>2. Generate the Xcode project</h3>
+      <p>The project is not committed — it is generated from <code>project.yml</code> using XcodeGen.</p>
+      <pre><code>xcodegen generate</code></pre>
+
+      <h3>3. Open in Xcode</h3>
+      <pre><code>open PPR.xcodeproj</code></pre>
+
+      <h3>4. Configure signing</h3>
+      <p>Update the bundle identifier and team in Xcode's Signing &amp; Capabilities settings to match your Apple Developer account.</p>
+
+      <div class="callout">
+        <strong>Note:</strong> After any changes to <code>project.yml</code>, re-run <code>xcodegen generate</code> to regenerate the project file.
+      </div>
+    </div>
+
+    <!-- STRUCTURE -->
+    <div class="docs-section" id="structure">
+      <h2>Project Structure</h2>
+      <div class="arch-tree">Sources/PPR/<br>
+├── API/                    # Networking layer (PaperlessAPI, error handling)<br>
+├── Configuration/          # App configuration and Keychain storage<br>
+├── Models/                 # Codable models (Document, Tag, Correspondent…)<br>
+├── Networking/             # Local network access utilities<br>
+├── Resources/              # Assets, localizations, app icons<br>
+├── Supporting/             # Info.plist<br>
+├── Views/<br>
+│   ├── CaptureView.swift           # Camera/scanner tab<br>
+│   ├── CaptureMetadataView.swift   # Upload metadata form<br>
+│   ├── DocumentListView.swift      # Document browser<br>
+│   ├── DocumentDetailView.swift    # Detail view with PDF<br>
+│   ├── OnboardingView.swift        # First-launch setup<br>
+│   └── SettingsView.swift          # Server status &amp; config<br>
+├── PPRApp.swift            # App entry point<br>
+└── RootView.swift          # Tab-based root navigation<br>
+<br>
+Sources/PPRUITests/         # Fastlane snapshot UI tests</div>
+    </div>
+
+    <!-- API LAYER -->
+    <div class="docs-section" id="api-layer">
+      <h2>API Layer</h2>
+      <p>All network calls go through the <code>PaperlessAPI</code> module in <code>Sources/PPR/API/</code>. It handles:</p>
+      <ul>
+        <li>Base URL + <code>Authorization: Token &lt;token&gt;</code> header injection</li>
+        <li>Paginated responses (<code>count</code>, <code>next</code>, <code>previous</code>, <code>results</code>)</li>
+        <li><code>Codable</code> models for all response types</li>
+        <li>Structured error types for network and server errors</li>
+      </ul>
+      <p>The <a href="https://docs.paperless-ngx.com/api/" target="_blank">paperless-ngx OpenAPI schema</a> (<code>GET /api/schema/</code>) is the source of truth for request/response shapes.</p>
+
+      <h3>Key endpoints used</h3>
+      <ul>
+        <li><code>GET /api/documents/</code> — document list with search &amp; filter</li>
+        <li><code>POST /api/documents/post_document/</code> — upload</li>
+        <li><code>GET /api/documents/{id}/download/</code> — PDF download</li>
+        <li><code>GET /api/tags/</code>, <code>/api/document_types/</code>, <code>/api/correspondents/</code> — metadata</li>
+        <li><code>GET /api/status/</code> — server health</li>
+      </ul>
+    </div>
+
+    <!-- CONFIGURATION -->
+    <div class="docs-section" id="configuration">
+      <h2>Configuration &amp; Security</h2>
+      <p>Server URL and API token are stored in the iOS Keychain via <code>Sources/PPR/Configuration/</code>. They are never logged or stored in plain text.</p>
+      <div class="callout">
+        <strong>Important:</strong> <code>GET /api/profile/</code> echoes the <code>auth_token</code> in its response — never log this endpoint's output.
+      </div>
+      <p>HTTP (non-TLS) connections to local network servers are explicitly allowed via <code>NSAllowsArbitraryLoads</code> in <code>Info.plist</code>, which is required for typical home server setups.</p>
+    </div>
+
+    <!-- XCODEGEN -->
+    <div class="docs-section" id="xcodegen">
+      <h2>XcodeGen</h2>
+      <p>The Xcode project (<code>PPR.xcodeproj</code>) is generated from <code>project.yml</code> and is not committed to the repository. This keeps the repo clean and avoids merge conflicts in Xcode project files.</p>
+      <pre><code># Regenerate after any changes to project.yml
+xcodegen generate</code></pre>
+      <p>Key things configured in <code>project.yml</code>: targets, bundle IDs, deployment target, build settings, entitlements, and Info.plist values.</p>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="docs-section" id="screenshots">
+      <h2>App Store Screenshots</h2>
+      <p>Screenshots are generated automatically using Fastlane Snapshot and the UI test target <code>PPRUITests</code>.</p>
+      <pre><code># Generate screenshots for all devices and languages
+fastlane screenshots</code></pre>
+      <p>Output is saved to <code>fastlane/screenshots/</code>, organized by language and device type.</p>
+    </div>
+
+    <!-- LOCALIZATION -->
+    <div class="docs-section" id="localization">
+      <h2>Localization</h2>
+      <p>PPR is fully translated in 7 languages:</p>
+      <ul>
+        <li>German (de)</li>
+        <li>English (en)</li>
+        <li>French (fr)</li>
+        <li>Spanish (es)</li>
+        <li>Italian (it)</li>
+        <li>Dutch (nl)</li>
+        <li>Polish (pl)</li>
+      </ul>
+      <p>String catalogs are located in <code>Sources/PPR/Resources/</code>. All user-facing strings must be localized using SwiftUI's standard localization APIs.</p>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  <p>PPR is an open-source project by <a href="https://github.com/kaistephanrichter" target="_blank">Kai Stephan Richter</a> · <a href="https://github.com/kaistephanrichter/ppr" target="_blank">GitHub</a></p>
+</footer>
+
+</body>
+</html>
