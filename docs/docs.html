@@ -211,7 +211,7 @@
       <h2>Requirements</h2>
       <ul>
         <li>Xcode 16+</li>
-        <li>iOS 17.0+ deployment target</li>
+        <li>iOS 18.0+ deployment target</li>
         <li><a href="https://github.com/yonaskolb/XcodeGen" target="_blank">XcodeGen</a> — <code>brew install xcodegen</code></li>
         <li>Fastlane (optional, for screenshots) — <code>brew install fastlane</code></li>
         <li>A running paperless-ngx instance reachable from your device</li>
@@ -293,7 +293,7 @@ Sources/PPRUITests/         # Fastlane snapshot UI tests</div>
       <div class="callout">
         <strong>Important:</strong> <code>GET /api/profile/</code> echoes the <code>auth_token</code> in its response — never log this endpoint's output.
       </div>
-      <p>HTTP (non-TLS) connections to local network servers are explicitly allowed via <code>NSAllowsArbitraryLoads</code> in <code>Info.plist</code>, which is required for typical home server setups.</p>
+      <p>HTTP (non-TLS) connections to local network servers are explicitly allowed via <code>NSAllowsLocalNetworking</code> in <code>Info.plist</code>, which is required for typical home server setups.</p>
     </div>
 
     <!-- XCODEGEN -->

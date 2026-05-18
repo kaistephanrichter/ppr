@@ -135,6 +135,12 @@ nav a:hover { color: var(--text); }
   justify-content: center;
 }
 
+.hero-disclaimer {
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
 .badge {
   display: inline-flex;
   align-items: center;
