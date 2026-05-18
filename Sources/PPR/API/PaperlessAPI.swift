@@ -244,6 +244,7 @@ enum PaperlessAPI {
         tagIDs: [Int] = [],
         correspondentID: Int? = nil,
         documentTypeID: Int? = nil,
+        storagePathID: Int? = nil,
         ordering: String? = nil
     ) async throws -> PaginatedEnvelope<DocumentSummary> {
         var components = URLComponents(
@@ -258,6 +259,7 @@ enum PaperlessAPI {
         for id in tagIDs { items.append(URLQueryItem(name: "tags__id__all", value: String(id))) }
         if let id = correspondentID { items.append(URLQueryItem(name: "correspondent__id", value: String(id))) }
         if let id = documentTypeID { items.append(URLQueryItem(name: "document_type__id", value: String(id))) }
+        if let id = storagePathID { items.append(URLQueryItem(name: "storage_path__id", value: String(id))) }
         if let ordering { items.append(URLQueryItem(name: "ordering", value: ordering)) }
         components?.queryItems = items
         guard let url = components?.url else { throw PaperlessAPIError.invalidServerURL }
@@ -353,6 +355,18 @@ enum PaperlessAPI {
         return page.results
     }
 
+    static func storagePaths(serverURL: String, token: String, pageSize: Int = 500) async throws -> [StoragePath] {
+        var components = URLComponents(
+            url: try buildURL(serverURL: serverURL, path: "api/storage_paths/"),
+            resolvingAgainstBaseURL: false
+        )
+        components?.queryItems = [URLQueryItem(name: "page_size", value: String(pageSize))]
+        guard let url = components?.url else { throw PaperlessAPIError.invalidServerURL }
+        let request = try authorizedRequest(url: url, token: token)
+        let page = try await perform(request, PaginatedEnvelope<StoragePath>.self)
+        return page.results
+    }
+
     private static func jsonPostRequest(url: URL, token: String, body: [String: String]) throws -> URLRequest {
         var request = try authorizedRequest(url: url, token: token)
         request.httpMethod = "POST"
@@ -387,6 +401,7 @@ enum PaperlessAPI {
         documentType: Int?,
         correspondent: Int?,
         tags: [Int],
+        storagePath: Int?,
         serverURL: String,
         token: String
     ) async throws {
@@ -415,6 +430,7 @@ enum PaperlessAPI {
         if let documentType { field("document_type", String(documentType)) }
         if let correspondent { field("correspondent", String(correspondent)) }
         for tag in tags { field("tags", String(tag)) }
+        if let storagePath { field("storage_path", String(storagePath)) }
 
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
         request.httpBody = body

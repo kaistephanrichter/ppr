@@ -24,3 +24,15 @@ struct Correspondent: Identifiable, Decodable, Hashable {
         case documentCount = "document_count"
     }
 }
+
+struct StoragePath: Identifiable, Decodable, Hashable {
+    let id: Int
+    let name: String
+    let path: String?
+    let documentCount: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case id, name, path
+        case documentCount = "document_count"
+    }
+}

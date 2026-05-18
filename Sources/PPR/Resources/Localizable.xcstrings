@@ -2,10 +2,10 @@
   "sourceLanguage": "de",
   "strings": {
     "": {},
-    "·": {},
-    "(%lld)": {},
     "%lld": {},
+    "(%lld)": {},
     "+%lld": {},
+    "Paperless-ngx": {},
     "alert.new_correspondent.title": {
       "comment": "Alert title: create new correspondent",
       "localizations": {
@@ -2865,6 +2865,100 @@
         }
       }
     },
+    "metadata.field.storage_path": {
+      "comment": "Picker label for storage path",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ablagepfad"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Storage Path"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ruta de almacenamiento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chemin de stockage"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Percorso di archiviazione"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opslagpad"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ścieżka przechowywania"
+          }
+        }
+      }
+    },
+    "metadata.field.storage_path.none": {
+      "comment": "Picker option: no storage path",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kein Pfad"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin ruta"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun chemin"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nessun percorso"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen pad"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brak ścieżki"
+          }
+        }
+      }
+    },
     "metadata.field.title": {
       "comment": "TextField label for document title in detail view",
       "localizations": {
@@ -3840,7 +3934,6 @@
         }
       }
     },
-    "Paperless-ngx": {},
     "search.empty.description": {
       "extractionState": "stale",
       "localizations": {
@@ -6644,7 +6737,8 @@
           }
         }
       }
-    }
+    },
+    "·": {}
   },
   "version": "1.0"
 }

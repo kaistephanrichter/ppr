@@ -17,12 +17,14 @@ struct DocumentListView: View {
     @State private var allTags: [TagSummary] = []
     @State private var allCorrespondents: [Correspondent] = []
     @State private var allDocumentTypes: [DocumentType] = []
+    @State private var allStoragePaths: [StoragePath] = []
 
     @State private var searchText = ""
     @State private var searchDebounceTask: Task<Void, Never>?
     @State private var filterTagIDs: Set<Int> = Set(UserDefaults.standard.array(forKey: "filterTagIDs") as? [Int] ?? [])
     @State private var filterCorrespondent: Correspondent?
     @State private var filterDocumentType: DocumentType?
+    @State private var filterStoragePath: StoragePath?
     @State private var showFilterSheet = false
 
     @State private var isLoading = false
@@ -34,6 +36,7 @@ struct DocumentListView: View {
     // Persisted filter IDs (restored after metadata loads)
     private static let savedCorrespondentIDKey = "filterCorrespondentID"
     private static let savedDocumentTypeIDKey = "filterDocumentTypeID"
+    private static let savedStoragePathIDKey = "filterStoragePathID"
 
     enum GroupBy: String, CaseIterable {
         case none, documentType, correspondent
@@ -46,7 +49,7 @@ struct DocumentListView: View {
     @State private var sortOrder: SortOrder = SortOrder(rawValue: UserDefaults.standard.string(forKey: "documentListSortOrder") ?? "") ?? .newestFirst
 
     private var isFiltered: Bool {
-        !filterTagIDs.isEmpty || filterCorrespondent != nil || filterDocumentType != nil
+        !filterTagIDs.isEmpty || filterCorrespondent != nil || filterDocumentType != nil || filterStoragePath != nil
     }
 
     var body: some View {
@@ -147,9 +150,11 @@ struct DocumentListView: View {
                             allTags: allTags,
                             allCorrespondents: allCorrespondents,
                             allDocumentTypes: allDocumentTypes,
+                            allStoragePaths: allStoragePaths,
                             filterTagIDs: $filterTagIDs,
                             filterCorrespondent: $filterCorrespondent,
                             filterDocumentType: $filterDocumentType,
+                            filterStoragePath: $filterStoragePath,
                             groupBy: $groupBy,
                             sortOrder: $sortOrder,
                             excludedTagIDs: configuration.excludedTagIDs
@@ -182,6 +187,10 @@ struct DocumentListView: View {
                 UserDefaults.standard.set(newValue?.id, forKey: Self.savedDocumentTypeIDKey)
                 Task { await resetAndLoad() }
             }
+            .onChange(of: filterStoragePath) { _, newValue in
+                UserDefaults.standard.set(newValue?.id, forKey: Self.savedStoragePathIDKey)
+                Task { await resetAndLoad() }
+            }
             .onChange(of: groupBy) { _, newValue in
                 UserDefaults.standard.set(newValue.rawValue, forKey: "documentListGroupBy")
                 collapsedSections = []
@@ -204,6 +213,9 @@ struct DocumentListView: View {
                 }
                 if let corr = filterCorrespondent {
                     filterPill(label: corr.name) { filterCorrespondent = nil }
+                }
+                if let sp = filterStoragePath {
+                    filterPill(label: sp.name) { filterStoragePath = nil }
                 }
                 ForEach(allTags.filter { filterTagIDs.contains($0.id) }) { tag in
                     filterPill(label: tag.name) { filterTagIDs.remove(tag.id) }
@@ -331,15 +343,20 @@ struct DocumentListView: View {
         async let tagsTask = PaperlessAPI.tags(serverURL: configuration.serverURL, token: configuration.apiToken)
         async let corrsTask = PaperlessAPI.correspondents(serverURL: configuration.serverURL, token: configuration.apiToken)
         async let typesTask = PaperlessAPI.documentTypes(serverURL: configuration.serverURL, token: configuration.apiToken)
+        async let storagePathsTask = PaperlessAPI.storagePaths(serverURL: configuration.serverURL, token: configuration.apiToken)
         allTags = (try? await tagsTask) ?? []
         allCorrespondents = (try? await corrsTask) ?? []
         allDocumentTypes = (try? await typesTask) ?? []
+        allStoragePaths = (try? await storagePathsTask) ?? []
         // Restore persisted filters
         if let savedTypeID = UserDefaults.standard.object(forKey: Self.savedDocumentTypeIDKey) as? Int {
             filterDocumentType = allDocumentTypes.first { $0.id == savedTypeID }
         }
         if let savedCorrID = UserDefaults.standard.object(forKey: Self.savedCorrespondentIDKey) as? Int {
             filterCorrespondent = allCorrespondents.first { $0.id == savedCorrID }
+        }
+        if let savedSpID = UserDefaults.standard.object(forKey: Self.savedStoragePathIDKey) as? Int {
+            filterStoragePath = allStoragePaths.first { $0.id == savedSpID }
         }
         await resetAndLoad()
     }
@@ -395,6 +412,7 @@ struct DocumentListView: View {
                 tagIDs: Array(filterTagIDs),
                 correspondentID: filterCorrespondent?.id,
                 documentTypeID: filterDocumentType?.id,
+                storagePathID: filterStoragePath?.id,
                 ordering: apiOrdering
             )
             totalCount = envelope.count
@@ -526,10 +544,12 @@ private struct FilterSheet: View {
     let allTags: [TagSummary]
     let allCorrespondents: [Correspondent]
     let allDocumentTypes: [DocumentType]
+    let allStoragePaths: [StoragePath]
 
     @Binding var filterTagIDs: Set<Int>
     @Binding var filterCorrespondent: Correspondent?
     @Binding var filterDocumentType: DocumentType?
+    @Binding var filterStoragePath: StoragePath?
     @Binding var groupBy: DocumentListView.GroupBy
     @Binding var sortOrder: DocumentListView.SortOrder
 
@@ -589,6 +609,16 @@ private struct FilterSheet: View {
                     }
                     .pickerStyle(.menu)
 
+                    if !allStoragePaths.isEmpty {
+                        Picker(String(localized: "metadata.field.storage_path"), selection: $filterStoragePath) {
+                            Text(String(localized: "filter.option.all")).tag(Optional<StoragePath>.none)
+                            ForEach(allStoragePaths) { sp in
+                                Text(sp.documentCount.map { "\(sp.name) (\($0))" } ?? sp.name).tag(Optional(sp))
+                            }
+                        }
+                        .pickerStyle(.menu)
+                    }
+
                     let visibleTags = showAllTags ? allTagsAlphabetical : topTags
                     ForEach(visibleTags) { tag in
                         Button {
@@ -621,10 +651,10 @@ private struct FilterSheet: View {
                     }
                 }
 
-                if !filterTagIDs.isEmpty || filterCorrespondent != nil || filterDocumentType != nil {
+                if !filterTagIDs.isEmpty || filterCorrespondent != nil || filterDocumentType != nil || filterStoragePath != nil {
                     Section {
                         Button(role: .destructive) {
-                            filterTagIDs = []; filterCorrespondent = nil; filterDocumentType = nil
+                            filterTagIDs = []; filterCorrespondent = nil; filterDocumentType = nil; filterStoragePath = nil
                         } label: {
                             Label(String(localized: "filter.button.reset"), systemImage: "xmark.circle")
                         }

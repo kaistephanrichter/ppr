@@ -152,6 +152,7 @@ struct CaptureView: View {
                 documentType: nil,
                 correspondent: nil,
                 tags: [],
+                storagePath: nil,
                 serverURL: configuration.serverURL,
                 token: configuration.apiToken
             )

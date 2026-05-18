@@ -14,10 +14,12 @@ struct CaptureMetadataView: View {
     @State private var createdDate = Date()
     @State private var selectedDocumentType: DocumentType?
     @State private var selectedCorrespondent: Correspondent?
+    @State private var selectedStoragePath: StoragePath?
     @State private var selectedTagIDs: Set<Int> = []
 
     @State private var documentTypes: [DocumentType] = []
     @State private var correspondents: [Correspondent] = []
+    @State private var storagePaths: [StoragePath] = []
     @State private var availableTags: [TagSummary] = []
 
     @State private var isLoadingMetadata = false
@@ -71,6 +73,15 @@ struct CaptureMetadataView: View {
                     } label: {
                         Label(String(localized: "metadata.button.new_correspondent"), systemImage: "plus")
                             .font(.subheadline)
+                    }
+
+                    if !storagePaths.isEmpty {
+                        Picker(String(localized: "metadata.field.storage_path"), selection: $selectedStoragePath) {
+                            Text(String(localized: "metadata.field.storage_path.none")).tag(Optional<StoragePath>.none)
+                            ForEach(storagePaths) { sp in
+                                Text(sp.name).tag(Optional(sp))
+                            }
+                        }
                     }
                 } header: {
                     Text(String(localized: "metadata.section.classification"))
@@ -265,6 +276,11 @@ struct CaptureMetadataView: View {
             errors.append("Korrespondenten: \(error.localizedDescription)")
         }
         do {
+            storagePaths = try await PaperlessAPI.storagePaths(serverURL: url, token: token)
+        } catch {
+            // Storage paths are optional — silently ignore if unavailable
+        }
+        do {
             availableTags = try await PaperlessAPI.tags(serverURL: url, token: token)
         } catch {
             errors.append("Tags: \(error.localizedDescription)")
@@ -297,6 +313,7 @@ struct CaptureMetadataView: View {
                 documentType: selectedDocumentType?.id,
                 correspondent: selectedCorrespondent?.id,
                 tags: Array(selectedTagIDs),
+                storagePath: selectedStoragePath?.id,
                 serverURL: configuration.serverURL,
                 token: configuration.apiToken
             )
