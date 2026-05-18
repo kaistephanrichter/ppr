@@ -153,14 +153,19 @@ struct OnboardingView: View {
     private func startApp() {
         saveError = nil
         isSaving = true
-        configuration.serverURL = serverURL.trimmingCharacters(in: .whitespaces)
-        configuration.apiToken = apiToken.trimmingCharacters(in: .whitespaces)
-        do {
-            try configuration.saveToKeychain()
-            dismiss()
-        } catch {
-            saveError = error.localizedDescription
-            isSaving = false
+        let url = serverURL.trimmingCharacters(in: .whitespaces)
+        let token = apiToken.trimmingCharacters(in: .whitespaces)
+        Task {
+            do {
+                try await PaperlessAPI.connectivityCheck(serverURL: url, token: token)
+                configuration.serverURL = url
+                configuration.apiToken = token
+                try configuration.saveToKeychain()
+                dismiss()
+            } catch {
+                saveError = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+                isSaving = false
+            }
         }
     }
 }
