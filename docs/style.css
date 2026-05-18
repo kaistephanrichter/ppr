@@ -7,8 +7,8 @@
   --border: #2a2a30;
   --text: #e8e8ed;
   --text-muted: #8e8e99;
-  --accent: #3b7eff;
-  --accent-hover: #5b93ff;
+  --accent: #2e5a36;
+  --accent-hover: #3a7245;
   --radius: 16px;
   --radius-sm: 8px;
 }
@@ -21,6 +21,15 @@
     --border: #d1d1d8;
     --text: #1d1d1f;
     --text-muted: #6e6e73;
+    --accent: #2e5a36;
+    --accent-hover: #3a7245;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #84c15d;
+    --accent-hover: #96cc72;
   }
 }
 
