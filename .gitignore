@@ -19,3 +19,4 @@ fastlane/.DS_Store
 
 # Data / vector index
 data/
+.claude/worktrees/
