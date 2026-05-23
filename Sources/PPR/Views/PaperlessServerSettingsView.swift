@@ -225,7 +225,9 @@ struct PaperlessServerSettingsView: View {
     private func statusRow(title: String, value: String, error: String?) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             LabeledContent(title) {
-                Text(value).foregroundStyle(statusColor(value))
+                Label(value, systemImage: statusIcon(value))
+                    .foregroundStyle(statusColor(value))
+                    .labelStyle(.titleAndIcon)
             }
             if let error, !error.isEmpty {
                 Text(error).font(.footnote).foregroundStyle(.secondary)
@@ -234,6 +236,15 @@ struct PaperlessServerSettingsView: View {
     }
 
     // MARK: - Helpers
+
+    private func statusIcon(_ value: String) -> String {
+        switch value.uppercased() {
+        case "OK": return "checkmark.circle.fill"
+        case "WARNING": return "exclamationmark.circle.fill"
+        case "ERROR", "FAILURE": return "xmark.circle.fill"
+        default: return "circle"
+        }
+    }
 
     private func statusColor(_ value: String) -> Color {
         switch value.uppercased() {
@@ -268,9 +279,10 @@ struct PaperlessServerSettingsView: View {
             async let statusTask = PaperlessAPI.status(serverURL: url, token: token)
             async let statsTask = PaperlessAPI.statistics(serverURL: url, token: token)
             let remote = try await statusTask
+            let stats = try? await statsTask
             connectionOKVersion = remote.pngxVersion
             status = remote
-            statistics = try? await statsTask
+            statistics = stats
             testedURL = url
             testedToken = token
             connectionErrorMessage = nil

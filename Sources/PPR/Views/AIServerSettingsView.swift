@@ -19,6 +19,15 @@ struct AIServerSettingsView: View {
         configuration.aiServerURL == testedURL && configuration.aiApiKey == testedKey
     }
 
+    private var connectedVersionLabel: String {
+        let identifier = healthStatus?.version.flatMap { $0.isEmpty ? nil : $0 }
+            ?? ragStatus?.aiModel.flatMap { $0.isEmpty ? nil : $0 }
+        if let id = identifier {
+            return String(format: String(localized: "ai.settings.status.connected_version"), id)
+        }
+        return String(localized: "ai.settings.status.connected")
+    }
+
     var body: some View {
         @Bindable var config = configuration
         return Form {
@@ -86,12 +95,8 @@ struct AIServerSettingsView: View {
                             .foregroundStyle(.secondary)
                     }
                 } else if let health = healthStatus, credentialsMatchLastTest, health.isHealthy {
-                    Label(
-                        health.version.map { String(format: String(localized: "ai.settings.status.connected_version"), $0) }
-                            ?? String(localized: "ai.settings.status.connected"),
-                        systemImage: "checkmark.circle.fill"
-                    )
-                    .foregroundStyle(.green)
+                    Label(connectedVersionLabel, systemImage: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
                 } else if let error = connectionErrorMessage, !error.isEmpty, credentialsMatchLastTest {
                     Button {
                         showConnectionErrorSheet = true

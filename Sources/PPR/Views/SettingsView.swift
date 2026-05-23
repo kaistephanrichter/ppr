@@ -234,11 +234,14 @@ struct SettingsView: View {
         let url = configuration.aiServerURL
         let key = configuration.aiApiKey
         do {
+            var modelFallback: String? = nil
             if !key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                _ = try await AIServerAPI.ragStatus(serverURL: url, apiKey: key)
+                let rag = try await AIServerAPI.ragStatus(serverURL: url, apiKey: key)
+                modelFallback = rag.aiModel.flatMap { $0.isEmpty ? nil : $0 }
             }
             let health = try await AIServerAPI.health(serverURL: url, apiKey: key)
-            aiConnectedVersion = health.version ?? ""
+            let version = health.version.flatMap { $0.isEmpty ? nil : $0 }
+            aiConnectedVersion = version ?? modelFallback ?? ""
         } catch {
             aiError = PaperlessAPI.formattedUserError(error)
                 ?? (error as? LocalizedError)?.errorDescription
