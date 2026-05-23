@@ -21,6 +21,16 @@ final class AppConfiguration {
         didSet { UserDefaults.standard.set(aiSemanticSearchEnabled, forKey: "aiSemanticSearchEnabled") }
     }
 
+    /// Whether the similar documents section is shown in document detail
+    var aiSimilarDocsEnabled: Bool = true {
+        didSet { UserDefaults.standard.set(aiSimilarDocsEnabled, forKey: "aiSimilarDocsEnabled") }
+    }
+
+    /// Whether the Document Chat tab is shown
+    var aiChatEnabled: Bool = true {
+        didSet { UserDefaults.standard.set(aiChatEnabled, forKey: "aiChatEnabled") }
+    }
+
     var hasAIServer: Bool {
         let trimmed = aiServerURL.trimmingCharacters(in: .whitespacesAndNewlines)
         return URL(string: trimmed) != nil && !trimmed.isEmpty
@@ -48,6 +58,8 @@ final class AppConfiguration {
         aiApiKey = KeychainStore.loadAIApiKey()
         excludedTagIDs = Set(UserDefaults.standard.array(forKey: "excludedTagIDs") as? [Int] ?? [])
         aiSemanticSearchEnabled = UserDefaults.standard.bool(forKey: "aiSemanticSearchEnabled")
+        aiSimilarDocsEnabled = UserDefaults.standard.object(forKey: "aiSimilarDocsEnabled") as? Bool ?? true
+        aiChatEnabled = UserDefaults.standard.object(forKey: "aiChatEnabled") as? Bool ?? true
         didLoadFromKeychain = true
     }
 

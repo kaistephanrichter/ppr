@@ -124,6 +124,28 @@ struct SettingsView: View {
                     }
                 }
 
+                // MARK: AI Features
+                if configuration.hasAIServer {
+                    Section {
+                        Toggle(isOn: Binding(
+                            get: { configuration.aiSimilarDocsEnabled },
+                            set: { configuration.aiSimilarDocsEnabled = $0 }
+                        )) {
+                            Label(String(localized: "ai.features.similar_docs"),
+                                  systemImage: "doc.on.doc")
+                        }
+                        Toggle(isOn: Binding(
+                            get: { configuration.aiChatEnabled },
+                            set: { configuration.aiChatEnabled = $0 }
+                        )) {
+                            Label(String(localized: "ai.features.chat"),
+                                  systemImage: "bubble.left.and.text.bubble.right")
+                        }
+                    } header: {
+                        Text(String(localized: "ai.features.section"))
+                    }
+                }
+
                 // MARK: Excluded Tags
                 Section {
                     if isLoadingTags {

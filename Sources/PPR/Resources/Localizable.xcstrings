@@ -401,6 +401,42 @@
         }
       }
     },
+    "ai.features.chat": {
+      "comment": "Toggle label for Document Chat tab feature",
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Dokument-Chat" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Document Chat" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Chat de documentos" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Chat de documents" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Chat documenti" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Documentchat" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Czat dokumentów" } }
+      }
+    },
+    "ai.features.section": {
+      "comment": "Section header for AI feature toggles in settings",
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "KI-Funktionen" } },
+        "en": { "stringUnit": { "state": "translated", "value": "AI Features" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Funciones de IA" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Fonctions IA" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Funzioni IA" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "AI-functies" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Funkcje AI" } }
+      }
+    },
+    "ai.features.similar_docs": {
+      "comment": "Toggle label for Similar Documents feature in document detail",
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Ähnliche Dokumente" } },
+        "en": { "stringUnit": { "state": "translated", "value": "Similar Documents" } },
+        "es": { "stringUnit": { "state": "translated", "value": "Documentos similares" } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Documents similaires" } },
+        "it": { "stringUnit": { "state": "translated", "value": "Documenti simili" } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Vergelijkbare documenten" } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Podobne dokumenty" } }
+      }
+    },
     "ai.settings.section.server": {
       "comment": "Section header for AI server in settings",
       "localizations": {

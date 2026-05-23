@@ -322,7 +322,7 @@ struct DocumentDetailView: View {
             didPopulateFields = true
         }
         isLoading = false
-        if configuration.hasAIServer {
+        if configuration.hasAIServer && configuration.aiSimilarDocsEnabled {
             Task { await loadSimilarDocuments() }
         }
     }

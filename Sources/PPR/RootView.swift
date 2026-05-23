@@ -23,8 +23,10 @@ struct RootView: View {
                     DocumentListView()
                 }
 
-                Tab(String(localized: "tab.chat"), systemImage: "bubble.left.and.text.bubble.right", value: 2) {
-                    DocumentChatView()
+                if configuration.hasAIServer && configuration.aiChatEnabled {
+                    Tab(String(localized: "tab.chat"), systemImage: "bubble.left.and.text.bubble.right", value: 2) {
+                        DocumentChatView()
+                    }
                 }
 
                 Tab(String(localized: "tab.settings"), systemImage: "gearshape", value: 3) {
