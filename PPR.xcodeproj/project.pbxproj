@@ -30,6 +30,7 @@
 		7A5B52CF9650813D2F3B2A80 /* AIServerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420C8DD809A2791174C8D469 /* AIServerStatus.swift */; };
 		7F146BD3BC158D5887C770EA /* AIServerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77697818355B50B60F5675AF /* AIServerSettingsView.swift */; };
 		8DB7FC7D77B06F096916C140 /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8D90D620F5B47C700188B7 /* DocumentPickerView.swift */; };
+		91B4CE59E5990D675AABA099 /* DocumentChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7BA4C789A755BDCD6C97B6 /* DocumentChatView.swift */; };
 		923C55FC8F206E10A39D42D4 /* PaperlessServerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A1FABDC82609D4AD797A1E /* PaperlessServerSettingsView.swift */; };
 		94133E2561002F3ADD326169 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3B8A721ADE866CCDEA7B1 /* RootView.swift */; };
 		9AE80A0130CF39F4375249CC /* PPRApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420F97639466E69DE34E9856 /* PPRApp.swift */; };
@@ -100,6 +101,7 @@
 		E0A8BCC7A044914C96958801 /* JSONDecoder+Paperless.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Paperless.swift"; sourceTree = "<group>"; };
 		E617803CE53D116B0D99F9F5 /* CaptureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureView.swift; sourceTree = "<group>"; };
 		F869D76FB468FA6A0A5CF3BB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		FA7BA4C789A755BDCD6C97B6 /* DocumentChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentChatView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -219,6 +221,7 @@
 				77697818355B50B60F5675AF /* AIServerSettingsView.swift */,
 				7B0B165D485AE2D8CD7DE451 /* CaptureMetadataView.swift */,
 				E617803CE53D116B0D99F9F5 /* CaptureView.swift */,
+				FA7BA4C789A755BDCD6C97B6 /* DocumentChatView.swift */,
 				DDAE72AE4C2F1BAB44B6C6C5 /* DocumentDetailView.swift */,
 				3FAA4A22B98EDF4DB1DCB254 /* DocumentListView.swift */,
 				5F8D90D620F5B47C700188B7 /* DocumentPickerView.swift */,
@@ -373,6 +376,7 @@
 				682DCD9BFB28E728EB25820E /* AppConfiguration.swift in Sources */,
 				447EFB0F2DF76A2068F23365 /* CaptureMetadataView.swift in Sources */,
 				6B42E7A1A6C460C46AA35F1B /* CaptureView.swift in Sources */,
+				91B4CE59E5990D675AABA099 /* DocumentChatView.swift in Sources */,
 				048F4E3BF90C9E9E596F4773 /* DocumentDetail.swift in Sources */,
 				69297E1158DBE12E9BE3BF5A /* DocumentDetailView.swift in Sources */,
 				3C5AF880517BAA8D19C0D0AD /* DocumentListView.swift in Sources */,

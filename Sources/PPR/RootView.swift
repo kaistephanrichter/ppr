@@ -23,7 +23,11 @@ struct RootView: View {
                     DocumentListView()
                 }
 
-                Tab(String(localized: "tab.settings"), systemImage: "gearshape", value: 2) {
+                Tab(String(localized: "tab.chat"), systemImage: "bubble.left.and.text.bubble.right", value: 2) {
+                    DocumentChatView()
+                }
+
+                Tab(String(localized: "tab.settings"), systemImage: "gearshape", value: 3) {
                     SettingsView()
                 }
             }

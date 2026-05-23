@@ -38,6 +38,10 @@ struct DocumentDetailView: View {
     @State private var showShareSheet = false
     @State private var didPopulateFields = false
 
+    // Similar documents
+    @State private var similarDocuments: [DocumentSummary] = []
+    @State private var isLoadingSimilar = false
+
     private var hasChanges: Bool {
         guard didPopulateFields, let detail else { return false }
         if editTitle != detail.title { return true }
@@ -132,6 +136,57 @@ struct DocumentDetailView: View {
                                 LabeledContent(String(localized: "detail.field.added"),
                                                value: formattedDateTime(added))
                                     .font(.footnote)
+                            }
+                        }
+                    }
+
+                    if isLoadingSimilar || !similarDocuments.isEmpty {
+                        Section(String(localized: "detail.section.similar")) {
+                            if isLoadingSimilar {
+                                HStack(spacing: 8) {
+                                    ProgressView().controlSize(.small)
+                                    Text(String(localized: "detail.similar.loading"))
+                                        .font(.footnote)
+                                        .foregroundStyle(.secondary)
+                                }
+                            } else {
+                                ForEach(similarDocuments.prefix(3)) { doc in
+                                    NavigationLink {
+                                        DocumentDetailView(summary: doc)
+                                            .environment(configuration)
+                                    } label: {
+                                        VStack(alignment: .leading, spacing: 3) {
+                                            Text(doc.title.isEmpty
+                                                 ? String(localized: "documents.row.untitled")
+                                                 : doc.title)
+                                                .font(.subheadline)
+                                                .lineLimit(2)
+                                            if let typeID = doc.documentType,
+                                               let t = allDocumentTypes.first(where: { $0.id == typeID }) {
+                                                Text(t.name)
+                                                    .font(.caption)
+                                                    .foregroundStyle(.secondary)
+                                            }
+                                        }
+                                        .padding(.vertical, 2)
+                                    }
+                                }
+                                if similarDocuments.count > 3 {
+                                    NavigationLink {
+                                        SimilarDocumentsListView(
+                                            documents: similarDocuments,
+                                            allTags: allTags,
+                                            allCorrespondents: allCorrespondents,
+                                            allDocumentTypes: allDocumentTypes
+                                        )
+                                        .environment(configuration)
+                                    } label: {
+                                        Label(String(localized: "detail.button.all_similar"),
+                                              systemImage: "doc.on.doc")
+                                            .font(.subheadline)
+                                            .foregroundStyle(Color.accentColor)
+                                    }
+                                }
                             }
                         }
                     }
@@ -267,6 +322,27 @@ struct DocumentDetailView: View {
             didPopulateFields = true
         }
         isLoading = false
+        if configuration.hasAIServer {
+            Task { await loadSimilarDocuments() }
+        }
+    }
+
+    private func loadSimilarDocuments() async {
+        guard let title = detail?.title, !title.isEmpty else { return }
+        isLoadingSimilar = true
+        defer { isLoadingSimilar = false }
+        let results = (try? await AIServerAPI.ragSearch(
+            query: title,
+            serverURL: configuration.aiServerURL,
+            apiKey: configuration.aiApiKey
+        )) ?? []
+        let ids = results.compactMap(\.docId).filter { $0 != summary.id }.prefix(10).map { $0 }
+        guard !ids.isEmpty else { return }
+        similarDocuments = (try? await PaperlessAPI.documentsByIDs(
+            ids: ids,
+            serverURL: configuration.serverURL,
+            token: configuration.apiToken
+        )) ?? []
     }
 
     // MARK: - Save
@@ -336,6 +412,48 @@ private struct DetailTagSelectionSheet: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - Similar Documents List
+
+private struct SimilarDocumentsListView: View {
+    @Environment(AppConfiguration.self) private var configuration
+    let documents: [DocumentSummary]
+    let allTags: [TagSummary]
+    let allCorrespondents: [Correspondent]
+    let allDocumentTypes: [DocumentType]
+
+    var body: some View {
+        List(documents) { doc in
+            NavigationLink {
+                DocumentDetailView(summary: doc)
+                    .environment(configuration)
+            } label: {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(doc.title.isEmpty
+                         ? String(localized: "documents.row.untitled")
+                         : doc.title)
+                        .font(.subheadline.weight(.medium))
+                        .lineLimit(2)
+                    HStack(spacing: 4) {
+                        if let typeID = doc.documentType,
+                           let t = allDocumentTypes.first(where: { $0.id == typeID }) {
+                            Text(t.name).foregroundStyle(.secondary)
+                        }
+                        if let corrID = doc.correspondent,
+                           let c = allCorrespondents.first(where: { $0.id == corrID }) {
+                            Text("·").foregroundStyle(.tertiary)
+                            Text(c.name).foregroundStyle(.secondary)
+                        }
+                    }
+                    .font(.caption)
+                }
+                .padding(.vertical, 3)
+            }
+        }
+        .navigationTitle(String(localized: "detail.nav.similar"))
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

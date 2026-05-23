@@ -259,7 +259,7 @@ struct CaptureView: View {
                             .font(.subheadline).foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                         Button {
-                            tabRouter.selectedTab = 2
+                            tabRouter.selectedTab = 3
                         } label: {
                             Label(String(localized: "nav.settings"), systemImage: "gearshape")
                         }
@@ -276,7 +276,7 @@ struct CaptureView: View {
                             .font(.subheadline).foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
                         Button {
-                            tabRouter.selectedTab = 2
+                            tabRouter.selectedTab = 3
                         } label: {
                             Label(String(localized: "nav.settings"), systemImage: "gearshape")
                         }

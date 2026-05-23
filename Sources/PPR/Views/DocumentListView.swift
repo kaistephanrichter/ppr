@@ -69,7 +69,7 @@ struct DocumentListView: View {
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 32)
                         Button {
-                            tabRouter.selectedTab = 2
+                            tabRouter.selectedTab = 3
                         } label: {
                             Label(String(localized: "nav.settings"), systemImage: "gearshape")
                         }
@@ -91,7 +91,7 @@ struct DocumentListView: View {
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 32)
                         Button {
-                            tabRouter.selectedTab = 2
+                            tabRouter.selectedTab = 3
                         } label: {
                             Label(String(localized: "nav.settings"), systemImage: "gearshape")
                         }
