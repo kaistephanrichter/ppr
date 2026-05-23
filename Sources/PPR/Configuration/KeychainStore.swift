@@ -7,6 +7,8 @@ enum KeychainStore {
     private enum Account: String {
         case serverURL
         case apiToken
+        case aiServerURL
+        case aiApiKey
     }
 
     private enum KeychainError: Error {
@@ -20,6 +22,22 @@ enum KeychainStore {
     static func save(serverURL: String, apiToken: String) throws {
         try saveString(serverURL, account: .serverURL)
         try saveString(apiToken, account: .apiToken)
+    }
+
+    static func loadAIServerURL() -> String {
+        loadString(.aiServerURL) ?? ""
+    }
+
+    static func saveAIServerURL(_ url: String) throws {
+        try saveString(url, account: .aiServerURL)
+    }
+
+    static func loadAIApiKey() -> String {
+        loadString(.aiApiKey) ?? ""
+    }
+
+    static func saveAIApiKey(_ key: String) throws {
+        try saveString(key, account: .aiApiKey)
     }
 
     private static func saveString(_ value: String, account: Account) throws {

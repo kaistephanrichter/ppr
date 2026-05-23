@@ -225,6 +225,14 @@ enum PaperlessAPI {
         _ = try await performOnce(request, PaginatedEnvelope<TagSummary>.self)
     }
 
+    static func aiServerHealth(serverURL: String) async throws -> AIServerStatus {
+        let url = try buildURL(serverURL: serverURL, path: "health")
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.timeoutInterval = 10
+        return try await performOnce(request, AIServerStatus.self)
+    }
+
     static func status(serverURL: String, token: String) async throws -> RemoteStatus {
         let url = try buildURL(serverURL: serverURL, path: "api/status/")
         let request = try authorizedRequest(url: url, token: token)
@@ -265,6 +273,30 @@ enum PaperlessAPI {
         guard let url = components?.url else { throw PaperlessAPIError.invalidServerURL }
         let request = try authorizedRequest(url: url, token: token)
         return try await perform(request, PaginatedEnvelope<DocumentSummary>.self)
+    }
+
+    /// Fetch a specific set of documents by their IDs (for semantic search results).
+    static func documentsByIDs(
+        ids: [Int],
+        serverURL: String,
+        token: String
+    ) async throws -> [DocumentSummary] {
+        guard !ids.isEmpty else { return [] }
+        var components = URLComponents(
+            url: try buildURL(serverURL: serverURL, path: "api/documents/"),
+            resolvingAgainstBaseURL: false
+        )
+        var items: [URLQueryItem] = [
+            URLQueryItem(name: "page_size", value: String(ids.count)),
+        ]
+        for id in ids {
+            items.append(URLQueryItem(name: "id__in", value: String(id)))
+        }
+        components?.queryItems = items
+        guard let url = components?.url else { throw PaperlessAPIError.invalidServerURL }
+        let request = try authorizedRequest(url: url, token: token)
+        let envelope = try await perform(request, PaginatedEnvelope<DocumentSummary>.self)
+        return envelope.results
     }
 
     static func document(id: Int, serverURL: String, token: String) async throws -> DocumentDetail {

@@ -10,6 +10,7 @@
 		048F4E3BF90C9E9E596F4773 /* DocumentDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C67A137E42475CB0690B57 /* DocumentDetail.swift */; };
 		160DBB427465221F7F164CA6 /* DocumentSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65135FFA3623C5D094213C45 /* DocumentSummary.swift */; };
 		1A212659FA9162FCCC2BA2A1 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F869D76FB468FA6A0A5CF3BB /* Localizable.xcstrings */; };
+		1B992B05F3F04861CD120077 /* AIDocumentAnalysis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D182CD8C3267C8A81CB8C0 /* AIDocumentAnalysis.swift */; };
 		1FBF661A17E47492493B5431 /* RemoteStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA20B518CDC11B436AB0C801 /* RemoteStatus.swift */; };
 		264134A75C10488D60E4CE61 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83325B1CBDE5D748B779F5D /* SettingsView.swift */; };
 		3AF0719494BE3A2743F06EBC /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D87D6A3E2679A17677490A /* NetworkMonitor.swift */; };
@@ -17,6 +18,7 @@
 		3D5110EAA6854DA25FCFB443 /* PPRScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4708788C06DE44231DC8F9 /* PPRScreenshots.swift */; };
 		3E3CA1C7DD5C16D77F035A00 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 337A506B8DB19C8AB1FFB0FD /* OnboardingView.swift */; };
 		447EFB0F2DF76A2068F23365 /* CaptureMetadataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B0B165D485AE2D8CD7DE451 /* CaptureMetadataView.swift */; };
+		4D3680F1FC4B99EEE873684E /* AIServerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764CD4D26D377F6E5A1963C9 /* AIServerAPI.swift */; };
 		5176B35E708EB691EE4D2F18 /* PhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E8A85E182DFCDE9F421CA2 /* PhotoPickerView.swift */; };
 		52C46CC21A767B7BADFFEDF3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60438F3500D470CE4C2D8C89 /* SnapshotHelper.swift */; };
 		610C6FB40361475D4011116D /* URLError+LocalNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC7A7B6FCE8491F83B09F33 /* URLError+LocalNetwork.swift */; };
@@ -25,7 +27,10 @@
 		6B42E7A1A6C460C46AA35F1B /* CaptureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E617803CE53D116B0D99F9F5 /* CaptureView.swift */; };
 		6C966C7CED1A9017A4B3267D /* DocumentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE3B63CEB1B0926F7F9C47CD /* DocumentType.swift */; };
 		6E349A8ACC00C465417C1D0D /* DocumentScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C816A244FFBDAAE03C4D64F /* DocumentScannerView.swift */; };
+		7A5B52CF9650813D2F3B2A80 /* AIServerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420C8DD809A2791174C8D469 /* AIServerStatus.swift */; };
+		7F146BD3BC158D5887C770EA /* AIServerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77697818355B50B60F5675AF /* AIServerSettingsView.swift */; };
 		8DB7FC7D77B06F096916C140 /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8D90D620F5B47C700188B7 /* DocumentPickerView.swift */; };
+		923C55FC8F206E10A39D42D4 /* PaperlessServerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A1FABDC82609D4AD797A1E /* PaperlessServerSettingsView.swift */; };
 		94133E2561002F3ADD326169 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E3B8A721ADE866CCDEA7B1 /* RootView.swift */; };
 		9AE80A0130CF39F4375249CC /* PPRApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420F97639466E69DE34E9856 /* PPRApp.swift */; };
 		A6B77383C4BBDCFF1FE8AE4B /* ServerStatusDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78C8834B297A0A251C16479 /* ServerStatusDetailView.swift */; };
@@ -34,6 +39,7 @@
 		C9050DB2E62D072DA1F0A87C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B671ACEB3EA3A2B4BBBBB24 /* Assets.xcassets */; };
 		CCC1F896946C3D5B5CED47EC /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F5A01E3FB93A9EE3216D9E /* StatusView.swift */; };
 		CF4B34505389A36F80F531E5 /* JSONDecoder+Paperless.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A8BCC7A044914C96958801 /* JSONDecoder+Paperless.swift */; };
+		D07CE826EF2CB97A34C16372 /* AIRagResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8768512E31CA30446C891EDC /* AIRagResult.swift */; };
 		D5BEA4E3D5B642562E947B2E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 5C245044D4C6A7586F1165A8 /* PrivacyInfo.xcprivacy */; };
 		DC9FF83C8682AEC664EC06E7 /* ErrorDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB26C16F34E58C667FD6D00 /* ErrorDetailSheet.swift */; };
 		EB18D11F22CF9E6D483BF1D2 /* ImportQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234FBF7028DEB8C25BA45B44 /* ImportQueue.swift */; };
@@ -56,10 +62,12 @@
 		15C67A137E42475CB0690B57 /* DocumentDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDetail.swift; sourceTree = "<group>"; };
 		18E81CA042F1466C2A5BFB75 /* LocalNetworkAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNetworkAccess.swift; sourceTree = "<group>"; };
 		234FBF7028DEB8C25BA45B44 /* ImportQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportQueue.swift; sourceTree = "<group>"; };
+		24D182CD8C3267C8A81CB8C0 /* AIDocumentAnalysis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIDocumentAnalysis.swift; sourceTree = "<group>"; };
 		2F204A1325A1D69C97E4F3EE /* PaperlessAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperlessAPI.swift; sourceTree = "<group>"; };
 		2FB26C16F34E58C667FD6D00 /* ErrorDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDetailSheet.swift; sourceTree = "<group>"; };
 		337A506B8DB19C8AB1FFB0FD /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		3FAA4A22B98EDF4DB1DCB254 /* DocumentListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentListView.swift; sourceTree = "<group>"; };
+		420C8DD809A2791174C8D469 /* AIServerStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServerStatus.swift; sourceTree = "<group>"; };
 		420F97639466E69DE34E9856 /* PPRApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPRApp.swift; sourceTree = "<group>"; };
 		4614A7261D12E6F526CF4068 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		48F5A01E3FB93A9EE3216D9E /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
@@ -72,10 +80,13 @@
 		5F8D90D620F5B47C700188B7 /* DocumentPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerView.swift; sourceTree = "<group>"; };
 		60438F3500D470CE4C2D8C89 /* SnapshotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
 		65135FFA3623C5D094213C45 /* DocumentSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentSummary.swift; sourceTree = "<group>"; };
+		764CD4D26D377F6E5A1963C9 /* AIServerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServerAPI.swift; sourceTree = "<group>"; };
+		77697818355B50B60F5675AF /* AIServerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIServerSettingsView.swift; sourceTree = "<group>"; };
 		7B0B165D485AE2D8CD7DE451 /* CaptureMetadataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureMetadataView.swift; sourceTree = "<group>"; };
 		7D4708788C06DE44231DC8F9 /* PPRScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPRScreenshots.swift; sourceTree = "<group>"; };
 		7E85A8FAA943E34A29059E82 /* PaperlessAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperlessAPIError.swift; sourceTree = "<group>"; };
 		86D87D6A3E2679A17677490A /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		8768512E31CA30446C891EDC /* AIRagResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIRagResult.swift; sourceTree = "<group>"; };
 		A4657E4A6E43CCCEE081163D /* TabRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRouter.swift; sourceTree = "<group>"; };
 		AB4BF0AC18B145DAC15B795A /* PPR.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PPR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3B63CEB1B0926F7F9C47CD /* DocumentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentType.swift; sourceTree = "<group>"; };
@@ -83,6 +94,7 @@
 		C78C8834B297A0A251C16479 /* ServerStatusDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStatusDetailView.swift; sourceTree = "<group>"; };
 		D4E8A85E182DFCDE9F421CA2 /* PhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerView.swift; sourceTree = "<group>"; };
 		D83325B1CBDE5D748B779F5D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D8A1FABDC82609D4AD797A1E /* PaperlessServerSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaperlessServerSettingsView.swift; sourceTree = "<group>"; };
 		DA20B518CDC11B436AB0C801 /* RemoteStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteStatus.swift; sourceTree = "<group>"; };
 		DDAE72AE4C2F1BAB44B6C6C5 /* DocumentDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentDetailView.swift; sourceTree = "<group>"; };
 		E0A8BCC7A044914C96958801 /* JSONDecoder+Paperless.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Paperless.swift"; sourceTree = "<group>"; };
@@ -104,6 +116,9 @@
 		4300FF98AACF68618105F4C0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				24D182CD8C3267C8A81CB8C0 /* AIDocumentAnalysis.swift */,
+				8768512E31CA30446C891EDC /* AIRagResult.swift */,
+				420C8DD809A2791174C8D469 /* AIServerStatus.swift */,
 				15C67A137E42475CB0690B57 /* DocumentDetail.swift */,
 				65135FFA3623C5D094213C45 /* DocumentSummary.swift */,
 				BE3B63CEB1B0926F7F9C47CD /* DocumentType.swift */,
@@ -169,6 +184,7 @@
 		8D1A75063803B82D5B392DE4 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				764CD4D26D377F6E5A1963C9 /* AIServerAPI.swift */,
 				E0A8BCC7A044914C96958801 /* JSONDecoder+Paperless.swift */,
 				2F204A1325A1D69C97E4F3EE /* PaperlessAPI.swift */,
 				7E85A8FAA943E34A29059E82 /* PaperlessAPIError.swift */,
@@ -200,6 +216,7 @@
 		F9C95F041FC8CDC41D5876C8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				77697818355B50B60F5675AF /* AIServerSettingsView.swift */,
 				7B0B165D485AE2D8CD7DE451 /* CaptureMetadataView.swift */,
 				E617803CE53D116B0D99F9F5 /* CaptureView.swift */,
 				DDAE72AE4C2F1BAB44B6C6C5 /* DocumentDetailView.swift */,
@@ -208,6 +225,7 @@
 				5C816A244FFBDAAE03C4D64F /* DocumentScannerView.swift */,
 				2FB26C16F34E58C667FD6D00 /* ErrorDetailSheet.swift */,
 				337A506B8DB19C8AB1FFB0FD /* OnboardingView.swift */,
+				D8A1FABDC82609D4AD797A1E /* PaperlessServerSettingsView.swift */,
 				D4E8A85E182DFCDE9F421CA2 /* PhotoPickerView.swift */,
 				C78C8834B297A0A251C16479 /* ServerStatusDetailView.swift */,
 				D83325B1CBDE5D748B779F5D /* SettingsView.swift */,
@@ -347,6 +365,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B992B05F3F04861CD120077 /* AIDocumentAnalysis.swift in Sources */,
+				D07CE826EF2CB97A34C16372 /* AIRagResult.swift in Sources */,
+				4D3680F1FC4B99EEE873684E /* AIServerAPI.swift in Sources */,
+				7F146BD3BC158D5887C770EA /* AIServerSettingsView.swift in Sources */,
+				7A5B52CF9650813D2F3B2A80 /* AIServerStatus.swift in Sources */,
 				682DCD9BFB28E728EB25820E /* AppConfiguration.swift in Sources */,
 				447EFB0F2DF76A2068F23365 /* CaptureMetadataView.swift in Sources */,
 				6B42E7A1A6C460C46AA35F1B /* CaptureView.swift in Sources */,
@@ -367,6 +390,7 @@
 				9AE80A0130CF39F4375249CC /* PPRApp.swift in Sources */,
 				C795B96950D0F0B4B8407779 /* PaperlessAPI.swift in Sources */,
 				FDAB82FD5679C75360450430 /* PaperlessAPIError.swift in Sources */,
+				923C55FC8F206E10A39D42D4 /* PaperlessServerSettingsView.swift in Sources */,
 				5176B35E708EB691EE4D2F18 /* PhotoPickerView.swift in Sources */,
 				1FBF661A17E47492493B5431 /* RemoteStatus.swift in Sources */,
 				94133E2561002F3ADD326169 /* RootView.swift in Sources */,

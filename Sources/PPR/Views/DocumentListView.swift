@@ -364,6 +364,15 @@ struct DocumentListView: View {
     private func resetAndLoad() async {
         guard networkMonitor.state != .offline else { return }
         page = 1; nextPageURL = nil; errorMessage = nil
+
+        // Use semantic search if enabled, query is non-empty, and AI server is configured
+        if configuration.aiSemanticSearchEnabled,
+           configuration.hasAIServerWithKey,
+           !searchText.trimmingCharacters(in: .whitespaces).isEmpty {
+            await loadSemanticSearch()
+            return
+        }
+
         await loadPage(reset: true)
         // When grouping, load all pages so groups are complete
         if groupBy != .none {
@@ -396,6 +405,47 @@ struct DocumentListView: View {
         case .titleAZ: return "title"
         case .titleZA: return "-title"
         case .addedRecent: return "-added"
+        }
+    }
+
+    private func loadSemanticSearch() async {
+        guard configuration.hasAIServerWithKey else { return }
+        isLoading = true
+        defer { isLoading = false }
+        do {
+            let results = try await AIServerAPI.ragSearch(
+                query: searchText,
+                serverURL: configuration.aiServerURL,
+                apiKey: configuration.aiApiKey
+            )
+            // Filter the current document list to IDs returned by semantic search,
+            // preserving the relevance order from the AI backend.
+            let docIDs = results.compactMap(\.docId)
+            if docIDs.isEmpty {
+                documents = []
+                totalCount = 0
+                nextPageURL = nil
+            } else {
+                // Load the matched documents from Paperless — fetch by page and filter.
+                // For simplicity we reload all currently-loaded docs and reorder by rank.
+                let envelope = try await PaperlessAPI.documentsByIDs(
+                    ids: docIDs,
+                    serverURL: configuration.serverURL,
+                    token: configuration.apiToken
+                )
+                // Sort by AI rank order
+                let idOrder = Dictionary(uniqueKeysWithValues: docIDs.enumerated().map { ($1, $0) })
+                documents = envelope.sorted { (idOrder[$0.id] ?? Int.max) < (idOrder[$1.id] ?? Int.max) }
+                totalCount = documents.count
+                nextPageURL = nil
+            }
+            errorMessage = nil
+        } catch {
+            if Task.isCancelled { return }
+            documents = []
+            errorMessage = PaperlessAPI.formattedUserError(error)
+                ?? (error as? LocalizedError)?.errorDescription
+                ?? error.localizedDescription
         }
     }
 

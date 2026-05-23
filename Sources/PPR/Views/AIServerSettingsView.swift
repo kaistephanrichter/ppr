@@ -34,6 +34,18 @@ struct AIServerSettingsView: View {
                     connectionErrorMessage = nil
                 }
 
+                SecureField(
+                    String(localized: "ai.settings.field.api_key"),
+                    text: $config.aiApiKey
+                )
+                .textContentType(.password)
+                .autocorrectionDisabled()
+                .onChange(of: config.aiApiKey) {
+                    isSaved = false
+                    healthStatus = nil
+                    connectionErrorMessage = nil
+                }
+
                 if isSaved {
                     Label(String(localized: "server.settings.saved_in_keychain"),
                           systemImage: "checkmark.circle.fill")
@@ -123,6 +135,7 @@ struct AIServerSettingsView: View {
         saveError = nil
         do {
             try configuration.saveAIServerURL()
+            try configuration.saveAIApiKey()
             isSaved = true
             Task { await testConnection() }
         } catch {
@@ -135,12 +148,14 @@ struct AIServerSettingsView: View {
         guard configuration.hasAIServer else { return }
         // Save silently without triggering another testConnection() call
         try? configuration.saveAIServerURL()
+        try? configuration.saveAIApiKey()
         isSaved = true
         isTesting = true
         defer { isTesting = false }
         let url = configuration.aiServerURL
+        let key = configuration.aiApiKey
         do {
-            healthStatus = try await PaperlessAPI.aiServerHealth(serverURL: url)
+            healthStatus = try await AIServerAPI.health(serverURL: url, apiKey: key)
             testedURL = url
             connectionErrorMessage = nil
         } catch {
