@@ -148,6 +148,16 @@ struct AIServerSettingsView: View {
                           systemImage: "sparkle.magnifyingglass")
                 }
                 .disabled(!configuration.hasAIServer || healthStatus?.isHealthy != true)
+                Toggle(isOn: $config.aiSimilarDocsEnabled) {
+                    Label(String(localized: "ai.features.similar_docs"),
+                          systemImage: "doc.on.doc")
+                }
+                .disabled(!configuration.hasAIServer || healthStatus?.isHealthy != true)
+                Toggle(isOn: $config.aiChatEnabled) {
+                    Label(String(localized: "ai.features.chat"),
+                          systemImage: "bubble.left.and.text.bubble.right")
+                }
+                .disabled(!configuration.hasAIServer || healthStatus?.isHealthy != true)
             } header: {
                 Text(String(localized: "ai.settings.section.features"))
             } footer: {

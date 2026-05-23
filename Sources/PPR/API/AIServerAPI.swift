@@ -12,8 +12,8 @@ enum AIServerAPI {
 
     private static let session: URLSession = {
         let config = URLSessionConfiguration.ephemeral
-        config.timeoutIntervalForRequest = 30
-        config.timeoutIntervalForResource = 120
+        config.timeoutIntervalForRequest = 120
+        config.timeoutIntervalForResource = 300
         return URLSession(configuration: config)
     }()
 
@@ -91,7 +91,7 @@ enum AIServerAPI {
         let url = try buildURL(serverURL: serverURL, path: "manual/analyze")
         var req = request(url: url, apiKey: apiKey, method: "POST")
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        req.timeoutInterval = 60
+        req.timeoutInterval = 120
         let body: [String: Any] = [
             "id": documentID,
             "existingTags": existingTags

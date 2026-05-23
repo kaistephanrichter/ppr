@@ -50,6 +50,7 @@ struct DocumentChatView: View {
                     }
                     .padding(.vertical, 12)
                 }
+                .scrollDismissesKeyboard(.interactively)
                 .onAppear { scrollProxy = proxy }
                 .onChange(of: messages.count) { _, _ in
                     if let last = messages.last {
