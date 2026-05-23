@@ -286,12 +286,11 @@ enum PaperlessAPI {
             url: try buildURL(serverURL: serverURL, path: "api/documents/"),
             resolvingAgainstBaseURL: false
         )
-        var items: [URLQueryItem] = [
+        // Paperless uses a single comma-separated id__in value, not repeated params.
+        let items: [URLQueryItem] = [
             URLQueryItem(name: "page_size", value: String(ids.count)),
+            URLQueryItem(name: "id__in", value: ids.map(String.init).joined(separator: ",")),
         ]
-        for id in ids {
-            items.append(URLQueryItem(name: "id__in", value: String(id)))
-        }
         components?.queryItems = items
         guard let url = components?.url else { throw PaperlessAPIError.invalidServerURL }
         let request = try authorizedRequest(url: url, token: token)

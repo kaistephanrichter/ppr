@@ -41,6 +41,7 @@ enum AIServerAPI {
     }
 
     private static func perform<T: Decodable>(_ req: URLRequest, _ type: T.Type) async throws -> T {
+        await LocalNetworkAccess.warmUpBonjourBrowse()
         let (data, response) = try await session.data(for: req)
         guard let http = response as? HTTPURLResponse else {
             throw PaperlessAPIError.transport("Missing HTTP response.")
@@ -67,12 +68,22 @@ enum AIServerAPI {
         return try await perform(req, AIServerStatus.self)
     }
 
+    /// Check RAG backend status — requires valid x-api-key. Use this for auth verification.
+    /// Endpoint: GET /api/rag/status
+    static func ragStatus(serverURL: String, apiKey: String) async throws -> AIRagStatus {
+        let url = try buildURL(serverURL: serverURL, path: "api/rag/status")
+        let req = request(url: url, apiKey: apiKey)
+        return try await perform(req, AIRagStatus.self)
+    }
+
     // MARK: - Document Analysis
 
-    /// Analyze document text with AI to suggest title, tags, document type, and correspondent.
+    /// Analyze an existing Paperless document by ID to suggest metadata.
     /// Endpoint: POST /manual/analyze
+    /// Note: this endpoint requires a valid Paperless document ID; it fetches
+    /// document content internally from Paperless rather than accepting raw text.
     static func analyzeDocument(
-        content: String,
+        documentID: Int,
         existingTags: [String],
         serverURL: String,
         apiKey: String
@@ -80,13 +91,26 @@ enum AIServerAPI {
         let url = try buildURL(serverURL: serverURL, path: "manual/analyze")
         var req = request(url: url, apiKey: apiKey, method: "POST")
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        req.timeoutInterval = 60 // AI analysis can take a moment
+        req.timeoutInterval = 60
         let body: [String: Any] = [
-            "content": content,
+            "id": documentID,
             "existingTags": existingTags
         ]
         req.httpBody = try JSONSerialization.data(withJSONObject: body)
         return try await perform(req, AIDocumentAnalysis.self)
+    }
+
+    // MARK: - RAG Index
+
+    /// Trigger a re-index of all Paperless documents into the RAG vector store.
+    /// Endpoint: POST /api/rag/index
+    @discardableResult
+    static func triggerReindex(serverURL: String, apiKey: String) async throws -> AIRagStatus {
+        let url = try buildURL(serverURL: serverURL, path: "api/rag/index")
+        var req = request(url: url, apiKey: apiKey, method: "POST")
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = try JSONSerialization.data(withJSONObject: ["force": false])
+        return try await perform(req, AIRagStatus.self)
     }
 
     // MARK: - RAG Search
