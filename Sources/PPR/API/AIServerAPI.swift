@@ -56,7 +56,8 @@ enum AIServerAPI {
         do {
             return try decoder.decode(T.self, from: data)
         } catch {
-            throw PaperlessAPIError.decodingFailed(error.localizedDescription)
+            let raw = String(data: data.prefix(500), encoding: .utf8) ?? "<binary>"
+            throw PaperlessAPIError.decodingFailed("\(error.localizedDescription)\n\nRaw: \(raw)")
         }
     }
 
