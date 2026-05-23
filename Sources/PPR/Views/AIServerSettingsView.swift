@@ -7,11 +7,16 @@ struct AIServerSettingsView: View {
     @State private var saveError: String?
     @State private var isTesting = false
     @State private var healthStatus: AIServerStatus?
+    @State private var ragStatus: AIRagStatus?
     @State private var connectionErrorMessage: String?
     @State private var testedURL = ""
+    @State private var testedKey = ""
+    @State private var showConnectionErrorSheet = false
+    @State private var isTriggering = false
+    @State private var triggerMessage: String?
 
     private var credentialsMatchLastTest: Bool {
-        configuration.aiServerURL == testedURL
+        configuration.aiServerURL == testedURL && configuration.aiApiKey == testedKey
     }
 
     var body: some View {
@@ -31,7 +36,10 @@ struct AIServerSettingsView: View {
                 .onChange(of: config.aiServerURL) {
                     isSaved = false
                     healthStatus = nil
+                    ragStatus = nil
                     connectionErrorMessage = nil
+                    testedURL = ""
+                    testedKey = ""
                 }
 
                 SecureField(
@@ -43,7 +51,10 @@ struct AIServerSettingsView: View {
                 .onChange(of: config.aiApiKey) {
                     isSaved = false
                     healthStatus = nil
+                    ragStatus = nil
                     connectionErrorMessage = nil
+                    testedURL = ""
+                    testedKey = ""
                 }
 
                 if isSaved {
@@ -76,14 +87,25 @@ struct AIServerSettingsView: View {
                     }
                 } else if let health = healthStatus, credentialsMatchLastTest, health.isHealthy {
                     Label(
-                        health.version.map { String(format: String(localized: "server.settings.connected"), $0) }
+                        health.version.map { String(format: String(localized: "ai.settings.status.connected_version"), $0) }
                             ?? String(localized: "ai.settings.status.connected"),
                         systemImage: "checkmark.circle.fill"
                     )
                     .foregroundStyle(.green)
                 } else if let error = connectionErrorMessage, !error.isEmpty, credentialsMatchLastTest {
-                    Label(error, systemImage: "xmark.circle.fill")
-                        .foregroundStyle(.red)
+                    Button {
+                        showConnectionErrorSheet = true
+                    } label: {
+                        Label(String(localized: "server.status.connection_failed"),
+                              systemImage: "xmark.circle.fill")
+                            .foregroundStyle(.red)
+                    }
+                    .sheet(isPresented: $showConnectionErrorSheet) {
+                        ErrorDetailSheet(
+                            title: String(localized: "error.detail.title"),
+                            detail: error
+                        )
+                    }
                 } else {
                     Button(String(localized: "server.settings.button.test_connection")) {
                         Task { await testConnection() }
@@ -92,21 +114,25 @@ struct AIServerSettingsView: View {
                 }
             }
 
-            if let health = healthStatus, credentialsMatchLastTest {
-                Section(String(localized: "ai.settings.section.details")) {
-                    if let version = health.version {
-                        LabeledContent("paperless-ai", value: version)
-                    }
-                    if let status = health.status {
-                        LabeledContent(String(localized: "ai.settings.field.status")) {
-                            Text(status)
-                                .foregroundStyle(health.isHealthy ? .green : .red)
+            if let rag = ragStatus, credentialsMatchLastTest {
+                ragStatisticsSection(rag)
+
+                Section {
+                    if isTriggering {
+                        HStack(spacing: 8) {
+                            ProgressView().controlSize(.small)
+                            Text(String(localized: "ai.settings.index.triggering"))
+                                .foregroundStyle(.secondary)
+                        }
+                    } else {
+                        Button {
+                            Task { await triggerReindex() }
+                        } label: {
+                            Label(String(localized: "ai.settings.index.trigger"), systemImage: "arrow.trianglehead.2.clockwise")
                         }
                     }
-                    if let message = health.message, !message.isEmpty {
-                        Text(message)
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
+                    if let msg = triggerMessage {
+                        Text(msg).font(.footnote).foregroundStyle(.secondary)
                     }
                 }
             }
@@ -125,9 +151,119 @@ struct AIServerSettingsView: View {
         }
         .navigationTitle(String(localized: "ai.settings.nav.title"))
         .toolbar(.hidden, for: .tabBar)
+        .toolbar {
+            if healthStatus?.isHealthy == true && credentialsMatchLastTest {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        Task { await testConnection() }
+                    } label: {
+                        Label(String(localized: "status.button.refresh"), systemImage: "arrow.clockwise")
+                    }
+                    .disabled(isTesting)
+                }
+            }
+        }
         .task {
             isSaved = configuration.hasAIServer
             if configuration.hasAIServer { await testConnection() }
+        }
+    }
+
+    @ViewBuilder
+    private func ragStatisticsSection(_ rag: AIRagStatus) -> some View {
+        Section {
+            if let count = rag.indexingStatus?.documentsCount {
+                LabeledContent(String(localized: "ai.settings.stat.indexed_docs"),
+                               value: count.formatted())
+            }
+            if let model = rag.aiModel, !model.isEmpty {
+                LabeledContent(String(localized: "ai.settings.stat.model"), value: model)
+            }
+            ragIndexStatusRows(rag.indexingStatus)
+            if let ready = rag.chromaReady {
+                readinessRow(label: "Chroma", ready: ready)
+            }
+            if let ready = rag.bm25Ready {
+                readinessRow(label: "BM25", ready: ready)
+            }
+        } header: {
+            Text(String(localized: "ai.settings.section.statistics"))
+        } footer: {
+            if let msg = rag.indexingStatus?.message, !msg.isEmpty {
+                Text(msg).foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func ragIndexStatusRows(_ indexing: AIRagIndexingStatus?) -> some View {
+        if let indexing {
+            if indexing.running == true {
+                LabeledContent(String(localized: "ai.settings.stat.index_status")) {
+                    HStack(spacing: 6) {
+                        ProgressView().controlSize(.mini)
+                        Text(String(localized: "ai.settings.stat.index_running"))
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            } else if let upToDate = indexing.upToDate {
+                LabeledContent(String(localized: "ai.settings.stat.index_status")) {
+                    Label(
+                        upToDate
+                            ? String(localized: "ai.settings.stat.index_up_to_date")
+                            : String(localized: "ai.settings.stat.index_outdated"),
+                        systemImage: upToDate ? "checkmark.circle.fill" : "exclamationmark.circle.fill"
+                    )
+                    .foregroundStyle(upToDate ? .green : .orange)
+                    .labelStyle(.titleAndIcon)
+                }
+            }
+            if let last = indexing.lastIndexed {
+                LabeledContent(String(localized: "ai.settings.stat.last_indexed"),
+                               value: formatIndexDate(last))
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func readinessRow(label: String, ready: Bool) -> some View {
+        LabeledContent(label) {
+            Label(
+                ready ? String(localized: "ai.settings.stat.ready")
+                      : String(localized: "ai.settings.stat.not_ready"),
+                systemImage: ready ? "checkmark.circle.fill" : "xmark.circle.fill"
+            )
+            .foregroundStyle(ready ? .green : .red)
+            .labelStyle(.titleAndIcon)
+        }
+    }
+
+    private func formatIndexDate(_ iso: String) -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        if let date = formatter.date(from: iso) {
+            let rel = RelativeDateTimeFormatter()
+            rel.unitsStyle = .full
+            return rel.localizedString(for: date, relativeTo: Date())
+        }
+        // Fallback: strip time portion
+        return String(iso.prefix(10))
+    }
+
+    private func triggerReindex() async {
+        guard configuration.hasAIServerWithKey else { return }
+        isTriggering = true
+        triggerMessage = nil
+        defer { isTriggering = false }
+        do {
+            try await AIServerAPI.triggerReindex(serverURL: configuration.aiServerURL, apiKey: configuration.aiApiKey)
+            triggerMessage = String(localized: "ai.settings.index.triggered")
+            // Refresh status after a short delay
+            try? await Task.sleep(for: .seconds(2))
+            ragStatus = try? await AIServerAPI.ragStatus(serverURL: configuration.aiServerURL, apiKey: configuration.aiApiKey)
+        } catch {
+            triggerMessage = PaperlessAPI.formattedUserError(error)
+                ?? error.localizedDescription
         }
     }
 
@@ -155,11 +291,19 @@ struct AIServerSettingsView: View {
         let url = configuration.aiServerURL
         let key = configuration.aiApiKey
         do {
+            // If an API key is configured, verify it against an authenticated endpoint first
+            if !key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                ragStatus = try await AIServerAPI.ragStatus(serverURL: url, apiKey: key)
+            }
             healthStatus = try await AIServerAPI.health(serverURL: url, apiKey: key)
             testedURL = url
+            testedKey = key
             connectionErrorMessage = nil
         } catch {
             healthStatus = nil
+            ragStatus = nil
+            testedURL = url
+            testedKey = key
             connectionErrorMessage = PaperlessAPI.formattedUserError(error)
                 ?? (error as? LocalizedError)?.errorDescription
                 ?? error.localizedDescription

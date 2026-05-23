@@ -2,7 +2,6 @@
 /// Allows setting title, date, document type, correspondent, and tags.
 /// Tags are displayed as compact pills with a sheet for full selection.
 import SwiftUI
-import PDFKit
 
 struct CaptureMetadataView: View {
     @Environment(AppConfiguration.self) private var configuration
@@ -27,10 +26,6 @@ struct CaptureMetadataView: View {
     @State private var loadError: String?
     @State private var isUploading = false
     @State private var uploadError: String?
-
-    // AI suggestions
-    @State private var isAnalyzing = false
-    @State private var analysisError: String?
 
     // Create new item alerts
     private enum CreateSheet { case docType, correspondent, tag }
@@ -127,14 +122,6 @@ struct CaptureMetadataView: View {
                     }
                 }
 
-                if let analysisError {
-                    Section {
-                        Text(analysisError)
-                            .foregroundStyle(.orange)
-                            .font(.footnote)
-                    }
-                }
-
                 if let uploadError {
                     Section {
                         Text(uploadError)
@@ -147,29 +134,15 @@ struct CaptureMetadataView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(String(localized: "button.cancel")) { dismiss() }
+                    Button { dismiss() } label: { Image(systemName: "xmark") }
                         .disabled(isUploading)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     if isUploading {
                         ProgressView()
                     } else {
-                        Button(String(localized: "metadata.button.upload")) {
-                            Task { await upload() }
-                        }
-                    }
-                }
-                if configuration.hasAIServerWithKey {
-                    ToolbarItem(placement: .topBarLeading) {
-                        if isAnalyzing {
-                            ProgressView().controlSize(.small)
-                        } else {
-                            Button {
-                                Task { await analyzeWithAI() }
-                            } label: {
-                                Label(String(localized: "metadata.button.ai_suggest"), systemImage: "sparkles")
-                            }
-                            .disabled(isLoadingMetadata || isUploading)
+                        Button { Task { await upload() } } label: {
+                            Image(systemName: "checkmark").bold()
                         }
                     }
                 }
@@ -280,74 +253,6 @@ struct CaptureMetadataView: View {
             createSheet = nil
         } catch {
             createError = error.localizedDescription
-        }
-    }
-
-    private func analyzeWithAI() async {
-        guard configuration.hasAIServerWithKey else { return }
-        isAnalyzing = true
-        analysisError = nil
-        defer { isAnalyzing = false }
-
-        // Extract text from the PDF (first ~3000 chars is enough for analysis)
-        let text: String
-        if let pdf = PDFDocument(data: pdfData) {
-            var extracted = ""
-            for i in 0..<min(pdf.pageCount, 5) {
-                extracted += pdf.page(at: i)?.string ?? ""
-            }
-            text = String(extracted.prefix(3000))
-        } else {
-            text = ""
-        }
-
-        guard !text.isEmpty else {
-            analysisError = String(localized: "metadata.ai.error.no_text")
-            return
-        }
-
-        do {
-            let result = try await AIServerAPI.analyzeDocument(
-                content: text,
-                existingTags: availableTags.map(\.name),
-                serverURL: configuration.aiServerURL,
-                apiKey: configuration.aiApiKey
-            )
-
-            // Apply suggestions — only fill if field is still empty
-            if let suggested = result.title, !suggested.isEmpty, title.isEmpty {
-                title = suggested
-            }
-
-            if let suggestedType = result.documentType, !suggestedType.isEmpty {
-                if let match = documentTypes.first(where: {
-                    $0.name.localizedCaseInsensitiveCompare(suggestedType) == .orderedSame
-                }) {
-                    selectedDocumentType = match
-                }
-            }
-
-            if let suggestedCorrespondent = result.correspondent, !suggestedCorrespondent.isEmpty {
-                if let match = correspondents.first(where: {
-                    $0.name.localizedCaseInsensitiveCompare(suggestedCorrespondent) == .orderedSame
-                }) {
-                    selectedCorrespondent = match
-                }
-            }
-
-            if let suggestedTags = result.tags {
-                for tagName in suggestedTags {
-                    if let match = availableTags.first(where: {
-                        $0.name.localizedCaseInsensitiveCompare(tagName) == .orderedSame
-                    }) {
-                        selectedTagIDs.insert(match.id)
-                    }
-                }
-            }
-        } catch {
-            analysisError = PaperlessAPI.formattedUserError(error)
-                ?? (error as? LocalizedError)?.errorDescription
-                ?? error.localizedDescription
         }
     }
 

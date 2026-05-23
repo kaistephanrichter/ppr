@@ -11,8 +11,9 @@ struct SettingsView: View {
 
     // AI connection state
     @State private var isTestingAI = false
-    @State private var aiHealth: AIServerStatus?
+    @State private var aiConnectedVersion: String?
     @State private var aiError: String?
+    @State private var showAIErrorSheet = false
 
     // Tags
     @State private var allTags: [TagSummary] = []
@@ -93,15 +94,28 @@ struct SettingsView: View {
                             Text(String(localized: "server.settings.testing_connection"))
                                 .foregroundStyle(.secondary)
                         }
-                    } else if let health = aiHealth, configuration.hasAIServer {
+                    } else if let error = aiError, !error.isEmpty {
+                        Button {
+                            showAIErrorSheet = true
+                        } label: {
+                            Label(String(localized: "server.status.connection_failed"),
+                                  systemImage: "xmark.circle.fill")
+                                .foregroundStyle(.red)
+                        }
+                        .sheet(isPresented: $showAIErrorSheet) {
+                            ErrorDetailSheet(
+                                title: String(localized: "error.detail.title"),
+                                detail: error
+                            )
+                        }
+                    } else if let version = aiConnectedVersion {
                         Label(
-                            health.isHealthy
-                                ? (health.version.map { String(format: String(localized: "server.settings.connected"), $0) }
-                                    ?? String(localized: "ai.settings.status.connected"))
-                                : String(localized: "server.status.connection_failed"),
-                            systemImage: health.isHealthy ? "checkmark.circle.fill" : "xmark.circle.fill"
+                            version.isEmpty
+                                ? String(localized: "ai.settings.status.connected")
+                                : String(format: String(localized: "ai.settings.status.connected_version"), version),
+                            systemImage: "checkmark.circle.fill"
                         )
-                        .foregroundStyle(health.isHealthy ? .green : .red)
+                        .foregroundStyle(.green)
                     } else {
                         Button(String(localized: "server.settings.button.test_connection")) {
                             Task { await testAIConnection() }
@@ -192,10 +206,22 @@ struct SettingsView: View {
     private func testAIConnection() async {
         guard configuration.hasAIServer else { return }
         isTestingAI = true
-        aiHealth = nil
+        aiConnectedVersion = nil
         aiError = nil
         defer { isTestingAI = false }
-        aiHealth = try? await PaperlessAPI.aiServerHealth(serverURL: configuration.aiServerURL)
+        let url = configuration.aiServerURL
+        let key = configuration.aiApiKey
+        do {
+            if !key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                _ = try await AIServerAPI.ragStatus(serverURL: url, apiKey: key)
+            }
+            let health = try await AIServerAPI.health(serverURL: url, apiKey: key)
+            aiConnectedVersion = health.version ?? ""
+        } catch {
+            aiError = PaperlessAPI.formattedUserError(error)
+                ?? (error as? LocalizedError)?.errorDescription
+                ?? error.localizedDescription
+        }
     }
 
     private func loadTags() async {
