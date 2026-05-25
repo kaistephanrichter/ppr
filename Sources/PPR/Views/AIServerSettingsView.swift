@@ -144,24 +144,34 @@ struct AIServerSettingsView: View {
 
             Section {
                 Toggle(isOn: $config.aiSemanticSearchEnabled) {
-                    Label(String(localized: "ai.settings.semantic_search"),
-                          systemImage: "sparkle.magnifyingglass")
+                    VStack(alignment: .leading, spacing: 2) {
+                        Label(String(localized: "ai.settings.semantic_search"),
+                              systemImage: "sparkle.magnifyingglass")
+                        Text(String(localized: "ai.settings.semantic_search.description"))
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
                 }
                 .disabled(!configuration.hasAIServer || healthStatus?.isHealthy != true)
                 Toggle(isOn: $config.aiSimilarDocsEnabled) {
-                    Label(String(localized: "ai.features.similar_docs"),
-                          systemImage: "doc.on.doc")
+                    VStack(alignment: .leading, spacing: 2) {
+                        Label(String(localized: "ai.features.similar_docs"),
+                              systemImage: "doc.on.doc")
+                        Text(String(localized: "ai.features.similar_docs.description"))
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
                 }
                 .disabled(!configuration.hasAIServer || healthStatus?.isHealthy != true)
                 Toggle(isOn: $config.aiChatEnabled) {
-                    Label(String(localized: "ai.features.chat"),
-                          systemImage: "bubble.left.and.text.bubble.right")
+                    VStack(alignment: .leading, spacing: 2) {
+                        Label(String(localized: "ai.features.chat"),
+                              systemImage: "bubble.left.and.text.bubble.right")
+                        Text(String(localized: "ai.features.chat.description"))
+                            .font(.caption).foregroundStyle(.secondary)
+                    }
                 }
                 .disabled(!configuration.hasAIServer || healthStatus?.isHealthy != true)
             } header: {
                 Text(String(localized: "ai.settings.section.features"))
-            } footer: {
-                Text(String(localized: "ai.settings.semantic_search.footer"))
             }
         }
         .navigationTitle(String(localized: "ai.settings.nav.title"))

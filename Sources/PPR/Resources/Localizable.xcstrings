@@ -158,6 +158,30 @@
         }
       }
     },
+    "ai.features.chat.description": {
+      "comment": "Inline description for Document Chat toggle",
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Beantwortet Fragen zu deinem Archiv per KI. Bei lokalen Modellen kann die Antwort mehrere Minuten dauern." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Answers questions about your archive using AI. With local models, responses may take several minutes." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Responde preguntas sobre tu archivo con IA. Con modelos locales, las respuestas pueden tardar varios minutos." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Répond aux questions sur vos archives via IA. Avec des modèles locaux, les réponses peuvent prendre plusieurs minutes." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Risponde a domande sul tuo archivio con IA. Con modelli locali, le risposte possono richiedere diversi minuti." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Beantwoordt vragen over je archief via AI. Met lokale modellen kunnen antwoorden enkele minuten duren." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Odpowiada na pytania dotyczące archiwum za pomocą AI. W przypadku modeli lokalnych odpowiedzi mogą zająć kilka minut." } }
+      }
+    },
+    "ai.features.similar_docs.description": {
+      "comment": "Inline description for Similar Documents toggle",
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Zeigt in der Dokumentenansicht ähnliche Dokumente basierend auf dem Inhalt." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Shows related documents in the detail view based on content similarity." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Muestra documentos relacionados en la vista de detalle según la similitud de contenido." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Affiche les documents similaires dans la vue détail selon la similarité de contenu." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Mostra documenti correlati nella vista dettaglio in base alla somiglianza del contenuto." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Toont gerelateerde documenten in de detailweergave op basis van inhoudsgelijkenis." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wyświetla powiązane dokumenty w widoku szczegółów na podstawie podobieństwa treści." } }
+      }
+    },
     "ai.settings.field.api_key" : {
       "localizations" : {
         "de" : {
@@ -692,6 +716,18 @@
             "value" : "Wyszukiwanie semantyczne"
           }
         }
+      }
+    },
+    "ai.settings.semantic_search.description": {
+      "comment": "Inline description for semantic search toggle",
+      "localizations": {
+        "de": { "stringUnit": { "state": "translated", "value": "Sucht Dokumente nach inhaltlicher Bedeutung statt nur nach Stichwörtern." } },
+        "en": { "stringUnit": { "state": "translated", "value": "Searches documents by meaning rather than just keywords." } },
+        "es": { "stringUnit": { "state": "translated", "value": "Busca documentos por significado en lugar de solo palabras clave." } },
+        "fr": { "stringUnit": { "state": "translated", "value": "Recherche des documents par sens plutôt que par simples mots-clés." } },
+        "it": { "stringUnit": { "state": "translated", "value": "Cerca documenti per significato anziché solo per parole chiave." } },
+        "nl": { "stringUnit": { "state": "translated", "value": "Zoekt documenten op betekenis in plaats van alleen op trefwoorden." } },
+        "pl": { "stringUnit": { "state": "translated", "value": "Wyszukuje dokumenty według znaczenia, a nie tylko słów kluczowych." } }
       }
     },
     "ai.settings.semantic_search.footer" : {
