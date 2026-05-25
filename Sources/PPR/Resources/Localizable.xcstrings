@@ -648,50 +648,15 @@
       }
     },
     "ai.settings.section.server" : {
-      "comment" : "Section header for AI server in settings",
+      "comment" : "Section header for AI server credentials",
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AI-Server"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AI Server"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Servidor IA"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serveur IA"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server IA"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AI-server"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serwer AI"
-          }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Server-Anmeldung" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Server Credentials" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Credenciales del servidor" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Identifiants du serveur" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Credenziali server" } },
+        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Serveraanmelding" } },
+        "pl" : { "stringUnit" : { "state" : "translated", "value" : "Dane logowania serwera" } }
       }
     },
     "ai.settings.section.statistics" : {
@@ -6741,50 +6706,15 @@
       }
     },
     "server.settings.section.server" : {
-      "comment" : "Section header: paperless server config",
+      "comment" : "Section header for Paperless server credentials",
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Paperless-Server"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Paperless Server"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Servidor Paperless"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serveur Paperless"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Server Paperless"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Paperless-server"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Serwer Paperless"
-          }
-        }
+        "de" : { "stringUnit" : { "state" : "translated", "value" : "Server-Anmeldung" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Server Credentials" } },
+        "es" : { "stringUnit" : { "state" : "translated", "value" : "Credenciales del servidor" } },
+        "fr" : { "stringUnit" : { "state" : "translated", "value" : "Identifiants du serveur" } },
+        "it" : { "stringUnit" : { "state" : "translated", "value" : "Credenziali server" } },
+        "nl" : { "stringUnit" : { "state" : "translated", "value" : "Serveraanmelding" } },
+        "pl" : { "stringUnit" : { "state" : "translated", "value" : "Dane logowania serwera" } }
       }
     },
     "server.settings.testing_connection" : {
