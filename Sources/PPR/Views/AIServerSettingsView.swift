@@ -49,6 +49,7 @@ struct AIServerSettingsView: View {
                     connectionErrorMessage = nil
                     testedURL = ""
                     testedKey = ""
+                    configuration.clearAICache()
                 }
 
                 SecureField(
@@ -64,6 +65,7 @@ struct AIServerSettingsView: View {
                     connectionErrorMessage = nil
                     testedURL = ""
                     testedKey = ""
+                    configuration.clearAICache()
                 }
 
                 if isSaved {
@@ -187,7 +189,15 @@ struct AIServerSettingsView: View {
         }
         .task {
             isSaved = configuration.hasAIServer
-            if configuration.hasAIServer { await testConnection() }
+            guard configuration.hasAIServer else { return }
+            if configuration.hasAICache {
+                healthStatus = configuration.aiCachedHealthStatus
+                ragStatus = configuration.aiCachedRagStatus
+                testedURL = configuration.aiCachedURL
+                testedKey = configuration.aiCachedKey
+            } else {
+                await testConnection()
+            }
         }
     }
 
@@ -313,7 +323,6 @@ struct AIServerSettingsView: View {
         let url = configuration.aiServerURL
         let key = configuration.aiApiKey
         do {
-            // If an API key is configured, verify it against an authenticated endpoint first
             if !key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 ragStatus = try await AIServerAPI.ragStatus(serverURL: url, apiKey: key)
             }
@@ -321,11 +330,16 @@ struct AIServerSettingsView: View {
             testedURL = url
             testedKey = key
             connectionErrorMessage = nil
+            configuration.aiCachedHealthStatus = healthStatus
+            configuration.aiCachedRagStatus = ragStatus
+            configuration.aiCachedURL = url
+            configuration.aiCachedKey = key
         } catch {
             healthStatus = nil
             ragStatus = nil
             testedURL = url
             testedKey = key
+            configuration.clearAICache()
             connectionErrorMessage = PaperlessAPI.formattedUserError(error)
                 ?? (error as? LocalizedError)?.errorDescription
                 ?? error.localizedDescription

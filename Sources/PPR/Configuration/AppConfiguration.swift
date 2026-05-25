@@ -53,6 +53,24 @@ final class AppConfiguration {
         paperlessCachedStatistics = nil
     }
 
+    // MARK: - AI server connection cache (session only)
+
+    var aiCachedHealthStatus: AIServerStatus? = nil
+    var aiCachedRagStatus: AIRagStatus? = nil
+    var aiCachedURL: String = ""
+    var aiCachedKey: String = ""
+
+    var hasAICache: Bool {
+        aiCachedHealthStatus?.isHealthy == true
+            && aiCachedURL == aiServerURL
+            && aiCachedKey == aiApiKey
+    }
+
+    func clearAICache() {
+        aiCachedHealthStatus = nil
+        aiCachedRagStatus = nil
+    }
+
     var hasAIServer: Bool {
         let trimmed = aiServerURL.trimmingCharacters(in: .whitespacesAndNewlines)
         return URL(string: trimmed) != nil && !trimmed.isEmpty
