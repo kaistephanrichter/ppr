@@ -83,8 +83,6 @@ struct AIServerSettingsView: View {
                 }
             } header: {
                 Text(String(localized: "ai.settings.section.server"))
-            } footer: {
-                Text(String(localized: "ai.settings.footer"))
             }
 
             Section(String(localized: "server.settings.section.connection")) {
