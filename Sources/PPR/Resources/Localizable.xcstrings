@@ -63,6 +63,53 @@
         }
       }
     },
+    "ai.features.chat.description" : {
+      "comment" : "Inline description for Document Chat toggle",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beantwortet Fragen zu deinem Archiv per KI. Bei lokalen Modellen kann die Antwort mehrere Minuten dauern."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answers questions about your archive using AI. With local models, responses may take several minutes."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Responde preguntas sobre tu archivo con IA. Con modelos locales, las respuestas pueden tardar varios minutos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Répond aux questions sur vos archives via IA. Avec des modèles locaux, les réponses peuvent prendre plusieurs minutes."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Risponde a domande sul tuo archivio con IA. Con modelli locali, le risposte possono richiedere diversi minuti."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beantwoordt vragen over je archief via AI. Met lokale modellen kunnen antwoorden enkele minuten duren."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odpowiada na pytania dotyczące archiwum za pomocą AI. W przypadku modeli lokalnych odpowiedzi mogą zająć kilka minut."
+          }
+        }
+      }
+    },
     "ai.features.section" : {
       "comment" : "Section header for AI feature toggles in settings",
       "extractionState" : "stale",
@@ -158,28 +205,51 @@
         }
       }
     },
-    "ai.features.chat.description": {
-      "comment": "Inline description for Document Chat toggle",
-      "localizations": {
-        "de": { "stringUnit": { "state": "translated", "value": "Beantwortet Fragen zu deinem Archiv per KI. Bei lokalen Modellen kann die Antwort mehrere Minuten dauern." } },
-        "en": { "stringUnit": { "state": "translated", "value": "Answers questions about your archive using AI. With local models, responses may take several minutes." } },
-        "es": { "stringUnit": { "state": "translated", "value": "Responde preguntas sobre tu archivo con IA. Con modelos locales, las respuestas pueden tardar varios minutos." } },
-        "fr": { "stringUnit": { "state": "translated", "value": "Répond aux questions sur vos archives via IA. Avec des modèles locaux, les réponses peuvent prendre plusieurs minutes." } },
-        "it": { "stringUnit": { "state": "translated", "value": "Risponde a domande sul tuo archivio con IA. Con modelli locali, le risposte possono richiedere diversi minuti." } },
-        "nl": { "stringUnit": { "state": "translated", "value": "Beantwoordt vragen over je archief via AI. Met lokale modellen kunnen antwoorden enkele minuten duren." } },
-        "pl": { "stringUnit": { "state": "translated", "value": "Odpowiada na pytania dotyczące archiwum za pomocą AI. W przypadku modeli lokalnych odpowiedzi mogą zająć kilka minut." } }
-      }
-    },
-    "ai.features.similar_docs.description": {
-      "comment": "Inline description for Similar Documents toggle",
-      "localizations": {
-        "de": { "stringUnit": { "state": "translated", "value": "Zeigt in der Dokumentenansicht ähnliche Dokumente basierend auf dem Inhalt." } },
-        "en": { "stringUnit": { "state": "translated", "value": "Shows related documents in the detail view based on content similarity." } },
-        "es": { "stringUnit": { "state": "translated", "value": "Muestra documentos relacionados en la vista de detalle según la similitud de contenido." } },
-        "fr": { "stringUnit": { "state": "translated", "value": "Affiche les documents similaires dans la vue détail selon la similarité de contenu." } },
-        "it": { "stringUnit": { "state": "translated", "value": "Mostra documenti correlati nella vista dettaglio in base alla somiglianza del contenuto." } },
-        "nl": { "stringUnit": { "state": "translated", "value": "Toont gerelateerde documenten in de detailweergave op basis van inhoudsgelijkenis." } },
-        "pl": { "stringUnit": { "state": "translated", "value": "Wyświetla powiązane dokumenty w widoku szczegółów na podstawie podobieństwa treści." } }
+    "ai.features.similar_docs.description" : {
+      "comment" : "Inline description for Similar Documents toggle",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeigt in der Dokumentenansicht ähnliche Dokumente basierend auf dem Inhalt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows related documents in the detail view based on content similarity."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muestra documentos relacionados en la vista de detalle según la similitud de contenido."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Affiche les documents similaires dans la vue détail selon la similarité de contenu."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra documenti correlati nella vista dettaglio in base alla somiglianza del contenuto."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toont gerelateerde documenten in de detailweergave op basis van inhoudsgelijkenis."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyświetla powiązane dokumenty w widoku szczegółów na podstawie podobieństwa treści."
+          }
+        }
       }
     },
     "ai.settings.field.api_key" : {
@@ -294,48 +364,48 @@
       }
     },
     "ai.settings.footer" : {
-      "comment" : "Footer explaining the AI server field",
+      "comment" : "Footer under AI server credentials — explains requirement and URL format",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL deines paperless-ai-next-Servers, z. B. http://192.168.1.x:3000"
+            "value" : "Für KI-Funktionen wird ein laufender paperless-ai-next-Server benötigt. URL-Format: http://192.168.1.x:3000"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL of your paperless-ai-next server, e.g. http://192.168.1.x:3000"
+            "value" : "AI features require a running paperless-ai-next server. URL format: http://192.168.1.x:3000"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL de tu servidor paperless-ai-next, p. ej. http://192.168.1.x:3000"
+            "value" : "Las funciones de IA requieren un servidor paperless-ai-next en ejecución. Formato de URL: http://192.168.1.x:3000"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL de votre serveur paperless-ai-next, ex. http://192.168.1.x:3000"
+            "value" : "Les fonctions IA nécessitent un serveur paperless-ai-next actif. Format d'URL : http://192.168.1.x:3000"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL del tuo server paperless-ai-next, es. http://192.168.1.x:3000"
+            "value" : "Le funzioni IA richiedono un server paperless-ai-next attivo. Formato URL: http://192.168.1.x:3000"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL van je paperless-ai-next-server, bijv. http://192.168.1.x:3000"
+            "value" : "AI-functies vereisen een actieve paperless-ai-next-server. URL-indeling: http://192.168.1.x:3000"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL serwera paperless-ai-next, np. http://192.168.1.x:3000"
+            "value" : "Funkcje AI wymagają działającego serwera paperless-ai-next. Format URL: http://192.168.1.x:3000"
           }
         }
       }
@@ -718,20 +788,56 @@
         }
       }
     },
-    "ai.settings.semantic_search.description": {
-      "comment": "Inline description for semantic search toggle",
-      "localizations": {
-        "de": { "stringUnit": { "state": "translated", "value": "Sucht Dokumente nach inhaltlicher Bedeutung statt nur nach Stichwörtern." } },
-        "en": { "stringUnit": { "state": "translated", "value": "Searches documents by meaning rather than just keywords." } },
-        "es": { "stringUnit": { "state": "translated", "value": "Busca documentos por significado en lugar de solo palabras clave." } },
-        "fr": { "stringUnit": { "state": "translated", "value": "Recherche des documents par sens plutôt que par simples mots-clés." } },
-        "it": { "stringUnit": { "state": "translated", "value": "Cerca documenti per significato anziché solo per parole chiave." } },
-        "nl": { "stringUnit": { "state": "translated", "value": "Zoekt documenten op betekenis in plaats van alleen op trefwoorden." } },
-        "pl": { "stringUnit": { "state": "translated", "value": "Wyszukuje dokumenty według znaczenia, a nie tylko słów kluczowych." } }
+    "ai.settings.semantic_search.description" : {
+      "comment" : "Inline description for semantic search toggle",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sucht Dokumente nach inhaltlicher Bedeutung statt nur nach Stichwörtern."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Searches documents by meaning rather than just keywords."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Busca documentos por significado en lugar de solo palabras clave."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recherche des documents par sens plutôt que par simples mots-clés."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca documenti per significato anziché solo per parole chiave."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoekt documenten op betekenis in plaats van alleen op trefwoorden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wyszukuje dokumenty według znaczenia, a nie tylko słów kluczowych."
+          }
+        }
       }
     },
     "ai.settings.semantic_search.footer" : {
       "comment" : "Footer explaining semantic search toggle",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2301,6 +2407,100 @@
         }
       }
     },
+    "custom_field.value.no" : {
+      "comment" : "Boolean custom field value: false",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nein"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nee"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nie"
+          }
+        }
+      }
+    },
+    "custom_field.value.yes" : {
+      "comment" : "Boolean custom field value: true",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sí"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oui"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sì"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tak"
+          }
+        }
+      }
+    },
     "detail.alert.save_error.title" : {
       "comment" : "Alert title when saving fails",
       "localizations" : {
@@ -2693,42 +2893,6 @@
         }
       }
     },
-    "custom_field.value.no": {
-      "comment": "Boolean custom field value: false",
-      "localizations": {
-        "de": { "stringUnit": { "state": "translated", "value": "Nein" } },
-        "en": { "stringUnit": { "state": "translated", "value": "No" } },
-        "es": { "stringUnit": { "state": "translated", "value": "No" } },
-        "fr": { "stringUnit": { "state": "translated", "value": "Non" } },
-        "it": { "stringUnit": { "state": "translated", "value": "No" } },
-        "nl": { "stringUnit": { "state": "translated", "value": "Nee" } },
-        "pl": { "stringUnit": { "state": "translated", "value": "Nie" } }
-      }
-    },
-    "custom_field.value.yes": {
-      "comment": "Boolean custom field value: true",
-      "localizations": {
-        "de": { "stringUnit": { "state": "translated", "value": "Ja" } },
-        "en": { "stringUnit": { "state": "translated", "value": "Yes" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Sí" } },
-        "fr": { "stringUnit": { "state": "translated", "value": "Oui" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Sì" } },
-        "nl": { "stringUnit": { "state": "translated", "value": "Ja" } },
-        "pl": { "stringUnit": { "state": "translated", "value": "Tak" } }
-      }
-    },
-    "detail.section.custom_fields": {
-      "comment": "Section header for custom fields in document detail",
-      "localizations": {
-        "de": { "stringUnit": { "state": "translated", "value": "Benutzerdefinierte Felder" } },
-        "en": { "stringUnit": { "state": "translated", "value": "Custom Fields" } },
-        "es": { "stringUnit": { "state": "translated", "value": "Campos personalizados" } },
-        "fr": { "stringUnit": { "state": "translated", "value": "Champs personnalisés" } },
-        "it": { "stringUnit": { "state": "translated", "value": "Campi personalizzati" } },
-        "nl": { "stringUnit": { "state": "translated", "value": "Aangepaste velden" } },
-        "pl": { "stringUnit": { "state": "translated", "value": "Pola niestandardowe" } }
-      }
-    },
     "detail.section.content_ocr" : {
       "comment" : "Section header: OCR text content",
       "localizations" : {
@@ -2772,6 +2936,53 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Treść (OCR)"
+          }
+        }
+      }
+    },
+    "detail.section.custom_fields" : {
+      "comment" : "Section header for custom fields in document detail",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzerdefinierte Felder"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Fields"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campos personalizados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Champs personnalisés"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Campi personalizzati"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aangepaste velden"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pola niestandardowe"
           }
         }
       }

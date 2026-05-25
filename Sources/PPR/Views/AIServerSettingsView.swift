@@ -83,6 +83,8 @@ struct AIServerSettingsView: View {
                 }
             } header: {
                 Text(String(localized: "ai.settings.section.server"))
+            } footer: {
+                Text(String(localized: "ai.settings.footer"))
             }
 
             Section(String(localized: "server.settings.section.connection")) {
@@ -143,8 +145,7 @@ struct AIServerSettingsView: View {
             Section {
                 Toggle(isOn: $config.aiSemanticSearchEnabled) {
                     VStack(alignment: .leading, spacing: 2) {
-                        Label(String(localized: "ai.settings.semantic_search"),
-                              systemImage: "sparkle.magnifyingglass")
+                        Text(String(localized: "ai.settings.semantic_search"))
                         Text(String(localized: "ai.settings.semantic_search.description"))
                             .font(.caption).foregroundStyle(.secondary)
                     }
@@ -152,8 +153,7 @@ struct AIServerSettingsView: View {
                 .disabled(!configuration.hasAIServer || healthStatus?.isHealthy != true)
                 Toggle(isOn: $config.aiSimilarDocsEnabled) {
                     VStack(alignment: .leading, spacing: 2) {
-                        Label(String(localized: "ai.features.similar_docs"),
-                              systemImage: "doc.on.doc")
+                        Text(String(localized: "ai.features.similar_docs"))
                         Text(String(localized: "ai.features.similar_docs.description"))
                             .font(.caption).foregroundStyle(.secondary)
                     }
@@ -161,8 +161,7 @@ struct AIServerSettingsView: View {
                 .disabled(!configuration.hasAIServer || healthStatus?.isHealthy != true)
                 Toggle(isOn: $config.aiChatEnabled) {
                     VStack(alignment: .leading, spacing: 2) {
-                        Label(String(localized: "ai.features.chat"),
-                              systemImage: "bubble.left.and.text.bubble.right")
+                        Text(String(localized: "ai.features.chat"))
                         Text(String(localized: "ai.features.chat.description"))
                             .font(.caption).foregroundStyle(.secondary)
                     }
