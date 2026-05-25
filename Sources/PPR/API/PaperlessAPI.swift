@@ -398,6 +398,18 @@ enum PaperlessAPI {
         return page.results
     }
 
+    static func customFields(serverURL: String, token: String, pageSize: Int = 500) async throws -> [CustomField] {
+        var components = URLComponents(
+            url: try buildURL(serverURL: serverURL, path: "api/custom_fields/"),
+            resolvingAgainstBaseURL: false
+        )
+        components?.queryItems = [URLQueryItem(name: "page_size", value: String(pageSize))]
+        guard let url = components?.url else { throw PaperlessAPIError.invalidServerURL }
+        let request = try authorizedRequest(url: url, token: token)
+        let page = try await perform(request, PaginatedEnvelope<CustomField>.self)
+        return page.results
+    }
+
     private static func jsonPostRequest(url: URL, token: String, body: [String: String]) throws -> URLRequest {
         var request = try authorizedRequest(url: url, token: token)
         request.httpMethod = "POST"

@@ -29,6 +29,7 @@
 		6E349A8ACC00C465417C1D0D /* DocumentScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C816A244FFBDAAE03C4D64F /* DocumentScannerView.swift */; };
 		7A5B52CF9650813D2F3B2A80 /* AIServerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 420C8DD809A2791174C8D469 /* AIServerStatus.swift */; };
 		7F146BD3BC158D5887C770EA /* AIServerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77697818355B50B60F5675AF /* AIServerSettingsView.swift */; };
+		87C1F5FDFAAB16F536012984 /* CustomField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5477F115DA97B4F46099F847 /* CustomField.swift */; };
 		8DB7FC7D77B06F096916C140 /* DocumentPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8D90D620F5B47C700188B7 /* DocumentPickerView.swift */; };
 		91B4CE59E5990D675AABA099 /* DocumentChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7BA4C789A755BDCD6C97B6 /* DocumentChatView.swift */; };
 		923C55FC8F206E10A39D42D4 /* PaperlessServerSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A1FABDC82609D4AD797A1E /* PaperlessServerSettingsView.swift */; };
@@ -73,6 +74,7 @@
 		4614A7261D12E6F526CF4068 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		48F5A01E3FB93A9EE3216D9E /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		4FC7A7B6FCE8491F83B09F33 /* URLError+LocalNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLError+LocalNetwork.swift"; sourceTree = "<group>"; };
+		5477F115DA97B4F46099F847 /* CustomField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomField.swift; sourceTree = "<group>"; };
 		54E3B8A721ADE866CCDEA7B1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		5B671ACEB3EA3A2B4BBBBB24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C245044D4C6A7586F1165A8 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				24D182CD8C3267C8A81CB8C0 /* AIDocumentAnalysis.swift */,
 				8768512E31CA30446C891EDC /* AIRagResult.swift */,
 				420C8DD809A2791174C8D469 /* AIServerStatus.swift */,
+				5477F115DA97B4F46099F847 /* CustomField.swift */,
 				15C67A137E42475CB0690B57 /* DocumentDetail.swift */,
 				65135FFA3623C5D094213C45 /* DocumentSummary.swift */,
 				BE3B63CEB1B0926F7F9C47CD /* DocumentType.swift */,
@@ -376,6 +379,7 @@
 				682DCD9BFB28E728EB25820E /* AppConfiguration.swift in Sources */,
 				447EFB0F2DF76A2068F23365 /* CaptureMetadataView.swift in Sources */,
 				6B42E7A1A6C460C46AA35F1B /* CaptureView.swift in Sources */,
+				87C1F5FDFAAB16F536012984 /* CustomField.swift in Sources */,
 				91B4CE59E5990D675AABA099 /* DocumentChatView.swift in Sources */,
 				048F4E3BF90C9E9E596F4773 /* DocumentDetail.swift in Sources */,
 				69297E1158DBE12E9BE3BF5A /* DocumentDetailView.swift in Sources */,

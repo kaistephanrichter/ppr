@@ -38,6 +38,9 @@ struct DocumentDetailView: View {
     @State private var showShareSheet = false
     @State private var didPopulateFields = false
 
+    // Custom fields
+    @State private var allCustomFields: [CustomField] = []
+
     // Similar documents
     @State private var similarDocuments: [DocumentSummary] = []
     @State private var isLoadingSimilar = false
@@ -113,6 +116,23 @@ struct DocumentDetailView: View {
                                         .foregroundStyle(.secondary)
                                 } else {
                                     selectedTagPills
+                                }
+                            }
+                        }
+                    }
+
+                    if let detail, !detail.customFields.isEmpty, !allCustomFields.isEmpty {
+                        let populated = detail.customFields.filter { cf in
+                            cf.value != nil &&
+                            allCustomFields.contains(where: { $0.id == cf.field })
+                        }
+                        if !populated.isEmpty {
+                            Section(String(localized: "detail.section.custom_fields")) {
+                                ForEach(populated, id: \.field) { cf in
+                                    if let def = allCustomFields.first(where: { $0.id == cf.field }),
+                                       let value = cf.value {
+                                        LabeledContent(def.name, value: value)
+                                    }
                                 }
                             }
                         }
@@ -306,12 +326,14 @@ struct DocumentDetailView: View {
         async let corrsTask = PaperlessAPI.correspondents(serverURL: url, token: token)
         async let tagsTask = PaperlessAPI.tags(serverURL: url, token: token)
         async let pdfTask = PaperlessAPI.documentPreview(id: summary.id, serverURL: url, token: token)
+        async let customFieldsTask = PaperlessAPI.customFields(serverURL: url, token: token)
 
         do { detail = try await detailTask } catch { loadError = error.localizedDescription }
         allDocumentTypes = (try? await typesTask) ?? []
         allCorrespondents = (try? await corrsTask) ?? []
         allTags = (try? await tagsTask) ?? []
         pdfData = try? await pdfTask
+        allCustomFields = (try? await customFieldsTask) ?? []
 
         if let d = detail {
             editTitle = d.title
