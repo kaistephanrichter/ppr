@@ -37,6 +37,7 @@ struct PaperlessServerSettingsView: View {
                         connectionOKVersion = nil
                         connectionErrorMessage = nil
                         status = nil
+                        configuration.clearPaperlessCache()
                     }
 
                 SecureField(String(localized: "server.settings.field.token"), text: $config.apiToken)
@@ -47,6 +48,7 @@ struct PaperlessServerSettingsView: View {
                         connectionOKVersion = nil
                         connectionErrorMessage = nil
                         status = nil
+                        configuration.clearPaperlessCache()
                     }
 
                 if isSaved {
@@ -126,7 +128,16 @@ struct PaperlessServerSettingsView: View {
         .task {
             isSaved = configuration.didLoadFromKeychain && configuration.canConnect
             guard configuration.canConnect && configuration.didLoadFromKeychain else { return }
-            await testConnection()
+            if configuration.hasPaperlessCache {
+                // Restore last known result immediately — no re-test needed
+                connectionOKVersion = configuration.paperlessCachedVersion
+                status = configuration.paperlessCachedStatus
+                statistics = configuration.paperlessCachedStatistics
+                testedURL = configuration.paperlessCachedURL
+                testedToken = configuration.paperlessCachedToken
+            } else {
+                await testConnection()
+            }
         }
     }
 
@@ -286,10 +297,17 @@ struct PaperlessServerSettingsView: View {
             testedURL = url
             testedToken = token
             connectionErrorMessage = nil
+            // Store in session cache so re-opening the page shows stats immediately
+            configuration.paperlessCachedVersion = remote.pngxVersion
+            configuration.paperlessCachedStatus = remote
+            configuration.paperlessCachedStatistics = stats
+            configuration.paperlessCachedURL = url
+            configuration.paperlessCachedToken = token
         } catch {
             connectionOKVersion = nil
             status = nil
             statistics = nil
+            configuration.clearPaperlessCache()
             connectionErrorMessage = PaperlessAPI.formattedUserError(error)
                 ?? (error as? LocalizedError)?.errorDescription
                 ?? error.localizedDescription

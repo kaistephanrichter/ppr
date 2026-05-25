@@ -31,6 +31,28 @@ final class AppConfiguration {
         didSet { UserDefaults.standard.set(aiChatEnabled, forKey: "aiChatEnabled") }
     }
 
+    // MARK: - In-memory connection cache (session only, not persisted)
+
+    /// Last successful Paperless connection result — shown immediately when
+    /// reopening the server settings page so no re-test is needed.
+    var paperlessCachedVersion: String? = nil
+    var paperlessCachedStatus: RemoteStatus? = nil
+    var paperlessCachedStatistics: RemoteStatistics? = nil
+    var paperlessCachedURL: String = ""
+    var paperlessCachedToken: String = ""
+
+    var hasPaperlessCache: Bool {
+        paperlessCachedVersion != nil
+            && paperlessCachedURL == serverURL
+            && paperlessCachedToken == apiToken
+    }
+
+    func clearPaperlessCache() {
+        paperlessCachedVersion = nil
+        paperlessCachedStatus = nil
+        paperlessCachedStatistics = nil
+    }
+
     var hasAIServer: Bool {
         let trimmed = aiServerURL.trimmingCharacters(in: .whitespacesAndNewlines)
         return URL(string: trimmed) != nil && !trimmed.isEmpty
